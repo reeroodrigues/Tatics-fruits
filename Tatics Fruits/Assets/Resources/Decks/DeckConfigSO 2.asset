@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e06ec0b8d29460a9cc80a240997754f, type: 3}
-  m_Name: DeckConfigSO
+  m_Name: DeckConfigSO 2
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.DeckConfigSo
   entries:
   - type: {fileID: 11400000, guid: 15a1a8963dd67bc4a9cbd71e27e2a09d, type: 2}

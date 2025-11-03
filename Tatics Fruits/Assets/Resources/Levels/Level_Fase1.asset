@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.LevelConfigSO
   levelId: fase_1
   displayName: Fase 1
-  description: "Fa\xE7a 100 pontos em 60 segundos!"
+  description: "Fa\xE7a {0} pontos em {0} segundos!"
   targetScore: 100
   initialTimeSeconds: 60
   handSize: 6

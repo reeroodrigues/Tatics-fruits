@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.LevelConfigSO
   levelId: fase_5
   displayName: Fase 5
-  description: "Fa\xE7a 100 pontos em 60 segundos!"
+  description: "Fa\xE7a {0} pontos em {0} segundos!"
   targetScore: 100
   initialTimeSeconds: 60
   handSize: 6
@@ -23,7 +23,7 @@ MonoBehaviour:
   swapAllTimePenalty: 5
   swapRandomTimePenalty: 2
   allowEmptyDeckRefill: 1
-  deck: {fileID: 11400000, guid: 2e74fcf8bbee2644c9ae6030dd455b4c, type: 2}
+  deck: {fileID: 11400000, guid: c7614298d8a04af4b857655580915a06, type: 2}
   useFixedSeed: 0
   fixedSeed: 0
   scorePerPairBase: 0

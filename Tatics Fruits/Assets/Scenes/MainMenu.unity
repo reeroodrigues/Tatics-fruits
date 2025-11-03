@@ -7585,9 +7585,9 @@ MonoBehaviour:
   bonusTabBadge: {fileID: 514818175}
   missionsTabBadge: {fileID: 2145746006}
   missionsPanelRoot: {fileID: 720634953}
-  missionsPanelCg: {fileID: 0}
+  missionsPanelCg: {fileID: 795167727}
   bonusPanelRoot: {fileID: 554180452}
-  bonusPanelCg: {fileID: 0}
+  bonusPanelCg: {fileID: 795167727}
   missionsParent: {fileID: 478034226}
   missionItemPrefab: {fileID: 325154248622583549, guid: eafc2814499a1184d94a62082a9e3e24, type: 3}
   loginGridParent: {fileID: 750413013}
@@ -13765,6 +13765,7 @@ MonoBehaviour:
   travelEase: 5
   targetPunchScale: 1.15
   targetPunchTime: 0.12
+  targetPadding: 8
 --- !u!1 &1713097882
 GameObject:
   m_ObjectHideFlags: 0
@@ -17927,8 +17928,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 20.9925
-  m_fontSizeMax: 83.97
+  m_fontSizeMin: 18.838127
+  m_fontSizeMax: 75.35251
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -18944,12 +18945,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.75
+  m_fontSize: 24.973278
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 32.9
+  m_fontSizeMin: 13.663191
+  m_fontSizeMax: 24.973278
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
