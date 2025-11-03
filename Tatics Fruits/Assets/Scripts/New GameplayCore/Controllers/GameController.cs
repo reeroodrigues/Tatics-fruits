@@ -136,21 +136,13 @@ namespace New_GameplayCore.Controllers
         public void OnSwapAllRequested()
         {
             _swap.TrySwapAll();
-            if (DailyMissionsController.Instance != null &&
-                DailyMissionsController.Instance.ReportSwapAll(out var toast, out _))
-            {
-                ToastService.Show(toast);
-            }
+            DailyMissionsController.Instance?.ReportSwapAll();
         }
 
         public void OnSwapRandomRequested()
         {
             _swap.TrySwapRandom();
-            if (DailyMissionsController.Instance != null &&
-                DailyMissionsController.Instance.ReportSwapAll(out var toast, out _))
-            {
-                ToastService.Show(toast);
-            }
+            DailyMissionsController.Instance?.ReportSwapAll();
         }
     }
 }

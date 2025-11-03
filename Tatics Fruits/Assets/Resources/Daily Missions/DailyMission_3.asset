@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 3
   eventType: 5
   target: 1
-  rewardGold: 150
+  rewardGold: 30
   levelParam: 0
   paramId: 
   descriptionKey: 

@@ -185,22 +185,13 @@ public class DailyMissionsController : MonoBehaviour
         if (profile.Data == null)
         {
             Debug.LogWarning("[DailyMissionsController] Criando novo ProfileData pois estava nulo.");
-            if (profile.Data == null)
-                profile.Data = new PlayerProfileData();
+            profile.Data = new PlayerProfileData();
         }
 
         if (profile.Data.daily == null)
-        {
             profile.Data.daily = new DailySystemData();
-        }
-        
-        var daily = profile.Data.daily;
-        if (daily == null)
-        {
-            profile.Data.daily = new DailySystemData();
-            daily = profile.Data.daily;
-        }
 
+        var daily = profile.Data.daily;
         if (daily.dayKey == TodayKey && daily.missions != null && daily.missions.Count == missionsPerDay)
             return;
 
@@ -235,140 +226,80 @@ public class DailyMissionsController : MonoBehaviour
     public DailyMissionSo GetDefinition(string missionId)
     {
         if (string.IsNullOrEmpty(missionId)) return null;
-        foreach (var def in missionPool)
-            if (def != null && def.id == missionId)
-                return def;
-        return null;
+        return missionPool.FirstOrDefault(def => def != null && def.id == missionId);
     }
 
     public IReadOnlyList<DailyMissionState> GetMissions() => profile.Data.daily.missions;
 
     public bool TryClaimMission(string missionId)
     {
-        var st = profile.Data.daily.missions.FirstOrDefault(m => m.missionId == missionId);
+        var list = profile.Data.daily.missions;
+        if (list == null) return false;
+
+        var st = list.FirstOrDefault(m => m.missionId == missionId);
         if (st == null || !st.completed || st.claimed)
             return false;
 
         profile.AddGoldAndSave(st.rewardGold);
         st.claimed = true;
         profile.SaveProfile();
+
         OnDailyMissionsChanged?.Invoke();
         FireAttention();
         return true;
     }
 
-    public DateTime GetNextResetTime()
-    {
-        var now = GetNow();
-        return now.Date.AddDays(1);
-    }
+    public DateTime GetNextResetTime() => GetNow().Date.AddDays(1);
 
     // -------------------------
-    // Report API (com out toast)
+    // Reporting (progress updates)
     // -------------------------
-    public bool ReportWinLevel(int level, out string toastMsg, out int rewardGold)
+    public void ReportWinLevel(int level)
     {
-        toastMsg = null; rewardGold = 0;
-        bool changed = false, completedNowAny = false;
-
-        var list = profile.Data.daily.missions;
-        if (list == null) return false;
-
-        foreach (var st in list)
-        {
-            var def = FindDef(st.missionId);
-            if (def == null || def.eventType != MissionEventType.WinLevel) continue;
-            if (def.levelParam > 0 && def.levelParam != level) continue;
-            if (st.completed) continue;
-
-            int before = st.progress;
-            st.progress = Mathf.Min(st.target, st.progress + 1);
-            if (st.progress != before) changed = true;
-
-            if (st.progress >= st.target && !st.completed)
-            {
-                st.completed = true;
-                changed = true;
-                completedNowAny = true;
-
-                var text = BuildDescription(def, st);
-                toastMsg = $"Missão concluída: {text}  +{st.rewardGold} moedas!";
-                rewardGold = st.rewardGold;
-            }
-        }
-
-        if (changed)
-        {
-            profile.SaveProfile();
-            OnDailyMissionsChanged?.Invoke();
-            FireAttention();
-        }
-        return completedNowAny;
+        if (TryAddProgress(MissionEventType.WinLevel, 1, level.ToString()))
+            ToastService.Show($"Missão concluída: Vencer o nível {level}!");
     }
 
-    public void ReportWinLevel(int level) // compat (sem quebrar chamadas antigas)
+    public void ReportPairMade(string cardTypeId = null)
     {
-        if (ReportWinLevel(level, out var toast, out _))
-            ToastService.Show(toast);
+        if (TryAddProgress(MissionEventType.MakePair, 1, cardTypeId))
+            ToastService.Show($"Missão concluída: Formar pares!");
     }
 
-    public bool ReportPairMade(out string toastMsg, out int rewardGold, string cardTypeId = null)
+    public void ReportSwapAll()
     {
-        return TryAddProgress(MissionEventType.MakePair, 1, out toastMsg, out rewardGold, cardTypeId);
+        if (TryAddProgress(MissionEventType.SwapAll, 1))
+            ToastService.Show("Missão concluída: Trocar todas as cartas!");
     }
 
-    public void ReportPairMade(string cardTypeId = null) // compat
+    public void ReportSwapRandom()
     {
-        if (ReportPairMade(out var toast, out _, cardTypeId))
-            ToastService.Show(toast);
+        if (TryAddProgress(MissionEventType.SwapRandom, 1))
+            ToastService.Show("Missão concluída: Trocar carta aleatória!");
     }
 
-    public bool ReportSwapAll(out string toastMsg, out int rewardGold)
+    public void ReportBuyCard()
     {
-        return TryAddProgress(MissionEventType.SwapAll, 1, out toastMsg, out rewardGold, null);
+        if (TryAddProgress(MissionEventType.BuyCard, 1))
+            ToastService.Show("Missão concluída: Comprar carta!");
     }
-    public void ReportSwapAll() { if (ReportSwapAll(out var toast, out _)) ToastService.Show(toast); }
 
-    public bool ReportSwapRandom(out string toastMsg, out int rewardGold)
+    public void ReportRunFinished()
     {
-        return TryAddProgress(MissionEventType.SwapRandom, 1, out toastMsg, out rewardGold, null);
+        if (TryAddProgress(MissionEventType.PlayRun, 1))
+            ToastService.Show("Missão concluída: Jogar uma partida!");
     }
-    public void ReportSwapRandom() { if (ReportSwapRandom(out var toast, out _)) ToastService.Show(toast); }
 
-    public bool ReportBuyCard(out string toastMsg, out int rewardGold)
-    {
-        return TryAddProgress(MissionEventType.BuyCard, 1, out toastMsg, out rewardGold, null);
-    }
-    public void ReportBuyCard() { if (ReportBuyCard(out var toast, out _)) ToastService.Show(toast); }
-
-    public bool ReportRunFinished(out string toastMsg, out int rewardGold)
-    {
-        return TryAddProgress(MissionEventType.PlayRun, 1, out toastMsg, out rewardGold, null);
-    }
-    public void ReportRunFinished() { if (ReportRunFinished(out var toast, out _)) ToastService.Show(toast); }
-
-    public bool ReportScoreDelta(int delta, out string toastMsg, out int rewardGold)
-    {
-        toastMsg = null; rewardGold = 0;
-        if (delta <= 0) return false;
-        return TryAddProgress(MissionEventType.ScorePoints, delta, out toastMsg, out rewardGold, null);
-    }
     public void ReportScoreDelta(int delta)
     {
-        if (ReportScoreDelta(delta, out var toast, out _))
-            ToastService.Show(toast);
+        if (delta > 0 && TryAddProgress(MissionEventType.ScorePoints, delta))
+            ToastService.Show($"Missão concluída: Fazer {delta} pontos!");
     }
 
-    public bool ReportStars(int stars, out string toastMsg, out int rewardGold)
-    {
-        toastMsg = null; rewardGold = 0;
-        if (stars <= 0) return false;
-        return TryAddProgress(MissionEventType.StarsEarned, stars, out toastMsg, out rewardGold, null);
-    }
     public void ReportStars(int stars)
     {
-        if (ReportStars(stars, out var toast, out _))
-            ToastService.Show(toast);
+        if (stars > 0 && TryAddProgress(MissionEventType.StarsEarned, stars))
+            ToastService.Show($"Missão concluída: Conquistar {stars} estrelas!");
     }
 
     // -------------------------
@@ -390,52 +321,52 @@ public class DailyMissionsController : MonoBehaviour
         return list != null && list.Any(m => m.completed && !m.claimed);
     }
 
-    public void FireAttention()
-    {
-        OnAttentionChanged?.Invoke(HasAnyClaimAvailable());
-    }
+    public void FireAttention() => OnAttentionChanged?.Invoke(HasAnyClaimAvailable());
 
     // -------------------------
-    // Core progress (com toast out)
+    // Core mission logic
     // -------------------------
-    private bool TryAddProgress(
-        MissionEventType type,
-        int amount,
-        out string toastMsg,
-        out int rewardGold,
-        string param = null)
+    private bool TryAddProgress(MissionEventType type, int amount = 1, string param = null)
     {
-        toastMsg = null;
-        rewardGold = 0;
-
-        var list = profile.Data?.daily?.missions;
-        if (list == null) return false;
+        var daily = profile.Data?.daily;
+        if (daily == null || daily.missions == null)
+            return false;
 
         bool changed = false;
-        bool completedNowAny = false;
 
-        foreach (var st in list)
+        for (int i = 0; i < daily.missions.Count; i++)
         {
+            var st = daily.missions[i];
             var def = FindDef(st.missionId);
-            if (def == null || def.eventType != type) continue;
-            if (st.completed) continue;
-            if (!string.IsNullOrEmpty(def.paramId) && def.paramId != param) continue;
 
-            var before = st.progress;
+            if (def == null || def.eventType != type)
+                continue;
+
+            if (st.completed)
+                continue;
+
+            if (!string.IsNullOrEmpty(def.paramId) && def.paramId != param)
+                continue;
+
+            int before = st.progress;
             st.progress = Mathf.Min(st.target, st.progress + Mathf.Max(1, amount));
-            if (st.progress != before) changed = true;
+
+            if (st.progress != before)
+                changed = true;
 
             if (st.progress >= st.target && !st.completed)
             {
                 st.completed = true;
                 changed = true;
-                completedNowAny = true;
 
-                var text = BuildDescription(def, st);
-                toastMsg = $"Missão concluída: {text}  +{st.rewardGold} moedas!";
-                rewardGold = st.rewardGold;
-                // não faz claim aqui; apenas marca concluída e deixa pro jogador coletar
+                var desc = def.descriptionTemplate
+                    .Replace("{0}", def.levelParam.ToString())
+                    .Replace("{target}", st.target.ToString());
+
+                ToastService.Show($"Missão concluída: {desc} +{st.rewardGold} moedas!");
             }
+
+            daily.missions[i] = st;
         }
 
         if (changed)
@@ -445,22 +376,6 @@ public class DailyMissionsController : MonoBehaviour
             FireAttention();
         }
 
-        return completedNowAny;
-    }
-
-    private string BuildDescription(DailyMissionSo def, DailyMissionState st)
-    {
-        // Usa o template do SO, senão cai no texto salvo no state
-        string tpl = !string.IsNullOrEmpty(def?.descriptionTemplate) ? def.descriptionTemplate : st.description;
-        if (string.IsNullOrEmpty(tpl)) tpl = st.missionId;
-
-        // Substituições simples
-        tpl = tpl.Replace("{level}", def.levelParam.ToString());
-        tpl = tpl.Replace("{target}", st.target.ToString());
-
-        // Formato {0} compatível (ex.: nível)
-        try { tpl = string.Format(tpl, def.levelParam, st.target); } catch { /* ignore */ }
-
-        return tpl;
+        return changed;
     }
 }

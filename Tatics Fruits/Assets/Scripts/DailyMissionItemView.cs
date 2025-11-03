@@ -93,18 +93,20 @@ public class DailyMissionItemView : MonoBehaviour
             if (!hide) progressText.text = $"{cur}/{max}";
         }
 
-        var canClaim = _state.completed && !_state.claimed;
+        bool canClaim = _state.completed && !_state.claimed;
 
         if (claimButton)
         {
-            claimButton.gameObject.SetActive(true);
+            claimButton.gameObject.SetActive(canClaim);
             claimButton.interactable = canClaim;
+            
+            var g = claimButton.targetGraphic;
+            if (g != null) g.raycastTarget = canClaim;
         }
 
         if (claimStamp) claimStamp.SetActive(_state.claimed);
     }
     
-
     private void SetDescriptionLocalized()
     {
         if (!descriptionText) return;
@@ -153,6 +155,7 @@ public class DailyMissionItemView : MonoBehaviour
     private void OnClickClaim()
     {
         if (_ctrl == null) return;
+        Debug.Log($"[DailyMissionItemView] Tentar coletar: {_state.missionId} (completed={_state.completed}, claimed={_state.claimed})");
 
         if (_ctrl.TryClaimMission(_state.missionId))
         {
@@ -162,5 +165,10 @@ public class DailyMissionItemView : MonoBehaviour
             _state.claimed = true;
             Refresh();
         }
+        else
+        {
+            Debug.LogWarning("[DailyMissionItemView] TryClaimMission retornou false (a missão não está completa ou já foi coletada).");
+        }
     }
+
 }

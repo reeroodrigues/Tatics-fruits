@@ -14,16 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.LevelConfigSO
   levelId: fase_10
   displayName: Fase 10
-  description: "Fa\xE7a 300 pontos em 60 segundos!"
-  targetScore: 300
-  initialTimeSeconds: 60
+  description: "Fa\xE7a 350 pontos em 120 segundos!"
+  targetScore: 350
+  initialTimeSeconds: 120
   handSize: 6
   deckSize: 60
   timeBonusOnPair: 3
   swapAllTimePenalty: 5
   swapRandomTimePenalty: 2
   allowEmptyDeckRefill: 1
-  deck: {fileID: 11400000, guid: 2e74fcf8bbee2644c9ae6030dd455b4c, type: 2}
+  deck: {fileID: 11400000, guid: b5d8a3ce478c283449184d2dac24d233, type: 2}
   useFixedSeed: 0
   fixedSeed: 0
   scorePerPairBase: 0

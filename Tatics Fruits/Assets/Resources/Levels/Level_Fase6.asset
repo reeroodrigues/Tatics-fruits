@@ -15,7 +15,7 @@ MonoBehaviour:
   levelId: fase_6
   displayName: Fase 6
   description: "Fa\xE7a 200 pontos em 60 segundos!"
-  targetScore: 200
+  targetScore: 150
   initialTimeSeconds: 60
   handSize: 6
   deckSize: 60
@@ -23,7 +23,7 @@ MonoBehaviour:
   swapAllTimePenalty: 5
   swapRandomTimePenalty: 2
   allowEmptyDeckRefill: 1
-  deck: {fileID: 11400000, guid: 2e74fcf8bbee2644c9ae6030dd455b4c, type: 2}
+  deck: {fileID: 11400000, guid: 69cd80bbeffcb08459011704d15717ed, type: 2}
   useFixedSeed: 0
   fixedSeed: 0
   scorePerPairBase: 0
