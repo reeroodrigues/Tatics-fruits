@@ -228,17 +228,6 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         missionsPanelRoot.SetActive(tab == Tab.Missions);
         bonusPanelRoot.SetActive(tab == Tab.Bonus);
         
-        if (missionsPanelCg)
-        {
-            missionsPanelCg.interactable   = (tab == Tab.Missions);
-            missionsPanelCg.blocksRaycasts = (tab == Tab.Missions);
-        }
-        if (bonusPanelCg)
-        {
-            bonusPanelCg.interactable   = (tab == Tab.Bonus);
-            bonusPanelCg.blocksRaycasts = (tab == Tab.Bonus);
-        }
-        
         if (!instant)
         {
             if (missionsPanelCg) missionsPanelCg.alpha = (tab == Tab.Missions) ? 0f : 1f;

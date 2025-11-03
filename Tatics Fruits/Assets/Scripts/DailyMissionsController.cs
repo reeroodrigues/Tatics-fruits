@@ -245,23 +245,12 @@ public class DailyMissionsController : MonoBehaviour
 
     public bool TryClaimMission(string missionId)
     {
-        var list = profile.Data?.daily?.missions;
-        if (list == null) return false;
-
-        int index = list.FindIndex(m => m.missionId == missionId);
-        if (index < 0) return false;
-
-        var st = list[index];
-        if (!st.completed || st.claimed)
+        var st = profile.Data.daily.missions.FirstOrDefault(m => m.missionId == missionId);
+        if (st == null || !st.completed || st.claimed)
             return false;
 
-        // Dá a recompensa
         profile.AddGoldAndSave(st.rewardGold);
-
-        // Marca como coletada
         st.claimed = true;
-        list[index] = st; // ✅ atualiza a lista com o struct modificado!
-
         profile.SaveProfile();
         OnDailyMissionsChanged?.Invoke();
         FireAttention();

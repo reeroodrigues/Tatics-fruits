@@ -95,11 +95,10 @@ public class DailyMissionItemView : MonoBehaviour
 
         var canClaim = _state.completed && !_state.claimed;
 
-        bool showClaim = _state.completed && !_state.claimed;
         if (claimButton)
         {
-            claimButton.gameObject.SetActive(showClaim);
-            claimButton.interactable = showClaim;
+            claimButton.gameObject.SetActive(true);
+            claimButton.interactable = canClaim;
         }
 
         if (claimStamp) claimStamp.SetActive(_state.claimed);
@@ -160,11 +159,8 @@ public class DailyMissionItemView : MonoBehaviour
             var spawn = coinSpawnPoint ? coinSpawnPoint : (RectTransform)transform;
             CoinCollectFx.Instance?.PlayFromUI(spawn, _state.rewardGold);
 
-            // Atualiza visual local
             _state.claimed = true;
-            if (claimButton) claimButton.interactable = false;
             Refresh();
-            // NÃO dispare evento daqui.
         }
     }
 }
