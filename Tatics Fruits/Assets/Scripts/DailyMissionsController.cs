@@ -31,10 +31,7 @@ public class DailyMissionsController : MonoBehaviour
         public bool Claimed;
         public bool Claimable;
     }
-
-    // -------------------------
-    // Lifecycle
-    // -------------------------
+    
     private void Awake()
     {
         if (Instance == null)
@@ -56,10 +53,7 @@ public class DailyMissionsController : MonoBehaviour
         EnsureDayGenerated();
         FireAttention();
     }
-
-    // -------------------------
-    // Daily Login
-    // -------------------------
+    
     private void EnsureLoginInitialized()
     {
         if (profile.Data == null) return;
@@ -165,10 +159,7 @@ public class DailyMissionsController : MonoBehaviour
         var l = profile.Data.daily.login;
         return TryClaimDailyLoginDay(l.cycleIndex);
     }
-
-    // -------------------------
-    // Missions (day generation / getters)
-    // -------------------------
+    
     public void EnsureDayGenerated()
     {
         if (profile == null)
@@ -250,10 +241,7 @@ public class DailyMissionsController : MonoBehaviour
     }
 
     public DateTime GetNextResetTime() => GetNow().Date.AddDays(1);
-
-    // -------------------------
-    // Reporting (progress updates)
-    // -------------------------
+    
     public void ReportWinLevel(int level)
     {
         if (TryAddProgress(MissionEventType.WinLevel, 1, level.ToString()))
@@ -301,10 +289,7 @@ public class DailyMissionsController : MonoBehaviour
         if (stars > 0 && TryAddProgress(MissionEventType.StarsEarned, stars))
             ToastService.Show($"Missão concluída: Conquistar {stars} estrelas!");
     }
-
-    // -------------------------
-    // Helpers / attention
-    // -------------------------
+    
     private DailyMissionSo FindDef(string missionId) =>
         missionPool.FirstOrDefault(m => m && m.id == missionId);
 
@@ -322,10 +307,7 @@ public class DailyMissionsController : MonoBehaviour
     }
 
     public void FireAttention() => OnAttentionChanged?.Invoke(HasAnyClaimAvailable());
-
-    // -------------------------
-    // Core mission logic
-    // -------------------------
+    
     private bool TryAddProgress(MissionEventType type, int amount = 1, string param = null)
     {
         var daily = profile.Data?.daily;
