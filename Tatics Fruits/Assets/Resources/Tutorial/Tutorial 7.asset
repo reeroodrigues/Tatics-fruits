@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1949b2453db4eedad1e6ba7a3caf331, type: 3}
+  m_Name: Tutorial 7
+  m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.TutorialSlideSo
+  image: {fileID: -148964584196396808, guid: 940b302d60ae9a948bf73ef456ba0103, type: 3}
+  description: 

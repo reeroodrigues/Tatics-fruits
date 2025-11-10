@@ -21,7 +21,7 @@ namespace New_GameplayCore.Views
         [SerializeField] private LevelSetSO levelSet;
         [SerializeField] private TextMeshProUGUI phaseLabel;
         [SerializeField] private PlayerProfileService _profileService;
-
+        [SerializeField] private TutorialManager tutorialManager;
 
         public IRuleEngine RuleEngine => _rule;
         public IGameController Controller => _controller;
@@ -36,8 +36,7 @@ namespace New_GameplayCore.Views
         public IHighScoreService Highscores => _highscores;
         public LevelProgressService Progress;
         public PlayerProfileService Profile => _profileService;
-
-
+        
         private GameStateMachine _fsm;
         private TimeManager _time;
         private ScoreService _score;
@@ -60,13 +59,14 @@ namespace New_GameplayCore.Views
             _profileService.Load();
 
             var currentIndex = _profileService.Data.currentLevelIndex;
-            Debug.Log($"[PROFILE] Carregando level {currentIndex +1}");
+            Debug.Log($"[PROFILE] Carregando level {currentIndex + 1}");
             
-            if(levelSet && levelSet.levels.Length > 0)
+            if (levelSet && levelSet.levels.Length > 0)
                 levelConfig = levelSet.levels[Mathf.Clamp(currentIndex, 0, levelSet.levels.Length - 1)];
             
             var cfg = Progress.Current(levelSet);
-            if (cfg != null) levelConfig = cfg;
+            if (cfg != null)
+                levelConfig = cfg;
             
             _fsm   = new GameStateMachine();
             _time  = new TimeManager(levelConfig.initialTimeSeconds);
@@ -76,19 +76,44 @@ namespace New_GameplayCore.Views
             _hand  = new HandService(levelConfig.handSize);
             _swap  = new SwapService(_hand, _deck, _time, levelConfig);
             _rule  = new RuleEngine(_hand, _deck, _score, _time, _combo, levelConfig);
-            _controller = new New_GameplayCore.Controllers.GameController(_fsm, _time, _deck, _hand, _rule, _swap, levelConfig, _score);
+            _controller = new New_GameplayCore.Controllers.GameController(
+                _fsm, _time, _deck, _hand, _rule, _swap, levelConfig, _score);
             _highscores = new JsonHighScoreService();
             
-            IsReady = true;
-            OnReady?.Invoke();
             _controller.OnEnterPreRound += HandleEnterPreRound;
             _controller.OnLevelEnded += HandleLevelEnded;
+
+            IsReady = true;
+            OnReady?.Invoke();
         }
-        
+
         private void Start()
         {
-            if(phaseLabel)
+            if (tutorialManager == null)
+            {
+                StartGameplay();
+                return;
+            }
+            
+            var levelIndexForTutorial = Progress.CurrentIndex + 1;
+            
+            bool shown = tutorialManager.TryShowTutorial(levelIndexForTutorial);
+
+            if (!shown)
+            {
+                StartGameplay();
+            }
+            else
+            {
+                tutorialManager.OnTutorialFinished += HandleTutorialFinished;
+            }
+        }
+
+        private void StartGameplay()
+        {
+            if (phaseLabel)
                 phaseLabel.text = $"Fase {Progress.CurrentIndex + 1}";
+
             _controller.StartLevel(levelConfig, deckConfig);
             hudView.Initialize(_time, _score, _swap);
             handView.Initialize(_hand, _controller);
@@ -98,15 +123,25 @@ namespace New_GameplayCore.Views
                 _highscores.TryReportScore(GetLevelId(), total);
             };
         }
-        
+
+        private void HandleTutorialFinished()
+        {
+            tutorialManager.OnTutorialFinished -= HandleTutorialFinished;
+            StartGameplay();
+        }
 
         private void OnDestroy()
         {
             if (_controller != null)
+            {
                 _controller.OnEnterPreRound -= HandleEnterPreRound;
-            
-            if (_controller != null)
                 _controller.OnLevelEnded -= HandleLevelEnded;
+            }
+
+            if (tutorialManager != null)
+            {
+                tutorialManager.OnTutorialFinished -= HandleTutorialFinished;
+            }
         }
         
         private void HandleLevelEnded(EndCause cause)
@@ -117,6 +152,7 @@ namespace New_GameplayCore.Views
                 levelId = levelConfig.name;
 
             _profileService.RegisterBestScore(levelId, totalScore);
+
             switch (cause)
             {
                 case EndCause.TargetReached:
@@ -131,7 +167,8 @@ namespace New_GameplayCore.Views
 
         private void ShowVictory()
         {
-            var presenter = new VictoryPresenter(levelConfig, _score, _time, _highscores, _profileService, Progress, levelSet);
+            var presenter = new VictoryPresenter(
+                levelConfig, _score, _time, _highscores, _profileService, Progress, levelSet);
 
             VictoryModel model = default;
             presenter.OnModelReady += m => model = m;
@@ -202,7 +239,7 @@ namespace New_GameplayCore.Views
 
             var model = _preRoundPresenter.BuildModel(levelConfig, _deck, _highscores);
 
-            _preRoundInstance = Instantiate(preRoundView,uiRoot);
+            _preRoundInstance = Instantiate(preRoundView, uiRoot);
             _preRoundInstance.Bind(_preRoundPresenter, model);
         }
 
@@ -211,6 +248,7 @@ namespace New_GameplayCore.Views
             _controller.UpdateTick(Time.deltaTime);
         }
     
-        private string GetLevelId() => string.IsNullOrEmpty(levelConfig.levelId) ? levelConfig.name : levelConfig.levelId;
+        private string GetLevelId()
+            => string.IsNullOrEmpty(levelConfig.levelId) ? levelConfig.name : levelConfig.levelId;
     }
 }
