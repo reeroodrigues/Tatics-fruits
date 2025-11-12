@@ -3450,6 +3450,63 @@ MonoBehaviour:
   levelSet: {fileID: 11400000, guid: e2de82088fcc9144293855b79aeb9171, type: 2}
   phaseLabel: {fileID: 2489931806995890087}
   tutorialManager: {fileID: 1014608234}
+--- !u!1001 &1448547642
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 188.30695
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 405.84882
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678211673712965702, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515989144101792857, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
+      propertyPath: m_Name
+      value: AndroidManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b97f6747477e9464c8dacbcd44e02ea1, type: 3}
 --- !u!1 &1473103879
 GameObject:
   m_ObjectHideFlags: 0
@@ -6476,3 +6533,4 @@ SceneRoots:
   - {fileID: 1780655301}
   - {fileID: 1419642187}
   - {fileID: 1014608233}
+  - {fileID: 1448547642}
