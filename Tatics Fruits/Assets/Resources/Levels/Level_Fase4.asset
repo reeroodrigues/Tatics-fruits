@@ -15,8 +15,8 @@ MonoBehaviour:
   levelId: fase_4
   displayName: Fase 4
   description: "Fa\xE7a {0} pontos em {0} segundos!"
-  targetScore: 150
-  initialTimeSeconds: 120
+  targetScore: 250
+  initialTimeSeconds: 60
   handSize: 6
   deckSize: 60
   timeBonusOnPair: 3

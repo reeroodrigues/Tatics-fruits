@@ -15,13 +15,13 @@ MonoBehaviour:
   levelId: fase_7
   displayName: Fase 7
   description: "Fa\xE7a {0} pontos em {0} segundos!"
-  targetScore: 150
-  initialTimeSeconds: 60
+  targetScore: 200
+  initialTimeSeconds: 50
   handSize: 6
   deckSize: 60
   timeBonusOnPair: 3
   swapAllTimePenalty: 5
-  swapRandomTimePenalty: 2
+  swapRandomTimePenalty: 3
   allowEmptyDeckRefill: 1
   deck: {fileID: 11400000, guid: 1852bbabbfa37bd4aa778c7bec33e583, type: 2}
   useFixedSeed: 0
