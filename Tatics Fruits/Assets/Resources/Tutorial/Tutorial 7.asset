@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.TutorialSlideSo
   image: {fileID: -148964584196396808, guid: 940b302d60ae9a948bf73ef456ba0103, type: 3}
   description: 
+  localizationKey: 

@@ -32,20 +32,47 @@ namespace New_GameplayCore.Views
             _presenter = presenter;
 
             if (titleText)
-                titleText.text = "Vitória!";
+            {
+                titleText.text = Localizer.Instance.Tr(
+                    "victory_title",
+                    "Vitória!");
+            }
 
             if (scoreText)
-                scoreText.text = $"Você fez: {model.totalScore} pontos!";
-            
-            if(recordText)
-                recordText.text = model.newRecord ? "Novo Recorde!" : $"{model.bestBefore}";
+            {
+                scoreText.text = Localizer.Instance.TrFormat(
+                    "victory_score_line",
+                    "Você fez: {0} pontos!", model.totalScore);
+            }
 
+            if (recordText)
+            {
+                if (model.newRecord)
+                {
+                    recordText.text = Localizer.Instance.Tr(
+                        "victory_new_record",
+                        "Novo Recorde!"
+                    );
+                }
+                else
+                {
+                    recordText.text = Localizer.Instance.TrFormat(
+                        "victory_previous_record",
+                        "{0}",
+                        model.bestBefore
+                    );
+                }
+            }
+            
             SetStar(star1, model.starsEarned >= 1);
             SetStar(star2, model.starsEarned >= 2);
             SetStar(star3, model.starsEarned >= 3);
             
+            nextButton.onClick.RemoveAllListeners();
             nextButton.onClick.AddListener(_presenter.ClickNext);
+            replayButton.onClick.RemoveAllListeners();
             replayButton.onClick.AddListener(_presenter.ClickReplay);
+            menuButton.onClick.RemoveAllListeners();
             menuButton.onClick.AddListener(() =>
             {
                 SceneManager.LoadScene("MainMenu");

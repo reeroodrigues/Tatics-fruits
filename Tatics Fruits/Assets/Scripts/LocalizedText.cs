@@ -6,7 +6,7 @@ using System.Collections;
 [RequireComponent(typeof(Graphic))]
 public class LocalizedText : MonoBehaviour
 {
-    [SerializeField] private string key;
+    [SerializeField] public string key;
     [TextArea] public string fallback;
 
     private TextMeshProUGUI _tmp;

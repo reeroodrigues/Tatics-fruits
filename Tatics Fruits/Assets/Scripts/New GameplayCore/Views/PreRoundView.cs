@@ -30,24 +30,53 @@ namespace New_GameplayCore.Views
         {
             _presenter = presenter;
             _model = model;
-
+            
             if (titleText)
-                titleText.text = string.IsNullOrEmpty(model.displayName) ? $"Fase {model.levelId}" : model.displayName;
+            {
+                if (!string.IsNullOrEmpty(model.displayName))
+                {
+                    titleText.text = model.displayName;
+                }
+                else
+                {
+                    titleText.text = Localizer.Instance.TrFormat(
+                        "pre_round_play",
+                        "Fase {0}",
+                        model.levelId
+                    );
+                }
+            }
             
             if (objectiveText)
-                objectiveText.text = $"Faça <b>{model.targetScore}</b> pontos em <b>{model.initialTimeSec}</b> segundos para ganhar as <b>3</b> estrelas!";
-
+            {
+                objectiveText.text = Localizer.Instance.TrFormat(
+                    "pre_round_objective",
+                    "Faça <b>{0}</b> pontos em <b>{1}</b> segundos para ganhar as <b>3</b> estrelas!",
+                    model.targetScore,
+                    model.initialTimeSec
+                );
+            }
+            
             SetStar(star1, false);
 
-            if (mainMenuButton) { mainMenuButton.onClick.AddListener(() =>
+            if (mainMenuButton)
             {
-                SceneManager.LoadScene("MainMenu");
-            });}
-            if (nextButton)     { nextButton.onClick.RemoveAllListeners();     nextButton.onClick.AddListener(OnStart); }
-            
+                mainMenuButton.onClick.AddListener(() =>
+                {
+                    SceneManager.LoadScene("MainMenu");
+                });
+            }
+
+            if (nextButton)
+            {
+                nextButton.onClick.RemoveAllListeners();
+                nextButton.onClick.AddListener(OnStart);
+            }
+
             gameObject.SetActive(true);
             StartCoroutine(FadeCanvas(0f, 1f, 0.2f));
         }
+
 
         private void OnStart()
         {

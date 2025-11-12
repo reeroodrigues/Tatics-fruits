@@ -65,5 +65,34 @@
   "wildcard_desc": "A próxima carta aberta combina com qualquer fruta.",
   
   "mission_win_level": "Vença o nível {0}",
-  "mission_collect_pairs": "Faça {0} pares certos"
+  "mission_collect_pairs": "Faça {0} pares certos",
+  
+  "tutorial_0": "Arraste as cartas iguais para fazer pares!",
+  "tutorial_1": "A cada par formado, você ganha pontos.",
+  "tutorial_2": "Cada vez que você tira uma carta da sua mão, você pode comprar outra.",
+  "tutorial_3": "Você pode trocar uma carta da sua mão...",
+  "tutorial_4": "ou todas de uma única vez!",
+  "tutorial_5": "Mas atenção! Você perde tempo ao realizar essas trocas.",
+  "tutorial_6": "A fase termina quando você conseguir as três estrelas!",
+  
+  "score": "Pontuação",
+  "high_score": "Maior pontuação",
+
+  "draw_card": "Jogue suas cartas",
+
+  "buy_card": "Comprar carta",
+  
+  "swap_all_cards": "Troque todas as cartas",
+  "swap_one_card": "Troque uma carta",
+  
+  "pre_round_play": "Fase {0}",
+  "pre_round_objective": "Faça <b>{0}</b> pontos em <b>{1}</b> segundos para ganhar as <b>3</b> estrelas!",
+  
+  "defeat_title_timeup": "Tempo esgotado! Não foi dessa vez.",
+  "defeat_score_line": "Você fez: {0} pontos.",
+
+  "victory_title": "Vitória!",
+  "victory_score_line": "Você fez: {0} pontos!",
+  "victory_new_record": "Novo Recorde!",
+  "victory_previous_record": "Recorde anterior: {0}"
 }

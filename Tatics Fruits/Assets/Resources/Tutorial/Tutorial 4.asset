@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.TutorialSlideSo
   image: {fileID: 2570263652362515984, guid: 60d63095ba95e354e996b83c128d0c82, type: 3}
   description: "ou todas de uma \xFAnica vez!"
+  localizationKey: tutorial_4

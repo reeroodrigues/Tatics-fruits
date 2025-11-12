@@ -11,5 +11,6 @@ namespace New_GameplayCore
         [Header("Texto")]
         [TextArea(2, 4)]
         public string description;
+        public string localizationKey;
     }
 }

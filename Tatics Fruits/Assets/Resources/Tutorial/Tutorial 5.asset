@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.TutorialSlideSo
   image: {fileID: -1222865253240127110, guid: a23fe8c2b3e8b6548a1d505ff012e8d3, type: 3}
   description: "Mas aten\xE7\xE3o! Voc\xEA perde tempo ao realizar essas trocas."
+  localizationKey: tutorial_5

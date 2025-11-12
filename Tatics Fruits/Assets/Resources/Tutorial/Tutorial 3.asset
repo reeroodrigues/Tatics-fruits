@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.TutorialSlideSo
   image: {fileID: -629268607273566845, guid: 7909a12ab3b37ea499ef9b99a6bea90e, type: 3}
   description: "Voc\xEA pode trocar uma carta da sua m\xE3o..."
+  localizationKey: tutorial_3

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.TutorialSlideSo
   image: {fileID: -8094072806987983546, guid: 58a329eb2bb6b894daaa0384caef82c1, type: 3}
   description: Arraste as cartas iguais para fazer pares!
+  localizationKey: tutorial_0

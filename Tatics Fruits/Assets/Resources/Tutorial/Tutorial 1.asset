@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.TutorialSlideSo
   image: {fileID: -1659978218264066355, guid: 0d67dab3d803e1c4eab5cd36ae580df1, type: 3}
   description: "A cada par formado, voc\xEA ganha pontos."
+  localizationKey: tutorial_1

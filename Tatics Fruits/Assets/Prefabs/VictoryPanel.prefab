@@ -798,6 +798,7 @@ GameObject:
   - component: {fileID: 8288011989087808099}
   - component: {fileID: 5143764307817327954}
   - component: {fileID: 4895292174208723623}
+  - component: {fileID: 9015449565138915137}
   m_Layer: 5
   m_Name: Record Text
   m_TagString: Untagged
@@ -923,6 +924,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &9015449565138915137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3656443107740894481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: victory_new_record
+  fallback: 
 --- !u!1 &5892001334301966238
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,6 +1099,7 @@ GameObject:
   - component: {fileID: 6529370392288295991}
   - component: {fileID: 8305703880940371996}
   - component: {fileID: 2663688111192914132}
+  - component: {fileID: 8641127991620543244}
   m_Layer: 5
   m_Name: Score Text
   m_TagString: Untagged
@@ -1209,6 +1225,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8641127991620543244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7525958809996904174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: victory_score_line
+  fallback: 
 --- !u!1 &7554237894670956729
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,6 +1371,7 @@ GameObject:
   - component: {fileID: 1996650592604996577}
   - component: {fileID: 2254737663842234467}
   - component: {fileID: 4339705010118402715}
+  - component: {fileID: 7717203916164190234}
   m_Layer: 5
   m_Name: Title Text
   m_TagString: Untagged
@@ -1466,6 +1497,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7717203916164190234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7587121214248446191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: victory_title
+  fallback: 
 --- !u!1 &7923311657506594518
 GameObject:
   m_ObjectHideFlags: 0

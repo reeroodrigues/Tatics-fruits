@@ -65,5 +65,34 @@
   "wildcard_desc": "La próxima carta volteada combina con cualquier fruta.",
 
   "mission_win_level": "Gana el nivel {0}",
-  "mission_collect_pairs": "Haz {0} pares correctos"
+  "mission_collect_pairs": "Haz {0} pares correctos",
+
+  "tutorial_0": "¡Arrastra las cartas iguales para formar pares!",
+  "tutorial_1": "Cada par que formes te da puntos.",
+  "tutorial_2": "Cada vez que juegues una carta de tu mano, puedes robar otra.",
+  "tutorial_3": "Puedes cambiar una sola carta de tu mano...",
+  "tutorial_4": "¡o todas a la vez!",
+  "tutorial_5": "¡Pero atención! Pierdes tiempo al realizar estos cambios.",
+  "tutorial_6": "¡La fase termina cuando consigas las tres estrellas!",
+
+  "score": "Puntuación",
+  "high_score": "Puntuación más alta",
+
+  "draw_card": "Juega tus cartas",
+
+  "buy_card": "Comprar carta",
+
+  "swap_all_cards": "Cambiar todas las cartas",
+  "swap_one_card": "Cambiar una carta",
+
+  "pre_round_play": "Fase {0}",
+  "pre_round_objective": "Consigue <b>{0}</b> puntos en <b>{1}</b> segundos para ganar las <b>3</b> estrellas!",
+
+  "defeat_title_timeup": "¡Se acabó el tiempo! No fue esta vez.",
+  "defeat_score_line": "Hiciste: {0} puntos.",
+
+  "victory_title": "¡Victoria!",
+  "victory_score_line": "Hiciste: {0} puntos!",
+  "victory_new_record": "¡Nuevo récord!",
+  "victory_previous_record": "Récord anterior: {0}"
 }

@@ -23,19 +23,41 @@ namespace New_GameplayCore.Views
         public void Bind(DefeatPresenter presenter, DefeatModel model)
         {
             _presenter = presenter;
-
-            if (titleText)  titleText.text = "Tempo esgotado! Não foi dessa vez.";
-            if (scoreText)  scoreText.text = $"Você fez: {model.totalScore} pontos.";
-
+            
+            if (titleText)
+            {
+                titleText.text = Localizer.Instance.Tr(
+                    "defeat_title_timeup",
+                    "Tempo esgotado! Não foi dessa vez."
+                );
+            }
+            
+            if (scoreText)
+            {
+                scoreText.text = Localizer.Instance.TrFormat(
+                    "defeat_score_line",
+                    "Você fez: {0} pontos.",
+                    model.totalScore
+                );
+            }
+            
             SetStar(star1, model.starsEarned >= 1);
             SetStar(star2, model.starsEarned >= 2);
             SetStar(star3, model.starsEarned >= 3);
-
-            if (replayButton) { replayButton.onClick.RemoveAllListeners(); replayButton.onClick.AddListener(_presenter.ClickReplay); }
-            if (menuButton)   { menuButton.onClick.RemoveAllListeners();   menuButton.onClick.AddListener(_presenter.ClickMenu); }
-
+            
+            if (replayButton)
+            {
+                replayButton.onClick.RemoveAllListeners();
+                replayButton.onClick.AddListener(_presenter.ClickReplay);
+            }
+            if (menuButton)
+            {
+                menuButton.onClick.RemoveAllListeners();
+                menuButton.onClick.AddListener(_presenter.ClickMenu);
+            }
             Show();
         }
+
 
         private void SetStar(Image img, bool on)
         {

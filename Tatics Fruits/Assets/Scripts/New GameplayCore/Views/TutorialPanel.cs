@@ -49,7 +49,6 @@ namespace New_GameplayCore.Views
     {
         if (slides == null || slides.Count == 0)
         {
-            Debug.LogWarning("[TutorialPopup] Nenhum slide configurado.");
             FinishTutorial();
             return;
         }
@@ -88,7 +87,20 @@ namespace New_GameplayCore.Views
             slideImage.sprite = slide.image;
 
         if (slideText != null)
-            slideText.text = slide.description;
+        {
+            var localized = slideText.GetComponent<LocalizedText>();
+            if (localized != null && !string.IsNullOrEmpty(slide.localizationKey))
+            {
+                localized.key = slide.localizationKey;
+                localized.fallback = slide.description;
+                localized.Refresh();
+            }
+            else
+            {
+                slideText.text = slide.description;    
+            }
+            
+        }
         
         if (prevButton != null)
             prevButton.gameObject.SetActive(_currentIndex > 0);

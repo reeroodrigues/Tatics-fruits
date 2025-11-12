@@ -65,5 +65,34 @@
   "wildcard_desc": "The next flipped card matches any fruit.",
 
   "mission_win_level": "Beat level {0}",
-  "mission_collect_pairs": "Make {0} correct pairs"
+  "mission_collect_pairs": "Make {0} correct pairs",
+
+  "tutorial_0": "Drag matching cards to make pairs!",
+  "tutorial_1": "Each pair you form gives you points.",
+  "tutorial_2": "Every time you play a card from your hand, you can draw another one.",
+  "tutorial_3": "You can swap a single card from your hand...",
+  "tutorial_4": "or all of them at once!",
+  "tutorial_5": "But be careful! You lose time when performing these swaps.",
+  "tutorial_6": "The stage ends when you earn all three stars!",
+
+  "score": "Score",
+  "high_score": "High Score",
+
+  "draw_card": "Drop your cards",
+  
+  "buy_card": "Buy Card",
+
+  "swap_all_cards": "Swap all cards",
+  "swap_one_card": "Swap one card",
+
+  "pre_round_play": "Stage {0}",
+  "pre_round_objective": "Score <b>{0}</b> points in <b>{1}</b> seconds to earn <b>3</b> stars!",
+
+  "defeat_title_timeup": "Time's up! Not this time.",
+  "defeat_score_line": "You scored: {0} points.",
+
+  "victory_title": "Victory!",
+  "victory_score_line": "You scored: {0} points!",
+  "victory_new_record": "New Record!",
+  "victory_previous_record": "Previous record: {0}"
 }
