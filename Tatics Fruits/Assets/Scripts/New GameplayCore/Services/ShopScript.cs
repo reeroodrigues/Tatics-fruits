@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Purchasing;
@@ -35,7 +36,10 @@ namespace New_GameplayCore.Services
     }
     public class ShopScript : MonoBehaviour, IDetailedStoreListener
     {
-        IStoreController m_StoreController;
+        [Header("Coin Packs")]
+        public List<CoinPackSo> coinPackList;
+        
+        private IStoreController _mStoreController;
     
         public ConsumableItem cItem;
         public NonConsumableItem ncItem;
@@ -59,18 +63,34 @@ namespace New_GameplayCore.Services
         void SetupBuilder()
         {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-        
-            builder.AddProduct(cItem.id, ProductType.Consumable);
+
+            foreach (var so in coinPackList)
+            {
+                builder.AddProduct(so.productId, ProductType.Consumable);
+            }
+            
             builder.AddProduct(ncItem.id, ProductType.NonConsumable);
+            
             builder.AddProduct(sItem.id, ProductType.Subscription);
-        
+            
             UnityPurchasing.Initialize(this, builder);
+        }
+        
+        public void InitiatePurchase(string productId)
+        {
+            if (_mStoreController == null)
+            {
+                Debug.LogError("Store is not initialized yet!");
+                return;
+            }
+
+            _mStoreController.InitiatePurchase(productId);
         }
 
         public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
         {
             print("Sucess");
-            m_StoreController = controller;
+            _mStoreController = controller;
             CheckNonConsumable(ncItem.id);
             CheckSubscription(sItem.id);
         }
@@ -80,19 +100,19 @@ namespace New_GameplayCore.Services
         public void Consumable_Btn_Pressed()
         {
             //AddCoins(50);
-            m_StoreController.InitiatePurchase(cItem.id);
+            _mStoreController.InitiatePurchase(cItem.id);
         }
 
         public void NonConsumable_Btn_Pressed()
         {
             //RemoveAds();
-            m_StoreController.InitiatePurchase(ncItem.id);
+            _mStoreController.InitiatePurchase(ncItem.id);
         }
 
         public void Subscription_Btn_Pressed()
         {
             //ActivateElitePass();
-            m_StoreController.InitiatePurchase(sItem.id);
+            _mStoreController.InitiatePurchase(sItem.id);
         }
         #endregion
     
@@ -100,34 +120,27 @@ namespace New_GameplayCore.Services
         //processing purchase
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
         {
-            //Retrieve the purchased product
             var product = purchaseEvent.purchasedProduct;
-        
-            print("Purchase Complete" + product.definition.id);
-
-            if (product.definition.id == cItem.id) //consumable item is pressed
+            
+            var pack = coinPackList.FirstOrDefault(p => p.productId == product.definition.id);
+            if (pack != null)
             {
-                string receipt = product.receipt;
-                data = JsonUtility.FromJson<Data>(receipt);
-                payload = JsonUtility.FromJson<Payload>(data.Payload);
-                payloadData = JsonUtility.FromJson<PayloadData>(payload.json);
-
-                int quantity = payloadData.quantity;
-
-                for (int i = 0; i < quantity; i++)
-                {
-                    AddCoins(50);
-                }
+                AddCoins(pack.coinAmount);
+                return PurchaseProcessingResult.Complete;
             }
-            else if (product.definition.id == ncItem.id)//non consumable
+
+            if (product.definition.id == ncItem.id)
             {
                 RemoveAds();
+                return PurchaseProcessingResult.Complete;
             }
-            else if(product.definition.id == sItem.id)//subscribed
+
+            if (product.definition.id == sItem.id)
             {
                 ActivateElitePass();
+                return PurchaseProcessingResult.Complete;
             }
-        
+            
             return PurchaseProcessingResult.Complete;
         }
         #endregion
@@ -135,9 +148,9 @@ namespace New_GameplayCore.Services
 
         void CheckNonConsumable(string id)
         {
-            if (m_StoreController != null)
+            if (_mStoreController != null)
             {
-                var product = m_StoreController.products.WithID(id);
+                var product = _mStoreController.products.WithID(id);
                 if (product != null)
                 {
                     if (product.hasReceipt) //purchased
@@ -154,7 +167,7 @@ namespace New_GameplayCore.Services
 
         void CheckSubscription(string id)
         {
-            var subProduct = m_StoreController.products.WithID(id);
+            var subProduct = _mStoreController.products.WithID(id);
             if (subProduct != null)
             {
                 try

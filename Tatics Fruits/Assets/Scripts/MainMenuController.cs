@@ -1,5 +1,6 @@
 using DG.Tweening;
 using New_GameplayCore.Services;
+using New_GameplayCore.Views;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -31,7 +32,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameObject rankingPanel;
 
     [Header("Panels")]
-    //[SerializeField] private ShopPanelController shopPanel;
+    [SerializeField] private ShopPanelController shopPanel;
     [SerializeField] private DailyMissionsPanelTabs dailyMissionsPanel;
 
     [Header("Animação de tilt")]
@@ -161,8 +162,9 @@ public class MainMenuController : MonoBehaviour
         
         if (dailyMissionsPanel && dailyMissionsPanel.gameObject.activeInHierarchy)
             dailyMissionsPanel.Hide();
-
-        //if (shopPanel) shopPanel.Show();
+        
+        if (shopPanel)
+            shopPanel.Show();
 
         DOVirtual.DelayedCall(0.05f, () => _switching = false);
     }
@@ -172,8 +174,8 @@ public class MainMenuController : MonoBehaviour
         if (_switching) return;
         _switching = true;
 
-        //if (shopPanel && shopPanel.gameObject.activeInHierarchy)
-            //shopPanel.Hide();
+        if (shopPanel && shopPanel.gameObject.activeInHierarchy)
+            shopPanel.Hide();
 
         if (dailyMissionsPanel) dailyMissionsPanel.Show();
 

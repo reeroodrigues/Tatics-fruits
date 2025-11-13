@@ -8,19 +8,13 @@ public class ShopItemView : MonoBehaviour
 {
     [Header("Refs")]
     [SerializeField] private Image icon;
-    
     [SerializeField] private TextMeshProUGUI title;
-    
     [SerializeField] private TextMeshProUGUI descriptionText;
-    
     [SerializeField] private TextMeshProUGUI priceText;
-
     [SerializeField] private TextMeshProUGUI rarityText;
-
     [SerializeField] private Button buyButton;
     [SerializeField] private Image  buyButtonGraphic;
     [SerializeField] private TextMeshProUGUI buyLabel;
-
     [SerializeField] private GameObject ownedOverlay;
     [SerializeField] private GameObject ribbonNew;
 
@@ -31,12 +25,10 @@ public class ShopItemView : MonoBehaviour
     [SerializeField] private bool showGoldWordInButton = false;
 
     [Header("Localization Keys")]
-    [SerializeField] private string buyTextKey   = "shop.buy";
-    [SerializeField] private string ownedTextKey = "shop.owned";
-    [SerializeField] private string goldTextKey  = "currency.gold";
-
-    public static Func<string, string> Translate = key => key;
-
+    [SerializeField] private string buyTextKey   = "shop_buy";
+    [SerializeField] private string ownedTextKey = "shop_owned";
+    [SerializeField] private string goldTextKey  = "currency_gold";
+    
     [Header("FX")]
     [SerializeField] private float cantAffordShakeDuration = 0.35f;
     [SerializeField] private float cantAffordShakeStrength = 0.25f;
@@ -45,6 +37,8 @@ public class ShopItemView : MonoBehaviour
     [SerializeField] private float cantAffordFlashDuration = 0.20f;
     [SerializeField] private float purchasePunchDuration   = 0.15f;
     [SerializeField] private float purchasePunchScale      = 0.12f;
+    
+    public static Func<string, string> Translate = key => key;
 
     private string _cardId;
     private int _price;
