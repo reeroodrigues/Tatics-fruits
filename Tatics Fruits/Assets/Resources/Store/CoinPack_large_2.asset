@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09717d4795c4d9c99a0ab1370417b57, type: 3}
   m_Name: CoinPack_large_2
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.CoinPackSo
-  productId: coin_50
-  displayName: 150 Moedas
+  productId: coin_200
+  displayName: 200 Moedas
   icon: {fileID: 21300000, guid: b2c956cfb47c640ea80fb559ed2f55f7, type: 3}
-  coinAmount: 150
+  coinAmount: 200
   size: 2
   priceText: 5,00
