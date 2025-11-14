@@ -38,9 +38,10 @@ namespace New_GameplayCore.Services
     {
         [Header("Coin Packs")]
         public List<CoinPackSo> coinPackList;
-        
-        private IStoreController _mStoreController;
-    
+
+        public IStoreController _mStoreController { get; private set; }
+        private IExtensionProvider _extensions;
+
         public ConsumableItem cItem;
         public NonConsumableItem ncItem;
         public SubscriptionItem sItem;
@@ -64,37 +65,59 @@ namespace New_GameplayCore.Services
         {
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
-            foreach (var so in coinPackList)
+            if (coinPackList != null)
             {
-                builder.AddProduct(so.productId, ProductType.Consumable);
-            }
-            
-            builder.AddProduct(ncItem.id, ProductType.NonConsumable);
-            
-            builder.AddProduct(sItem.id, ProductType.Subscription);
-            
-            UnityPurchasing.Initialize(this, builder);
-        }
-        
-        public void InitiatePurchase(string productId)
-        {
-            if (_mStoreController == null)
-            {
-                Debug.LogError("Store is not initialized yet!");
-                return;
+                foreach (var pack in coinPackList)
+                {
+                    if (!string.IsNullOrEmpty(pack.productId))
+                    {
+                        builder.AddProduct(pack.productId, ProductType.Consumable);
+                    }
+                }
             }
 
-            _mStoreController.InitiatePurchase(productId);
+            if (!string.IsNullOrEmpty(ncItem.id))
+            {
+                builder.AddProduct(ncItem.id, ProductType.NonConsumable);
+            }
+
+            if (!string.IsNullOrEmpty(sItem.id))
+            {
+                builder.AddProduct(sItem.id,  ProductType.Subscription);
+            }
+            
+            UnityPurchasing.Initialize(this, builder);
         }
 
         public void OnInitialized(IStoreController controller, IExtensionProvider extensions)
         {
-            print("Sucess");
+            Debug.Log("IAP initialized successfully");
             _mStoreController = controller;
+            _extensions = extensions;
+            
             CheckNonConsumable(ncItem.id);
             CheckSubscription(sItem.id);
         }
         #endregion
+
+        public void InitiatePurchase(string productId)
+        {
+            if (_mStoreController == null)
+            {
+                Debug.Log("Store not initialized yet");
+                return;
+            }
+
+            var product = _mStoreController.products.WithID(productId);
+            if (productId == null)
+            {
+                Debug.LogError($"Product with id {productId} not found in IAP catalog");
+                return;
+            }
+            
+            _mStoreController.InitiatePurchase(product);
+
+        }
     
         #region button clicks
         public void Consumable_Btn_Pressed()
@@ -121,11 +144,12 @@ namespace New_GameplayCore.Services
         public PurchaseProcessingResult ProcessPurchase(PurchaseEventArgs purchaseEvent)
         {
             var product = purchaseEvent.purchasedProduct;
+            Debug.Log("Purchase Complete:" + product.definition.id);
             
-            var pack = coinPackList.FirstOrDefault(p => p.productId == product.definition.id);
-            if (pack != null)
+            var coinPack = coinPackList.FirstOrDefault(p => p.productId == product.definition.id);
+            if (coinPack != null)
             {
-                AddCoins(pack.coinAmount);
+                AddCoins(coinPack.coinAmount);
                 return PurchaseProcessingResult.Complete;
             }
 
@@ -141,10 +165,23 @@ namespace New_GameplayCore.Services
                 return PurchaseProcessingResult.Complete;
             }
             
+            Debug.Log("Purchased product not found handled:" + product.definition.id);
             return PurchaseProcessingResult.Complete;
         }
         #endregion
 
+
+        public string GetLocalizedPrice(string productId, string fallback = "")
+        {
+            if (_mStoreController == null)
+                return fallback;
+
+            var product = _mStoreController.products.WithID(productId);
+            if (product != null && product.metadata != null)
+                return product.metadata.localizedPriceString;
+
+            return fallback;
+        }
 
         void CheckNonConsumable(string id)
         {

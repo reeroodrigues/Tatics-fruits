@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using New_GameplayCore.Services;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,26 +14,30 @@ namespace New_GameplayCore.Views
         [SerializeField] private Transform coinPackContainer;
         [SerializeField] private ShopCoinItemView coinItemPrefab;
         [SerializeField] private Button closeButton;
-
-        // Esse CanvasGroup deve estar NO ROOT do painel da loja
-        // e o mesmo GameObject precisa ter um Image para bloquear cliques.
+        
+        [Header("UI Blocking")]
         [SerializeField] private CanvasGroup panelCanvasGroup;
+        [SerializeField] private Image backgroundBlocker;
 
-        [Header("Coin Pack")]
+        [Header("Window Animation")]
+        [SerializeField] private RectTransform window;
+
+        [Header("Coin Packs")]
         [SerializeField] private List<CoinPackSo> coinPacks;
 
-        [Header("Special Buttons")] 
+        [Header("Special Buttons")]
         [SerializeField] private Button removeAdsButton;
         [SerializeField] private Button vipButton;
-        
+
+        private bool _animating;
+
         private void Awake()
         {
-            // Garante que começa fechado
             if (panelCanvasGroup)
             {
                 panelCanvasGroup.alpha = 0f;
-                panelCanvasGroup.interactable = false;
                 panelCanvasGroup.blocksRaycasts = false;
+                panelCanvasGroup.interactable = false;
             }
 
             gameObject.SetActive(false);
@@ -44,70 +49,79 @@ namespace New_GameplayCore.Views
             PopulateCoinPacks();
 
             if (closeButton)
-            {
-                closeButton.onClick.RemoveAllListeners();
                 closeButton.onClick.AddListener(Hide);
-            }
         }
-        
+
         public void Show()
         {
-            // Ativa o GO antes de mexer no CanvasGroup
-            gameObject.SetActive(true);
+            if (_animating) return;
+            _animating = true;
 
-            if (panelCanvasGroup)
+            gameObject.SetActive(true);
+            
+            panelCanvasGroup.alpha = 1f;
+            panelCanvasGroup.blocksRaycasts = true;
+            panelCanvasGroup.interactable = true;
+
+            if (backgroundBlocker)
+                backgroundBlocker.raycastTarget = true;
+            
+            if (window)
             {
-                panelCanvasGroup.alpha = 1f;
-                panelCanvasGroup.interactable = true;
-                panelCanvasGroup.blocksRaycasts = true;
+                window.localScale = new Vector3(0.8f, 0.8f, 1f);
+
+                DOTween.Sequence()
+                    .Append(window.DOScale(1f, 0.22f).SetEase(Ease.OutBack))
+                    .OnComplete(() => _animating = false);
+            }
+            else
+            {
+                _animating = false;
             }
         }
 
         public void Hide()
         {
-            if (panelCanvasGroup)
-            {
-                panelCanvasGroup.alpha = 0f;
-                panelCanvasGroup.interactable = false;
-                panelCanvasGroup.blocksRaycasts = false;
-            }
+            if (_animating) return;
+            _animating = true;
+            
+            panelCanvasGroup.interactable = false;
+            panelCanvasGroup.blocksRaycasts = false;
 
-            gameObject.SetActive(false);
+            if (backgroundBlocker)
+                backgroundBlocker.raycastTarget = false;
+
+            DOTween.Sequence()
+                .Append(panelCanvasGroup.DOFade(0f, 0.15f))
+                .Join(window ? window.DOScale(0.94f, 0.15f).SetEase(Ease.InSine) : null)
+                .OnComplete(() =>
+                {
+                    gameObject.SetActive(false);
+                    _animating = false;
+                });
         }
 
         private void SetupSpecialButtons()
         {
-            if (removeAdsButton)
+            removeAdsButton.onClick.RemoveAllListeners();
+            removeAdsButton.onClick.AddListener(() =>
             {
-                removeAdsButton.onClick.RemoveAllListeners();
-                removeAdsButton.onClick.AddListener(() =>
-                {
-                    if (shopScript != null)
-                        shopScript.InitiatePurchase(shopScript.ncItem.id);
-                });
-            }
-            
-            if (vipButton)
+                shopScript.InitiatePurchase(shopScript.ncItem.id);
+            });
+
+            vipButton.onClick.RemoveAllListeners();
+            vipButton.onClick.AddListener(() =>
             {
-                vipButton.onClick.RemoveAllListeners();
-                vipButton.onClick.AddListener(() =>
-                {
-                    if (shopScript != null)
-                        shopScript.InitiatePurchase(shopScript.sItem.id);
-                });
-            }
+                shopScript.InitiatePurchase(shopScript.sItem.id);
+            });
         }
 
         private void PopulateCoinPacks()
         {
-            if (!coinPackContainer || !coinItemPrefab) return;
-
             foreach (Transform child in coinPackContainer)
                 Destroy(child.gameObject);
 
-            var ordered = coinPacks
-                .OrderBy(p => p.size)
-                .ToList();
+            var ordered = coinPacks.OrderBy(p => p.size).ToList();
 
             foreach (var pack in ordered)
             {

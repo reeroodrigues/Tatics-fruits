@@ -17,4 +17,4 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: b2c956cfb47c640ea80fb559ed2f55f7, type: 3}
   coinAmount: 100
   size: 1
-  priceText: 4,00
+  priceText: 200,00

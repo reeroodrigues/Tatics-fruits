@@ -1016,6 +1016,8 @@ MonoBehaviour:
   coinItemPrefab: {fileID: 8839847515437578601, guid: 00ecc2fb7b39feb49977d6b976abf10d, type: 3}
   closeButton: {fileID: 433669127}
   panelCanvasGroup: {fileID: 145490551}
+  backgroundBlocker: {fileID: 0}
+  window: {fileID: 0}
   coinPacks:
   - {fileID: 11400000, guid: a00eba828ad70a448893dc09b8fa6072, type: 2}
   - {fileID: 11400000, guid: f2d1191ec09875c4c868b7cd0848d239, type: 2}
@@ -18441,9 +18443,9 @@ RectTransform:
   - {fileID: 981656064}
   - {fileID: 1414011868}
   - {fileID: 1902634790}
-  - {fileID: 594398919}
   - {fileID: 1873984827}
   - {fileID: 795167725}
+  - {fileID: 594398919}
   - {fileID: 145490550}
   - {fileID: 518797695}
   - {fileID: 1706589083}
