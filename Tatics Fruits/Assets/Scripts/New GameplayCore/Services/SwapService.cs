@@ -61,15 +61,30 @@ namespace New_GameplayCore.Services
 
             _time.TryPay(_cfg.swapRandomTimePenalty);
 
-            if (_hand.Cards.Count == 0) return false;
+            if (_hand.Cards.Count == 0) 
+                return false;
 
             int idx = UnityEngine.Random.Range(0, _hand.Cards.Count);
             var toRemove = _hand.Cards[idx];
-            _hand.TryRemove(toRemove);
+            
             _deck.Discard(toRemove);
-
+            
             if (_deck.TryDraw(out var newCard))
-                _hand.TryAdd(newCard);
+            {
+                if (_hand is HandService handService)
+                {
+                    handService.ReplaceAt(idx, newCard);
+                }
+                else
+                {
+                    _hand.TryRemove(toRemove);
+                    _hand.TryAdd(newCard);
+                }
+            }
+            else
+            {
+                _hand.TryRemove(toRemove);
+            }
 
             return true;
         }

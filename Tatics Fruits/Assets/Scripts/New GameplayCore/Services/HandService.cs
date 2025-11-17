@@ -60,5 +60,14 @@ namespace New_GameplayCore.Services
             _hand.Clear();
             OnHandChanged?.Invoke(_hand);
         }
+        
+        public void ReplaceAt(int index, CardInstance newCard)
+        {
+            if (index < 0 || index >= _hand.Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            _hand[index] = newCard;
+            OnHandChanged?.Invoke(_hand);
+        }
     }
 }
