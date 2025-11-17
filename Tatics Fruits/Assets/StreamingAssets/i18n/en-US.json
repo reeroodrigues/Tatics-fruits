@@ -94,5 +94,6 @@
   "victory_title": "Victory!",
   "victory_score_line": "You scored: {0} points!",
   "victory_new_record": "New Record!",
-  "victory_previous_record": "Previous record: {0}"
+  "victory_previous_record": "Previous record: {0}",
+  "buy_cards_auto": "Auto buy"
 }
