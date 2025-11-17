@@ -259,7 +259,7 @@ public class PlayerProfileController : MonoBehaviour
     {
         if (amount == 0)
             return;
-        
+
         Data.gold = Mathf.Max(0, Data.gold + amount);
         SaveProfile();
         UpdateGoldUI();

@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: R$2,99
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
   m_sharedMaterial: {fileID: -4171563015097924827, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -561,8 +561,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.Views.ShopCoinItemView
   icon: {fileID: 9182830376633436118}
-  title: {fileID: 0}
-  amountText: {fileID: 0}
+  title: {fileID: 7030938835875898611}
+  amountText: {fileID: 7030938835875898611}
   priceText: {fileID: 4199445817730706062}
   buyButton: {fileID: 8345924725337453210}
 --- !u!1 &7254387055430026180

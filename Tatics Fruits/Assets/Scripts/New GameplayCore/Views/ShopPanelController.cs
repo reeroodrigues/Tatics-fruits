@@ -1,16 +1,18 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using New_GameplayCore.Services;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Purchasing;
 
 namespace New_GameplayCore.Views
 {
     public class ShopPanelController : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private ShopScript shopScript;
+        [SerializeField] private IAPManager shopScript;
         [SerializeField] private Transform coinPackContainer;
         [SerializeField] private ShopCoinItemView coinItemPrefab;
         [SerializeField] private Button closeButton;
@@ -18,12 +20,12 @@ namespace New_GameplayCore.Views
         [Header("UI Blocking")]
         [SerializeField] private CanvasGroup panelCanvasGroup;
         [SerializeField] private Image backgroundBlocker;
+        
+        [Header("Coin Packs Data")]
+        [SerializeField] private List<CoinPackSo> allCoinPacksData;
 
         [Header("Window Animation")]
         [SerializeField] private RectTransform window;
-
-        [Header("Coin Packs")]
-        [SerializeField] private List<CoinPackSo> coinPacks;
 
         [Header("Special Buttons")]
         [SerializeField] private Button removeAdsButton;
@@ -46,10 +48,29 @@ namespace New_GameplayCore.Views
         private void Start()
         {
             SetupSpecialButtons();
-            PopulateCoinPacks();
 
-            if (closeButton)
+            if (shopScript != null)
+            {
+                if (shopScript.IsInitialized())
+                {
+                    PopulateCoinPacks(shopScript.GetAllProducts());
+                }
+                else
+                {
+                    shopScript.onIAPInitialized += PopulateCoinPacks;
+                }
+            }
+    
+            if(closeButton)
                 closeButton.onClick.AddListener(Hide);
+        }
+
+        private void OnDestroy()
+        {
+            if (shopScript != null)
+            {
+                shopScript.onIAPInitialized -= PopulateCoinPacks;
+            }
         }
 
         public void Show()
@@ -106,27 +127,46 @@ namespace New_GameplayCore.Views
             removeAdsButton.onClick.RemoveAllListeners();
             removeAdsButton.onClick.AddListener(() =>
             {
-                shopScript.InitiatePurchase(shopScript.ncItem.id);
+                shopScript.BuyProduct(IAPManager.ProductRemoveAds);
             });
 
             vipButton.onClick.RemoveAllListeners();
             vipButton.onClick.AddListener(() =>
             {
-                shopScript.InitiatePurchase(shopScript.sItem.id);
+                shopScript.BuyProduct(IAPManager.ProductVIP);
             });
         }
 
-        private void PopulateCoinPacks()
+        private void PopulateCoinPacks(IEnumerable<Product> availableProducts)
         {
+            if (coinPackContainer == null || coinItemPrefab == null)
+            {
+                Debug.LogError("Referências de UI para Coin Packs estão faltando.");
+                return;
+            }
+
             foreach (Transform child in coinPackContainer)
                 Destroy(child.gameObject);
+            
+            var dataMap = allCoinPacksData.ToDictionary(pack => pack.productId, pack => pack);
+            
+            var shopProducts = availableProducts
+                .Where(p => p.definition.type == ProductType.Consumable)
+                .OrderBy(p => p.metadata.localizedPrice)
+                .ToList();
 
-            var ordered = coinPacks.OrderBy(p => p.size).ToList();
-
-            foreach (var pack in ordered)
+            foreach (var product in shopProducts)
             {
-                var item = Instantiate(coinItemPrefab, coinPackContainer);
-                item.Setup(pack, shopScript);
+                if (dataMap.TryGetValue(product.definition.id, out CoinPackSo packData))
+                {
+                    var item = Instantiate(coinItemPrefab, coinPackContainer);
+                    
+                    item.Setup(product, packData, shopScript);
+                }
+                else
+                {
+                    Debug.LogWarning($"CoinPackSo não encontrado para o ID IAP: {product.definition.id}. Este item não será exibido.");
+                }
             }
         }
     }

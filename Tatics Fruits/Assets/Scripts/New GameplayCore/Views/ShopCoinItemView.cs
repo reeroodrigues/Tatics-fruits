@@ -1,6 +1,7 @@
 using New_GameplayCore.Services;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Purchasing;
 using UnityEngine.UI;
 
 namespace New_GameplayCore.Views
@@ -17,36 +18,33 @@ namespace New_GameplayCore.Views
         private string _productId;
         private CoinPackSo _so;
         private ShopScript _shop;
+        private string _storeDescription;
+        private IAPManager _iapManager;
 
-        public void Setup(CoinPackSo so, ShopScript shop)
+        public void Setup(Product product, CoinPackSo packData, IAPManager manager)
         {
-            _so = so;
-            _shop = shop;
-            _productId = so.productId;
+            _iapManager = manager;
+            _productId = product.definition.id;
             
-            if(icon) icon.sprite = so.icon;
-            if (title) title.text = so.displayName;
-            if (amountText) amountText.text = $"{so.coinAmount} Coins";
-
-            RefreshPriceLabel();
+            if (icon) icon.sprite = packData.icon;
+            if (title) title.text = packData.displayName;
+            
+            if (amountText) amountText.text = packData.coinAmount.ToString("N0"); 
+            
+            if (priceText) priceText.text = product.metadata.localizedPriceString; 
             
             buyButton.onClick.RemoveAllListeners();
             buyButton.onClick.AddListener(OnBuyClicked);
-        }
-
-        private void RefreshPriceLabel()
-        {
-            if(!priceText)
-                return;
-
-            var storePrice = _shop != null ? _shop.GetLocalizedPrice(_productId, _so.priceText) : _so.priceText;
+            
+            buyButton.interactable = product.availableToPurchase;
         }
 
         private void OnBuyClicked()
         {
-            if(_shop == null)
-                return;
-            _shop.InitiatePurchase(_productId);
+            if (_iapManager != null && !string.IsNullOrEmpty(_productId))
+            {
+                _iapManager.BuyProduct(_productId);
+            }
         }
     }
 }

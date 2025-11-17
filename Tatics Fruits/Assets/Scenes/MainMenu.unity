@@ -958,7 +958,7 @@ CanvasGroup:
   m_GameObject: {fileID: 145490549}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!114 &145490552
@@ -1011,20 +1011,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c625c7f14e3b45b79e298bb355ea149d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.Views.ShopPanelController
-  shopScript: {fileID: 998679810}
+  shopScript: {fileID: 998679811}
   coinPackContainer: {fileID: 1114360389}
   coinItemPrefab: {fileID: 8839847515437578601, guid: 00ecc2fb7b39feb49977d6b976abf10d, type: 3}
   closeButton: {fileID: 433669127}
   panelCanvasGroup: {fileID: 145490551}
   backgroundBlocker: {fileID: 0}
-  window: {fileID: 0}
-  coinPacks:
+  allCoinPacksData:
   - {fileID: 11400000, guid: a00eba828ad70a448893dc09b8fa6072, type: 2}
-  - {fileID: 11400000, guid: f2d1191ec09875c4c868b7cd0848d239, type: 2}
   - {fileID: 11400000, guid: c6b84cb88c37d1d4c85f4264e0b08556, type: 2}
-  - {fileID: 11400000, guid: 6ae134f6f0a0e1745831abebbb6d4b2d, type: 2}
   - {fileID: 11400000, guid: bbc05e4d71b844b4bbf86e526a93f749, type: 2}
-  - {fileID: 11400000, guid: 2d9512ad6755f1742853fd440b541ad2, type: 2}
+  window: {fileID: 0}
   removeAdsButton: {fileID: 413290195}
   vipButton: {fileID: 349693145}
 --- !u!1 &153809932
@@ -2027,11 +2024,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334434126}
   m_CullTransparentMesh: 1
---- !u!1 &349693143 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6092270652186305319, guid: 9f1322ee1ade5ac4cb22c6e17946bb5c, type: 3}
-  m_PrefabInstance: {fileID: 7166460485749890438}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &349693144 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 261358633703008085, guid: 9f1322ee1ade5ac4cb22c6e17946bb5c, type: 3}
@@ -2042,7 +2034,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5272138794335359987, guid: 9f1322ee1ade5ac4cb22c6e17946bb5c, type: 3}
   m_PrefabInstance: {fileID: 7166460485749890438}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 349693143}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -2822,17 +2814,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412486796}
   m_CullTransparentMesh: 1
---- !u!1 &413290193 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5342026441301936833, guid: cf668bd93548efc489138a324cbaf0e7, type: 3}
-  m_PrefabInstance: {fileID: 708993758184983229}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &413290195 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4294079194004603283, guid: cf668bd93548efc489138a324cbaf0e7, type: 3}
   m_PrefabInstance: {fileID: 708993758184983229}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 413290193}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -9374,7 +9361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 998679809}
-  - component: {fileID: 998679810}
+  - component: {fileID: 998679811}
   m_Layer: 0
   m_Name: ShopManagerTESTE
   m_TagString: Untagged
@@ -9397,7 +9384,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &998679810
+--- !u!114 &998679811
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9406,64 +9393,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 998679808}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f217ea5608b67c040b75e4349dee141d, type: 3}
+  m_Script: {fileID: 11500000, guid: 46f35b1d43a5407ea67c2995f1c3cb83, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.Services.ShopScript
-  coinPackList:
-  - {fileID: 11400000, guid: a00eba828ad70a448893dc09b8fa6072, type: 2}
-  - {fileID: 11400000, guid: f2d1191ec09875c4c868b7cd0848d239, type: 2}
-  - {fileID: 11400000, guid: c6b84cb88c37d1d4c85f4264e0b08556, type: 2}
-  - {fileID: 11400000, guid: 6ae134f6f0a0e1745831abebbb6d4b2d, type: 2}
-  - {fileID: 11400000, guid: bbc05e4d71b844b4bbf86e526a93f749, type: 2}
-  - {fileID: 11400000, guid: 2d9512ad6755f1742853fd440b541ad2, type: 2}
-  cItem:
-    name: 50 Coins
-    id: coin_50
-    description: Get 50 Coins
-    price: 0.99
-  ncItem:
-    name: No Ads
-    id: no_ad
-    description: Remove All Ads
-    price: 3.99
-  sItem:
-    name: Royal Pass
-    id: r_pass
-    description: Get extra benefit
-    price: 1.99
-    timeDuration: 1
-  inp: {fileID: 0}
-  data:
-    Payload: 
-    Store: 
-    TransactionID: 
-  payload:
-    json: 
-    signature: 
-    skuDetails: []
-    payloadData:
-      orderId: 
-      packageName: 
-      productId: 
-      purchaseTime: 0
-      purchaseState: 0
-      purchaseToken: 
-      quantity: 0
-      acknowledged: 0
-  payloadData:
-    orderId: 
-    packageName: 
-    productId: 
-    purchaseTime: 0
-    purchaseState: 0
-    purchaseToken: 
-    quantity: 0
-    acknowledged: 0
-  coinTxt: {fileID: 3186289265317484760}
-  AdsPurchasedWindow: {fileID: 413290193}
-  adsBanner: {fileID: 413290193}
-  subActivatedWindow: {fileID: 1062237188}
-  premiumBanner: {fileID: 349693143}
+  m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.Services.IAPManager
+  playerProfileController: {fileID: 1537639275}
 --- !u!1 &1015797452
 GameObject:
   m_ObjectHideFlags: 0
@@ -9863,11 +9796,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060629322}
   m_CullTransparentMesh: 1
---- !u!1 &1062237188 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1699031543111908412, guid: cf668bd93548efc489138a324cbaf0e7, type: 3}
-  m_PrefabInstance: {fileID: 708993758184983229}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1062237189 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8820072083462147335, guid: cf668bd93548efc489138a324cbaf0e7, type: 3}
