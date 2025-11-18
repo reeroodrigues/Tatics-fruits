@@ -12703,6 +12703,8 @@ GameObject:
   - component: {fileID: 1693729824}
   - component: {fileID: 1693729823}
   - component: {fileID: 1693729825}
+  - component: {fileID: 1693729827}
+  - component: {fileID: 1693729826}
   m_Layer: 0
   m_Name: AdSystem
   m_TagString: Untagged
@@ -12723,7 +12725,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ads.AdSystemSetup
   autoSetup: 1
-  adManager: {fileID: 0}
+  interstitialAdManager: {fileID: 0}
+  bannerAdManager: {fileID: 0}
   adInitializer: {fileID: 1693729825}
   debugUI: {fileID: 0}
 --- !u!4 &1693729824
@@ -12754,6 +12757,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ads.AdInitializer
   providerType: 2
+  initializeInterstitial: 1
+  initializeBanner: 1
+--- !u!114 &1693729826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693729822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d7dac6daaedfe74c94cc8cbc5d0a2ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ads.BannerAdManager
+  showBannerOnStart: 1
+  enableBanners: 1
+--- !u!114 &1693729827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1693729822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90b68707e97f5144b4aae771b5559a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ads.InterstitialAdManager
+  enableAds: 1
+  testMode: 0
 --- !u!1 &1695646025
 GameObject:
   m_ObjectHideFlags: 0

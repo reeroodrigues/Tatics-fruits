@@ -1,4 +1,35 @@
-# Interstitial Ad System - Quick Start
+# 🎮 Complete AdMob Integration - Fruit Tactics
+
+## 📋 System Overview
+
+Your project now has a **complete, production-ready ad system** with both **interstitial** and **banner** ads!
+
+### **✅ Features**
+- **Interstitial Ads** - Full-screen ads between gameplay
+- **Banner Ads** - Bottom-screen banners in menus  
+- **Test Providers** - Fake ads for Unity Editor testing
+- **AdMob Integration** - Real Google AdMob ads on device
+- **Debug Panel** - In-game controls (Press F1)
+- **Editor Tools** - Unity menu helpers
+
+---
+
+## 🚀 Quick Start
+
+### **Test in Unity Editor:**
+1. Press **Play**
+2. See debug panel in top-left
+3. See test banner at bottom (gray/yellow)
+4. Click **"SHOW AD NOW"** to test interstitial
+5. Click **"TOGGLE BANNER"** to hide/show banner
+
+### **Test on Android:**
+1. Build APK
+2. Install on device
+3. Banner appears immediately
+4. Interstitial shows after 30 seconds (test mode)
+
+---
 
 ## 🚀 Quick Setup (2 Minutes)
 

@@ -10,8 +10,10 @@ namespace Ads
         private TextMeshProUGUI _statusText;
         private TextMeshProUGUI _timerText;
         private TextMeshProUGUI _testModeText;
+        private TextMeshProUGUI _bannerStatusText;
         private Button _showAdButton;
         private Button _toggleTestModeButton;
+        private Button _toggleBannerButton;
         private bool _isVisible = true;
 
         private void Start()
@@ -46,7 +48,7 @@ namespace Ads
             panelRect.anchorMax = new Vector2(0, 1);
             panelRect.pivot = new Vector2(0, 1);
             panelRect.anchoredPosition = new Vector2(10, -10);
-            panelRect.sizeDelta = new Vector2(350, 200);
+            panelRect.sizeDelta = new Vector2(350, 250);
 
             Image panelBg = _panel.AddComponent<Image>();
             panelBg.color = new Color(0, 0, 0, 0.8f);
@@ -63,9 +65,41 @@ namespace Ads
             CreateStatusText();
             CreateTimerText();
             CreateTestModeText();
+            CreateBannerStatusText();
             CreateShowAdButton();
             CreateToggleTestModeButton();
+            CreateToggleBannerButton();
             CreateHelpText();
+        }
+
+        private void CreateToggleBannerButton()
+        {
+            GameObject buttonObj = new GameObject("ToggleBannerButton");
+            buttonObj.transform.SetParent(_panel.transform, false);
+            
+            Image buttonBg = buttonObj.AddComponent<Image>();
+            buttonBg.color = new Color(0.2f, 0.4f, 0.6f, 1f);
+            
+            _toggleBannerButton = buttonObj.AddComponent<Button>();
+            _toggleBannerButton.onClick.AddListener(OnToggleBanner);
+            
+            GameObject textObj = new GameObject("Text");
+            textObj.transform.SetParent(buttonObj.transform, false);
+            
+            TextMeshProUGUI buttonText = textObj.AddComponent<TextMeshProUGUI>();
+            buttonText.text = "TOGGLE BANNER";
+            buttonText.fontSize = 14;
+            buttonText.fontStyle = FontStyles.Bold;
+            buttonText.alignment = TextAlignmentOptions.Center;
+            buttonText.color = Color.white;
+            
+            RectTransform textRect = textObj.GetComponent<RectTransform>();
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.sizeDelta = Vector2.zero;
+            
+            LayoutElement le = buttonObj.AddComponent<LayoutElement>();
+            le.preferredHeight = 30;
         }
 
         private void CreateTitle()
@@ -126,6 +160,21 @@ namespace Ads
             _testModeText.color = Color.white;
             
             LayoutElement le = testModeObj.AddComponent<LayoutElement>();
+            le.preferredHeight = 20;
+        }
+
+        private void CreateBannerStatusText()
+        {
+            GameObject bannerStatusObj = new GameObject("BannerStatusText");
+            bannerStatusObj.transform.SetParent(_panel.transform, false);
+            
+            _bannerStatusText = bannerStatusObj.AddComponent<TextMeshProUGUI>();
+            _bannerStatusText.text = "Banner: Not Showing";
+            _bannerStatusText.fontSize = 14;
+            _bannerStatusText.alignment = TextAlignmentOptions.Left;
+            _bannerStatusText.color = Color.white;
+            
+            LayoutElement le = bannerStatusObj.AddComponent<LayoutElement>();
             le.preferredHeight = 20;
         }
 
@@ -206,7 +255,7 @@ namespace Ads
 
         private void UpdateStatusDisplay()
         {
-            if (_statusText == null || _timerText == null || _testModeText == null) return;
+            if (_statusText == null || _timerText == null || _testModeText == null || _bannerStatusText == null) return;
 
             if (InterstitialAdManager.Instance == null)
             {
@@ -227,6 +276,13 @@ namespace Ads
             bool isTestMode = InterstitialAdManager.Instance.IsTestModeEnabled();
             _testModeText.text = isTestMode ? "Test Mode: ON (30s)" : "Test Mode: OFF (3min)";
             _testModeText.color = isTestMode ? Color.cyan : Color.white;
+
+            if (BannerAdManager.Instance != null)
+            {
+                bool isBannerShowing = BannerAdManager.Instance.IsBannerShowing();
+                _bannerStatusText.text = isBannerShowing ? "Banner: ✅ Showing" : "Banner: ❌ Hidden";
+                _bannerStatusText.color = isBannerShowing ? Color.green : Color.gray;
+            }
         }
 
         private void OnShowAdButtonClicked()
@@ -247,6 +303,26 @@ namespace Ads
             if (InterstitialAdManager.Instance != null)
             {
                 InterstitialAdManager.Instance.ToggleTestMode();
+            }
+        }
+
+        private void OnToggleBanner()
+        {
+            if (BannerAdManager.Instance == null)
+            {
+                Debug.LogError("[AdDebugUI] BannerAdManager not found!");
+                return;
+            }
+
+            if (BannerAdManager.Instance.IsBannerShowing())
+            {
+                Debug.Log("[AdDebugUI] Hiding banner");
+                BannerAdManager.Instance.HideBanner();
+            }
+            else
+            {
+                Debug.Log("[AdDebugUI] Showing banner");
+                BannerAdManager.Instance.ShowBanner();
             }
         }
 

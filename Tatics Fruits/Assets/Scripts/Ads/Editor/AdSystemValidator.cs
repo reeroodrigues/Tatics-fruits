@@ -21,25 +21,33 @@ namespace Ads.Editor
 
         private static void ValidateAdSystem()
         {
-            InterstitialAdManager manager = Object.FindFirstObjectByType<InterstitialAdManager>();
+            InterstitialAdManager interstitialManager = Object.FindFirstObjectByType<InterstitialAdManager>();
+            BannerAdManager bannerManager = Object.FindFirstObjectByType<BannerAdManager>();
             
-            if (manager == null)
+            if (interstitialManager == null && bannerManager == null)
             {
-                Debug.LogWarning("[AdSystemValidator] No InterstitialAdManager found in scene!");
+                Debug.LogWarning("[AdSystemValidator] No Ad Managers found in scene!");
                 return;
             }
 
-            AdDebugUI debugUI = manager.GetComponent<AdDebugUI>();
-            if (debugUI == null)
+            if (interstitialManager != null)
             {
-                Debug.LogWarning($"[AdSystemValidator] No AdDebugUI found on {manager.gameObject.name}. You won't see the debug panel!");
-                Debug.LogWarning($"[AdSystemValidator] Add the AdDebugUI component to {manager.gameObject.name} to see debug controls.");
+                AdDebugUI debugUI = interstitialManager.GetComponent<AdDebugUI>();
+                if (debugUI == null)
+                {
+                    Debug.LogWarning($"[AdSystemValidator] No AdDebugUI found on {interstitialManager.gameObject.name}. You won't see the debug panel!");
+                }
+
+                AdInitializer initializer = interstitialManager.GetComponent<AdInitializer>();
+                if (initializer == null)
+                {
+                    Debug.LogWarning($"[AdSystemValidator] No AdInitializer found on {interstitialManager.gameObject.name}. Ads won't initialize!");
+                }
             }
 
-            AdInitializer initializer = manager.GetComponent<AdInitializer>();
-            if (initializer == null)
+            if (bannerManager != null)
             {
-                Debug.LogWarning($"[AdSystemValidator] No AdInitializer found on {manager.gameObject.name}. Ads won't initialize!");
+                Debug.Log("[AdSystemValidator] ✅ BannerAdManager found - Banner ads ready!");
             }
         }
     }
@@ -49,46 +57,73 @@ namespace Ads.Editor
         [MenuItem("Tools/Ads/Fix Ad System Setup")]
         public static void FixAdSystemSetup()
         {
-            InterstitialAdManager manager = Object.FindFirstObjectByType<InterstitialAdManager>();
+            InterstitialAdManager interstitialManager = Object.FindFirstObjectByType<InterstitialAdManager>();
+            BannerAdManager bannerManager = Object.FindFirstObjectByType<BannerAdManager>();
             
-            if (manager == null)
+            GameObject targetObject = null;
+            
+            if (interstitialManager != null)
+            {
+                targetObject = interstitialManager.gameObject;
+            }
+            else if (bannerManager != null)
+            {
+                targetObject = bannerManager.gameObject;
+            }
+            
+            if (targetObject == null)
             {
                 EditorUtility.DisplayDialog("Ad System Fix", 
-                    "No InterstitialAdManager found in the current scene!\n\nPlease add an InterstitialAdManager to a GameObject first.", 
+                    "No Ad Manager found in the current scene!\n\nPlease add InterstitialAdManager or BannerAdManager to a GameObject first.", 
                     "OK");
                 return;
             }
 
-            GameObject go = manager.gameObject;
             int componentsAdded = 0;
 
-            if (go.GetComponent<AdInitializer>() == null)
+            if (targetObject.GetComponent<InterstitialAdManager>() == null)
             {
-                go.AddComponent<AdInitializer>();
+                targetObject.AddComponent<InterstitialAdManager>();
                 componentsAdded++;
-                Debug.Log($"[AdSystemQuickFix] Added AdInitializer to {go.name}");
+                Debug.Log($"[AdSystemQuickFix] Added InterstitialAdManager to {targetObject.name}");
             }
 
-            if (go.GetComponent<AdDebugUI>() == null)
+            if (targetObject.GetComponent<BannerAdManager>() == null)
             {
-                go.AddComponent<AdDebugUI>();
+                targetObject.AddComponent<BannerAdManager>();
                 componentsAdded++;
-                Debug.Log($"[AdSystemQuickFix] Added AdDebugUI to {go.name}");
+                Debug.Log($"[AdSystemQuickFix] Added BannerAdManager to {targetObject.name}");
+            }
+
+            if (targetObject.GetComponent<AdInitializer>() == null)
+            {
+                targetObject.AddComponent<AdInitializer>();
+                componentsAdded++;
+                Debug.Log($"[AdSystemQuickFix] Added AdInitializer to {targetObject.name}");
+            }
+
+            if (targetObject.GetComponent<AdDebugUI>() == null)
+            {
+                targetObject.AddComponent<AdDebugUI>();
+                componentsAdded++;
+                Debug.Log($"[AdSystemQuickFix] Added AdDebugUI to {targetObject.name}");
             }
 
             if (componentsAdded > 0)
             {
                 EditorUtility.DisplayDialog("Ad System Fixed!", 
-                    $"Added {componentsAdded} missing component(s) to {go.name}.\n\n" +
+                    $"Added {componentsAdded} missing component(s) to {targetObject.name}.\n\n" +
                     "✅ Your ad system is now ready!\n\n" +
+                    "Both interstitial and banner ads are configured.\n\n" +
                     "Press Play to see the debug panel in the top-left corner.", 
                     "OK");
             }
             else
             {
                 EditorUtility.DisplayDialog("Ad System Check", 
-                    $"All components are already present on {go.name}!\n\n" +
+                    $"All components are already present on {targetObject.name}!\n\n" +
                     "✅ InterstitialAdManager\n" +
+                    "✅ BannerAdManager\n" +
                     "✅ AdInitializer\n" +
                     "✅ AdDebugUI\n\n" +
                     "Your ad system is ready to use!", 

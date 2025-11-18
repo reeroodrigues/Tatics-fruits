@@ -9,7 +9,8 @@ namespace Ads
         [SerializeField] private bool autoSetup = true;
 
         [Header("Components (Auto-filled)")]
-        [SerializeField] private InterstitialAdManager adManager;
+        [SerializeField] private InterstitialAdManager interstitialAdManager;
+        [SerializeField] private BannerAdManager bannerAdManager;
         [SerializeField] private AdInitializer adInitializer;
         [SerializeField] private AdDebugUI debugUI;
 
@@ -23,11 +24,18 @@ namespace Ads
 
         private void SetupComponents()
         {
-            adManager = GetComponent<InterstitialAdManager>();
-            if (adManager == null)
+            interstitialAdManager = GetComponent<InterstitialAdManager>();
+            if (interstitialAdManager == null)
             {
-                adManager = gameObject.AddComponent<InterstitialAdManager>();
+                interstitialAdManager = gameObject.AddComponent<InterstitialAdManager>();
                 Debug.Log("[AdSystemSetup] Added InterstitialAdManager component");
+            }
+
+            bannerAdManager = GetComponent<BannerAdManager>();
+            if (bannerAdManager == null)
+            {
+                bannerAdManager = gameObject.AddComponent<BannerAdManager>();
+                Debug.Log("[AdSystemSetup] Added BannerAdManager component");
             }
 
             adInitializer = GetComponent<AdInitializer>();
@@ -49,7 +57,8 @@ namespace Ads
 
         private void OnValidate()
         {
-            adManager = GetComponent<InterstitialAdManager>();
+            interstitialAdManager = GetComponent<InterstitialAdManager>();
+            bannerAdManager = GetComponent<BannerAdManager>();
             adInitializer = GetComponent<AdInitializer>();
             debugUI = GetComponent<AdDebugUI>();
         }
