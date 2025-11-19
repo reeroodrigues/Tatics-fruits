@@ -95,5 +95,8 @@
   "victory_score_line": "Hiciste: {0} puntos!",
   "victory_new_record": "¡Nuevo récord!",
   "victory_previous_record": "Récord anterior: {0}",
-  "buy_cards_auto": "Compra automática"
+  "buy_cards_auto": "Compra automática",
+
+  "quit_gameplay": "¿Quieres irte?",
+  "quit_gameplay_confirm": "Cuando abandones la actividad, perderás todo el progreso realizado en esta etapa."
 }

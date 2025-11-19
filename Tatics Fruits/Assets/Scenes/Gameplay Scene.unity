@@ -4824,7 +4824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1764245133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5295,7 +5295,8 @@ MonoBehaviour:
   musicOffSprite: {fileID: 2299020519406842400, guid: 7a63ee8aa350b3d4994a6844fc5fa467, type: 3}
   sfxOnSprite: {fileID: -5731114081525038041, guid: b5087768be5ebd047b4a3ed23958fcd0, type: 3}
   sfxOffSprite: {fileID: -6792300705316684432, guid: 7a63ee8aa350b3d4994a6844fc5fa467, type: 3}
-  mainMenuSceneName: MainMenu
+  quitPopupPrefab: {fileID: 373463654744968627, guid: 9fc27a7617d76a44d98c4913cfc0e77f, type: 3}
+  canvasTransform: {fileID: 2082077804}
 --- !u!1 &1947176953
 GameObject:
   m_ObjectHideFlags: 0

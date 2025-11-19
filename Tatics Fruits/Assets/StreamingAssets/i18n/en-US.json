@@ -95,5 +95,8 @@
   "victory_score_line": "You scored: {0} points!",
   "victory_new_record": "New Record!",
   "victory_previous_record": "Previous record: {0}",
-  "buy_cards_auto": "Auto buy"
+  "buy_cards_auto": "Auto buy",
+
+  "quit_gameplay": "Quit game?",
+  "quit_gameplay_confirm": "When you quit, you will lose all current progress in this stage."
 }

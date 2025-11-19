@@ -96,5 +96,8 @@
   "victory_new_record": "Novo Recorde!",
   "victory_previous_record": "Recorde anterior: {0}",
   
-  "buy_cards_auto": "Compra automática"
+  "buy_cards_auto": "Compra automática",
+  
+  "quit_gameplay": "Deseja sair?",
+  "quit_gameplay_confirm": "Ao sair você perderá todo o progresso atual da fase"
 }

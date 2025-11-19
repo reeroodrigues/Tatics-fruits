@@ -19,8 +19,9 @@ namespace New_GameplayCore.Views
         [SerializeField] private Sprite sfxOnSprite;
         [SerializeField] private Sprite sfxOffSprite;
 
-        [Header("Settings")]
-        [SerializeField] private string mainMenuSceneName = "MainMenu";
+        [Header("Quit Popup")]
+        [SerializeField] private GameObject quitPopupPrefab;
+        [SerializeField] private Transform canvasTransform;
 
         private const string MusicPrefKey = "MusicEnabled";
         private const string SfxPrefKey = "SFXEnabled";
@@ -121,7 +122,16 @@ namespace New_GameplayCore.Views
 
         private void QuitToMainMenu()
         {
-            SceneManager.LoadScene(mainMenuSceneName);
+            ShowQuitPopup();
+        }
+
+        private void ShowQuitPopup()
+        {
+            if (quitPopupPrefab != null)
+            {
+                Transform parentTransform = canvasTransform != null ? canvasTransform : transform.parent;
+                Instantiate(quitPopupPrefab, parentTransform);
+            }
         }
 
         private void LoadSettings()
