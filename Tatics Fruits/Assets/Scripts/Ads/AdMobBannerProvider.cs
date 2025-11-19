@@ -5,7 +5,7 @@ namespace Ads
 {
     public class AdMobBannerProvider : IBannerAdProvider
     {
-        private const string ANDROID_AD_UNIT_ID = "ca-app-pub-3940256099942544/6300978111";
+        private const string ANDROID_AD_UNIT_ID = "ca-app-pub-8609532543875876/5682573689";
         private const string IOS_AD_UNIT_ID = "ca-app-pub-3940256099942544/2934735716";
 
         private string _adUnitId;

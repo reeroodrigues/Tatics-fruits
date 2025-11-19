@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Ads
 {
@@ -7,8 +8,13 @@ namespace Ads
         [Header("Banner Settings")]
         [SerializeField] private bool showBannerOnStart = true;
         [SerializeField] private bool enableBanners = true;
+        
+        [Header("Scene Control")]
+        [Tooltip("List of scene names where banners should be shown")]
+        [SerializeField] private string[] scenesWithBanners = { "MainMenu" };
 
         private IBannerAdProvider _bannerProvider;
+        private bool _isCurrentSceneAllowed;
 
         public static BannerAdManager Instance { get; private set; }
 
@@ -22,14 +28,42 @@ namespace Ads
 
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void Start()
         {
-            if (enableBanners && showBannerOnStart && _bannerProvider != null)
+            CheckCurrentScene();
+            
+            if (enableBanners && showBannerOnStart && _bannerProvider != null && _isCurrentSceneAllowed)
             {
                 ShowBanner();
             }
+        }
+
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            CheckCurrentScene();
+            
+            if (_bannerProvider == null) return;
+            
+            if (enableBanners && _isCurrentSceneAllowed)
+            {
+                ShowBanner();
+            }
+            else
+            {
+                HideBanner();
+            }
+        }
+
+        private void CheckCurrentScene()
+        {
+            string currentScene = SceneManager.GetActiveScene().name;
+            _isCurrentSceneAllowed = System.Array.Exists(scenesWithBanners, sceneName => sceneName == currentScene);
+            
+            Debug.Log($"[BannerAdManager] Scene: {currentScene}, Banner allowed: {_isCurrentSceneAllowed}");
         }
 
         public void SetBannerProvider(IBannerAdProvider provider)
@@ -42,7 +76,9 @@ namespace Ads
             _bannerProvider = provider;
             Debug.Log($"[BannerAdManager] Banner provider set: {provider.GetType().Name}");
 
-            if (enableBanners && showBannerOnStart)
+            CheckCurrentScene();
+            
+            if (enableBanners && showBannerOnStart && _isCurrentSceneAllowed)
             {
                 ShowBanner();
             }
@@ -53,6 +89,12 @@ namespace Ads
             if (!enableBanners)
             {
                 Debug.Log("[BannerAdManager] Banners are disabled");
+                return;
+            }
+            
+            if (!_isCurrentSceneAllowed)
+            {
+                Debug.Log($"[BannerAdManager] Banner not allowed in scene: {SceneManager.GetActiveScene().name}");
                 return;
             }
 
@@ -107,6 +149,8 @@ namespace Ads
 
         private void OnDestroy()
         {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
+            
             if (_bannerProvider != null)
             {
                 _bannerProvider.DestroyBanner();

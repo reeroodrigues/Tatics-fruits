@@ -18,17 +18,24 @@ namespace Ads
 
         private void Start()
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             CreateDebugUI();
+#else
+            Debug.Log("[AdDebugUI] Debug UI disabled in production build");
+            enabled = false;
+#endif
         }
 
         private void Update()
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 TogglePanelVisibility();
             }
 
             UpdateStatusDisplay();
+#endif
         }
 
         private void CreateDebugUI()

@@ -12702,8 +12702,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1693729824}
   - component: {fileID: 1693729823}
-  - component: {fileID: 1693729825}
   - component: {fileID: 1693729827}
+  - component: {fileID: 1693729825}
   - component: {fileID: 1693729826}
   m_Layer: 0
   m_Name: AdSystem
@@ -12719,14 +12719,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1693729822}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b17464cba3b5ffa4d8ecb279fc672e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ads.AdSystemSetup
   autoSetup: 1
-  interstitialAdManager: {fileID: 0}
-  bannerAdManager: {fileID: 0}
+  interstitialAdManager: {fileID: 1693729827}
+  bannerAdManager: {fileID: 1693729826}
   adInitializer: {fileID: 1693729825}
   debugUI: {fileID: 0}
 --- !u!4 &1693729824
@@ -12757,7 +12757,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ads.AdInitializer
   providerType: 2
-  initializeInterstitial: 1
+  initializeInterstitial: 0
   initializeBanner: 1
 --- !u!114 &1693729826
 MonoBehaviour:
@@ -12773,6 +12773,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Ads.BannerAdManager
   showBannerOnStart: 1
   enableBanners: 1
+  scenesWithBanners:
+  - MainMenu
 --- !u!114 &1693729827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17142,8 +17144,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 19.9305
-  m_fontSizeMax: 79.722
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -18221,12 +18223,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.421413
+  m_fontSize: 23.862192
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 14.455484
-  m_fontSizeMax: 26.421413
+  m_fontSizeMin: 13.055303
+  m_fontSizeMax: 23.862192
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
