@@ -25,9 +25,7 @@ namespace New_GameplayCore.Views
         [SerializeField] private Transform canvasTransform;
 
         private ITimeManager _timeManager;
-
-        private const string MusicPrefKey = "MusicEnabled";
-        private const string SfxPrefKey = "SFXEnabled";
+        private GameSettingsModel _settings;
 
         private bool _isMusicEnabled = true;
         private bool _isSfxEnabled = true;
@@ -177,15 +175,16 @@ namespace New_GameplayCore.Views
 
         private void LoadSettings()
         {
-            _isMusicEnabled = PlayerPrefs.GetInt(MusicPrefKey, 1) == 1;
-            _isSfxEnabled = PlayerPrefs.GetInt(SfxPrefKey, 1) == 1;
+            _settings = SettingsRepository.Get();
+            _isMusicEnabled = _settings.musicOn;
+            _isSfxEnabled = _settings.sfxOn;
         }
 
         private void SaveSettings()
         {
-            PlayerPrefs.SetInt(MusicPrefKey, _isMusicEnabled ? 1 : 0);
-            PlayerPrefs.SetInt(SfxPrefKey, _isSfxEnabled ? 1 : 0);
-            PlayerPrefs.Save();
+            _settings.musicOn = _isMusicEnabled;
+            _settings.sfxOn = _isSfxEnabled;
+            SettingsRepository.Save(_settings);
         }
 
         private void OnDestroy()
