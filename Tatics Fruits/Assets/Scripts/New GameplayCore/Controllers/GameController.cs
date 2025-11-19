@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using DefaultNamespace.New_GameplayCore;
+using New_GameplayCore.GameState;
 using New_GameplayCore.Services;
 
 namespace New_GameplayCore.Controllers

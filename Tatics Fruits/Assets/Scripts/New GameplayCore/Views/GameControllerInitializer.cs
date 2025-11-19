@@ -22,6 +22,7 @@ namespace New_GameplayCore.Views
         [SerializeField] private TextMeshProUGUI phaseLabel;
         [SerializeField] private PlayerProfileService _profileService;
         [SerializeField] private TutorialManager tutorialManager;
+        [SerializeField] private GameplaySettings gameplaySettings;
 
         public IRuleEngine RuleEngine => _rule;
         public IGameController Controller => _controller;
@@ -117,6 +118,11 @@ namespace New_GameplayCore.Views
             _controller.StartLevel(levelConfig, deckConfig);
             hudView.Initialize(_time, _score, _swap);
             handView.Initialize(_hand, _controller);
+
+            if (gameplaySettings != null)
+            {
+                gameplaySettings.Initialize(_time);
+            }
 
             _score.OnScoreChanged += (total, delta) =>
             {

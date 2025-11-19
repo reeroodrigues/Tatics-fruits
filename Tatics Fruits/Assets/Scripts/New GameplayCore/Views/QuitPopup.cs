@@ -13,9 +13,16 @@ namespace New_GameplayCore.Views
         [Header("Scene Settings")]
         [SerializeField] private string mainMenuSceneName = "MainMenu";
 
+        private ITimeManager _timeManager;
+
         private void Start()
         {
             SetupButtonListeners();
+        }
+
+        public void SetTimeManager(ITimeManager timeManager)
+        {
+            _timeManager = timeManager;
         }
 
         private void SetupButtonListeners()
@@ -38,6 +45,11 @@ namespace New_GameplayCore.Views
 
         private void ContinueGameplay()
         {
+            if (_timeManager != null)
+            {
+                _timeManager.Resume();
+            }
+
             Destroy(gameObject);
         }
 

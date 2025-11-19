@@ -4005,6 +4005,7 @@ MonoBehaviour:
   levelSet: {fileID: 11400000, guid: e2de82088fcc9144293855b79aeb9171, type: 2}
   phaseLabel: {fileID: 2489931806995890087}
   tutorialManager: {fileID: 1014608234}
+  gameplaySettings: {fileID: 1923058688}
 --- !u!1001 &1448547642
 PrefabInstance:
   m_ObjectHideFlags: 0

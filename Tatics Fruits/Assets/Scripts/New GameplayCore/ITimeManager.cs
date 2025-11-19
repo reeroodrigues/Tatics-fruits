@@ -9,6 +9,8 @@ namespace New_GameplayCore
         bool CanPay(int seconds);
         bool TryPay(int seconds);
         void Add(int seconds);
+        void Pause();
+        void Resume();
         event Action<int> OnTimeChanged;
         event Action<int> OnTimeDelta;
     }

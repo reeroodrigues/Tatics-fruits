@@ -71,6 +71,16 @@ public class Timer : MonoBehaviour
         StopPulsingEffect();
     }
 
+    public void PauseTimer()
+    {
+        _isPaused = true;
+    }
+
+    public void ResumeTimer()
+    {
+        _isPaused = false;
+    }
+
     public void AddTime(float timeToAdd)
     {
         remainingTime += timeToAdd;

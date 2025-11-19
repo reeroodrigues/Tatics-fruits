@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using New_GameplayCore;
 
 namespace New_GameplayCore.Views
 {
@@ -23,6 +24,8 @@ namespace New_GameplayCore.Views
         [SerializeField] private GameObject quitPopupPrefab;
         [SerializeField] private Transform canvasTransform;
 
+        private ITimeManager _timeManager;
+
         private const string MusicPrefKey = "MusicEnabled";
         private const string SfxPrefKey = "SFXEnabled";
 
@@ -35,6 +38,11 @@ namespace New_GameplayCore.Views
         {
             LoadSettings();
             InitializeComponents();
+        }
+
+        public void Initialize(ITimeManager timeManager)
+        {
+            _timeManager = timeManager;
         }
 
         private void Start()
@@ -89,7 +97,20 @@ namespace New_GameplayCore.Views
         {
             if (settingsPanel != null)
             {
-                settingsPanel.SetActive(!settingsPanel.activeSelf);
+                bool isOpening = !settingsPanel.activeSelf;
+                settingsPanel.SetActive(isOpening);
+
+                if (_timeManager != null)
+                {
+                    if (isOpening)
+                    {
+                        _timeManager.Pause();
+                    }
+                    else
+                    {
+                        _timeManager.Resume();
+                    }
+                }
             }
         }
 
@@ -130,7 +151,18 @@ namespace New_GameplayCore.Views
             if (quitPopupPrefab != null)
             {
                 Transform parentTransform = canvasTransform != null ? canvasTransform : transform.parent;
-                Instantiate(quitPopupPrefab, parentTransform);
+                GameObject popup = Instantiate(quitPopupPrefab, parentTransform);
+
+                if (_timeManager != null)
+                {
+                    _timeManager.Pause();
+                }
+
+                QuitPopup quitPopupComponent = popup.GetComponent<QuitPopup>();
+                if (quitPopupComponent != null)
+                {
+                    quitPopupComponent.SetTimeManager(_timeManager);
+                }
             }
         }
 
