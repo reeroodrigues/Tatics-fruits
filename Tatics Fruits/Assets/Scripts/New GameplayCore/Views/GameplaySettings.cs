@@ -162,7 +162,16 @@ namespace New_GameplayCore.Views
                 if (quitPopupComponent != null)
                 {
                     quitPopupComponent.SetTimeManager(_timeManager);
+                    quitPopupComponent.SetGameplaySettings(this);
                 }
+            }
+        }
+
+        public void CloseSettings()
+        {
+            if (settingsPanel != null && settingsPanel.activeSelf)
+            {
+                settingsPanel.SetActive(false);
             }
         }
 
