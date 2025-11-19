@@ -12787,7 +12787,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b90b68707e97f5144b4aae771b5559a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ads.InterstitialAdManager
-  enableAds: 1
+  enableAds: 0
   testMode: 0
 --- !u!1 &1695646025
 GameObject:
