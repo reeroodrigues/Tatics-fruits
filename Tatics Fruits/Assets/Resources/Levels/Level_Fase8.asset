@@ -15,7 +15,7 @@ MonoBehaviour:
   levelId: fase_8
   displayName: Fase 8
   description: "Fa\xE7a {0} pontos em {0} segundos!"
-  targetScore: 250
+  targetScore: 150
   initialTimeSeconds: 90
   handSize: 6
   deckSize: 60
