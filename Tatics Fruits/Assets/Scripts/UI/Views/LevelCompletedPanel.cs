@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -5,6 +6,7 @@ using UnityEngine.UI;
 
 namespace DefaultNamespace
 {
+    [Obsolete("This class is deprecated. The new architecture uses VictoryView and DefeatView in New_GameplayCore.")]
     public class LevelCompletedPanel : MonoBehaviour
     {
         [Header("UI Elements")]
@@ -21,9 +23,11 @@ namespace DefaultNamespace
         [SerializeField] private Button _retryButton;
         [SerializeField] private Button _mainMenuButton;
         
-        private GameController _gameController;
+        [Obsolete("Use new architecture instead")]
+        private GameController_DEPRECATED _gameController;
         
-        private ScoreManager _scoreManager;
+        [Obsolete("Use new architecture instead")]
+        private ScoreManager_DEPRECATED _scoreManager;
 
         public void Setup(bool isSuccess, int starCount = 0)
         {
@@ -61,12 +65,14 @@ namespace DefaultNamespace
             }
         }
 
-        public void SetScoreManager(ScoreManager scoreManager)
+        [Obsolete("Use new architecture instead")]
+        public void SetScoreManager(ScoreManager_DEPRECATED scoreManager)
         {
             _scoreManager = scoreManager;
         }
 
-        public void SetGameController(GameController gameController)
+        [Obsolete("Use new architecture instead")]
+        public void SetGameController(GameController_DEPRECATED gameController)
         {
             _gameController = gameController;
         }

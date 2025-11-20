@@ -7,8 +7,30 @@ using UnityEngine.UIElements;
 [DefaultExecutionOrder(-100)]
 public class Localizer : MonoBehaviour
 {
-    public static Localizer Instance { get; private set; }
+    private static Localizer _instance;
+    public static Localizer Instance 
+    { 
+        get 
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<Localizer>();
+                
+                if (_instance == null)
+                {
+                    var go = new GameObject("Localizer");
+                    _instance = go.AddComponent<Localizer>();
+                    DontDestroyOnLoad(go);
+                }
+            }
+            return _instance;
+        }
+    }
+    
+    public static bool IsReady => _instance != null && _instance._isInitialized;
+    
     private readonly Dictionary<string, string> _table = new();
+    private bool _isInitialized = false;
 
     public string CurrentLanguage { get; private set; } = "pt-BR";
     
@@ -18,26 +40,28 @@ public class Localizer : MonoBehaviour
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Bootstrap()
     {
-        if (Instance == null && FindObjectOfType<Localizer>() == null)
-        {
-            var go = new GameObject("Localizer");
-            go.AddComponent<Localizer>();
-        }
+        var _ = Instance;
     }
 
     private void Awake()
     {
-        if (Instance != null)
+        if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
             return;
         }
         
-        Instance = this;
+        _instance = this;
         DontDestroyOnLoad(gameObject);
 
+        Initialize();
+    }
+
+    private void Initialize()
+    {
         var cfg = SettingsRepository.Get();
         SetLanguage(cfg.language, save: false);
+        _isInitialized = true;
     }
 
     public void SetLanguage(string language, bool save = true)

@@ -3,7 +3,8 @@ using DefaultNamespace;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameController : MonoBehaviour
+[Obsolete("This class is deprecated. Use New_GameplayCore.Controllers.GameController and GameControllerInitializer instead.")]
+public class GameController_DEPRECATED : MonoBehaviour
 {
     [SerializeField] private GameObject preRoundPrefab;
     [SerializeField] private Transform uiContainer;
@@ -14,17 +15,17 @@ public class GameController : MonoBehaviour
     [Obsolete("Obsolete")]
     private void Start()
     {
-        var phase = GameSession._phaseNumber > 0 ? GameSession._phaseNumber : 1;
-        var points = GameSession._targetScore > 0 ? GameSession._targetScore : 100;
-        var time = GameSession._totalTime > 0 ? GameSession._totalTime : 60;
-        var objectiveDescription = !string.IsNullOrEmpty(GameSession._objectiveDescription)
-            ? GameSession._objectiveDescription
+        var phase = GameSession_DEPRECATED._phaseNumber > 0 ? GameSession_DEPRECATED._phaseNumber : 1;
+        var points = GameSession_DEPRECATED._targetScore > 0 ? GameSession_DEPRECATED._targetScore : 100;
+        var time = GameSession_DEPRECATED._totalTime > 0 ? GameSession_DEPRECATED._totalTime : 60;
+        var objectiveDescription = !string.IsNullOrEmpty(GameSession_DEPRECATED._objectiveDescription)
+            ? GameSession_DEPRECATED._objectiveDescription
             : $"Score {points} points in {time} seconds.";
 
-        GameSession._phaseNumber = phase;
-        GameSession._targetScore = points;
-        GameSession._totalTime = time;
-        GameSession._objectiveDescription = objectiveDescription;
+        GameSession_DEPRECATED._phaseNumber = phase;
+        GameSession_DEPRECATED._targetScore = points;
+        GameSession_DEPRECATED._totalTime = time;
+        GameSession_DEPRECATED._objectiveDescription = objectiveDescription;
 
         ShowPreRoundPanel(phase);
     }
@@ -46,13 +47,13 @@ public class GameController : MonoBehaviour
     [Obsolete("Obsolete")]
     public void StartNewPhase()
     {
-        GameSession._phaseNumber++;
-        ShowPreRoundPanel(GameSession._phaseNumber);
+        GameSession_DEPRECATED._phaseNumber++;
+        ShowPreRoundPanel(GameSession_DEPRECATED._phaseNumber);
         var (points, time) = GetRandomObjective();
-        GameSession._phaseNumber = 2;
-        GameSession._targetScore = points;
-        GameSession._totalTime = time;
-        GameSession._objectiveDescription = $"Score {points} points in {time} seconds.";
+        GameSession_DEPRECATED._phaseNumber = 2;
+        GameSession_DEPRECATED._targetScore = points;
+        GameSession_DEPRECATED._totalTime = time;
+        GameSession_DEPRECATED._objectiveDescription = $"Score {points} points in {time} seconds.";
         
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
@@ -60,10 +61,10 @@ public class GameController : MonoBehaviour
     [Obsolete("Obsolete")]
     private void ShowPreRoundPanel(int phaseNumber)
     {
-        var points = GameSession._targetScore > 0 ? GameSession._targetScore : 100;
-        var time = GameSession._totalTime > 0 ? GameSession._totalTime : 60;
-        var objectiveDescription = !string.IsNullOrEmpty(GameSession._objectiveDescription)
-            ? GameSession._objectiveDescription
+        var points = GameSession_DEPRECATED._targetScore > 0 ? GameSession_DEPRECATED._targetScore : 100;
+        var time = GameSession_DEPRECATED._totalTime > 0 ? GameSession_DEPRECATED._totalTime : 60;
+        var objectiveDescription = !string.IsNullOrEmpty(GameSession_DEPRECATED._objectiveDescription)
+            ? GameSession_DEPRECATED._objectiveDescription
             : $"Score {points} points in {time} seconds.";
 
         if (_preRoundInstance == null)
@@ -75,7 +76,7 @@ public class GameController : MonoBehaviour
             _preRoundInstance.SetActive(true);
         }
 
-        _preRoundInstance.GetComponent<PreRoundPanelController>().SetupPreRound(
+        _preRoundInstance.GetComponent<PreRoundPanelController_DEPRECATED>().SetupPreRound(
             phaseNumber,
             objectiveDescription,
             starsSprite,

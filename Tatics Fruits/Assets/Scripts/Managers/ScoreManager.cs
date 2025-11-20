@@ -5,7 +5,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScoreManager : MonoBehaviour
+[Obsolete("This class is deprecated. Use New_GameplayCore.Services.ScoreService instead.")]
+public class ScoreManager_DEPRECATED : MonoBehaviour
 {
     private int _score;
     private HighScore _highScore;
@@ -27,8 +28,8 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] private GameObject _victoryPanelPrefab;
     [SerializeField] private GameObject _defeatPanelPrefab;
     [SerializeField] private Transform _uiCanvas;
-    [SerializeField] private Timer _timer;
-    [SerializeField] private GameController _gameController;
+    [SerializeField] private Timer_DEPRECATED _timer;
+    [SerializeField] private GameController_DEPRECATED _gameController;
 
     [Header("Score Animation")]
     [SerializeField] private float _scaleAmount = 1.3f;
@@ -43,7 +44,7 @@ public class ScoreManager : MonoBehaviour
     {
         _highScore = FindObjectOfType<HighScore>();
         
-        _currentLevel = GameSession._currentLevel > 0 ? GameSession._currentLevel : 1;
+        _currentLevel = GameSession_DEPRECATED._currentLevel > 0 ? GameSession_DEPRECATED._currentLevel : 1;
 
         if (_targetScore == 0)
         {
@@ -210,7 +211,7 @@ public class ScoreManager : MonoBehaviour
     private void AdvanceToNextLevel()
     {
         _currentLevel++;
-        GameSession._currentLevel = _currentLevel;
+        GameSession_DEPRECATED._currentLevel = _currentLevel;
         
         _scoreToNextLevel += Mathf.RoundToInt(_scoreToNextLevel * 0.5f);
 

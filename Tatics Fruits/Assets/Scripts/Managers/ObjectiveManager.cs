@@ -1,4 +1,5 @@
 using DG.Tweening;
+using New_GameplayCore.Views;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,37 +8,53 @@ namespace DefaultNamespace
 {
     public class ObjectiveManager : MonoBehaviour
     {
+        [Header("References")]
+        [SerializeField] private GameControllerInitializer bootstrap;
+        
+        [Header("UI Elements")]
         public Slider _progressBar;
-        public ScoreManager _scoreManager;
         public GameObject[] _stars;
         public TextMeshProUGUI _levelText;
         
         private readonly int[] _starThresholds = { 25, 50, 100 };
         private int _currentLevel = 1;
         private int _scoreToNextLevel = 100;
+        private int _currentScore = 0;
 
         private void Start()
         {
+            if (bootstrap == null)
+            {
+                Debug.LogError("ObjectiveManager: GameControllerInitializer not assigned!");
+                return;
+            }
+            
+            SubscribeToEvents();
             UpdateProgress();
             UpdateLevelUI();
         }
 
-        private void Update()
+        private void SubscribeToEvents()
         {
+            bootstrap.Score.OnScoreChanged += HandleScoreChanged;
+        }
+
+        private void HandleScoreChanged(int total, int delta)
+        {
+            _currentScore = total;
             UpdateProgress();
             CheckLevelProgression();
         }
 
         private void UpdateProgress()
         {
-            if (_scoreManager == null || _progressBar == null)
+            if (_progressBar == null)
                 return;
 
-            var score = _scoreManager.GetScore();
-            var fillAmount = Mathf.Clamp((float) score / _scoreToNextLevel, 0f, 1f);
+            var fillAmount = Mathf.Clamp((float) _currentScore / _scoreToNextLevel, 0f, 1f);
 
             _progressBar.DOValue(fillAmount, 0.5f);
-            ActivateStars(score);
+            ActivateStars(_currentScore);
         }
 
         private void ActivateStars(int score)
@@ -61,7 +78,7 @@ namespace DefaultNamespace
 
         private void CheckLevelProgression()
         {
-            if (_scoreManager.GetScore() >= _scoreToNextLevel)
+            if (_currentScore >= _scoreToNextLevel)
             {
                 AdvanceToNextLevel();
             }
@@ -70,7 +87,7 @@ namespace DefaultNamespace
         public void AdvanceToNextLevel()
         {
             _currentLevel++;
-            _scoreManager.ResetScore();
+            _currentScore = 0;
             _scoreToNextLevel += Mathf.RoundToInt(_scoreToNextLevel * 0.5f);
             _progressBar.value = 0f;
 
@@ -100,6 +117,19 @@ namespace DefaultNamespace
                 .SetEase(Ease.InOutSine);
             
             image.DOFade(1f, 0.2f).From(0.5f).SetLoops(2, LoopType.Yoyo);
+        }
+
+        private void OnDestroy()
+        {
+            UnsubscribeFromEvents();
+        }
+
+        private void UnsubscribeFromEvents()
+        {
+            if (bootstrap?.Score != null)
+            {
+                bootstrap.Score.OnScoreChanged -= HandleScoreChanged;
+            }
         }
     }
 }

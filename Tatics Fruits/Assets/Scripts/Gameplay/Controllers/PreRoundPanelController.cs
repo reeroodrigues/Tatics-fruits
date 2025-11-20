@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PreRoundPanelController : MonoBehaviour
+[Obsolete("This class is deprecated. Use New_GameplayCore.Services.PreRoundPresenter and PreRoundView instead.")]
+public class PreRoundPanelController_DEPRECATED : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI objectiveText;
     [SerializeField] private Image starsImage;
@@ -13,7 +14,7 @@ public class PreRoundPanelController : MonoBehaviour
     [SerializeField] private Button startPhaseButton;
     [SerializeField] private Button changeObjectiveButton;
     [SerializeField] private ObjectiveProvider objectiveProvider;
-    [SerializeField] private Timer timer;
+    [SerializeField] private Timer_DEPRECATED timer;
     
     private int _currentTargetScore;
     private int _currentTotalTime;
@@ -36,7 +37,7 @@ public class PreRoundPanelController : MonoBehaviour
 
         if (timer == null)
         {
-            timer = FindObjectOfType<Timer>();
+            timer = FindObjectOfType<Timer_DEPRECATED>();
         }
 
         if (timer != null)
@@ -44,7 +45,7 @@ public class PreRoundPanelController : MonoBehaviour
             timer.SetTotalTime(totalTime);
         }
 
-        var scoreManager = FindObjectOfType<ScoreManager>();
+        var scoreManager = FindObjectOfType<ScoreManager_DEPRECATED>();
         if (scoreManager != null)
         {
             scoreManager.SetTargetScore(targetScore);
@@ -63,7 +64,7 @@ public class PreRoundPanelController : MonoBehaviour
     
         if (timer == null)
         {
-            timer = FindObjectOfType<Timer>();
+            timer = FindObjectOfType<Timer_DEPRECATED>();
         }
 
         if (timer != null)
@@ -87,12 +88,12 @@ public class PreRoundPanelController : MonoBehaviour
         objectiveText.text = $"Score {_currentTargetScore} points in {_currentTotalTime} seconds.";
 
         if (timer == null)
-            timer = FindObjectOfType<Timer>();
+            timer = FindObjectOfType<Timer_DEPRECATED>();
 
         if (timer != null)
             timer.SetTotalTime(_currentTotalTime);
         
-        var scoreManager = FindObjectOfType<ScoreManager>();
+        var scoreManager = FindObjectOfType<ScoreManager_DEPRECATED>();
         if (scoreManager != null)
             scoreManager.SetTargetScore(_currentTargetScore);
     }

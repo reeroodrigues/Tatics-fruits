@@ -7,7 +7,8 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class Timer : MonoBehaviour
+[Obsolete("This class is deprecated. Use New_GameplayCore.GameState.TimeManager instead.")]
+public class Timer_DEPRECATED : MonoBehaviour
 {
     public Image timerImage;
     public TextMeshProUGUI timerText;
@@ -21,7 +22,7 @@ public class Timer : MonoBehaviour
     private bool _isRunning = false;
     private bool _isPaused;
 
-    public Timer(bool isPaused)
+    public Timer_DEPRECATED(bool isPaused)
     {
         _isPaused = isPaused;
     }

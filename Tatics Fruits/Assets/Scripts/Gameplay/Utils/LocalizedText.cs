@@ -31,7 +31,7 @@ public class LocalizedText : MonoBehaviour
 
     private IEnumerator EnsureSubscribedThenRefresh()
     {
-        while (Localizer.Instance == null) yield return null;
+        yield return new WaitUntil(() => Localizer.IsReady);
 
         TrySubscribe();
         Refresh();
@@ -39,21 +39,21 @@ public class LocalizedText : MonoBehaviour
 
     private void TrySubscribe()
     {
-        if (_subscribed || Localizer.Instance == null) return;
+        if (_subscribed || !Localizer.IsReady) return;
         Localizer.Instance.OnLanguageChanged += Refresh;
         _subscribed = true;
     }
 
     private void TryUnsubscribe()
     {
-        if (!_subscribed || Localizer.Instance == null) return;
+        if (!_subscribed || !Localizer.IsReady) return;
         Localizer.Instance.OnLanguageChanged -= Refresh;
         _subscribed = false;
     }
 
     public void Refresh()
     {
-        if (Localizer.Instance == null) return;
+        if (!Localizer.IsReady) return;
         var txt = Localizer.Instance.Tr(key, fallback);
         if (_tmp) _tmp.text = txt;
         else if (_ugui) _ugui.text = txt;
