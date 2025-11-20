@@ -3695,6 +3695,8 @@ MonoBehaviour:
   creditsButton: {fileID: 1906848815}
   deleteAccountButton: {fileID: 1593803870}
   termsButton: {fileID: 930964584}
+  creditsPopupPrefab: {fileID: -279068186861314722, guid: 491148faf23cf7c4fbd82bda63c728bc, type: 3}
+  popupParent: {fileID: 648363410}
   buttonsToDisable:
   - {fileID: 1208899202}
   - {fileID: 368309810}
@@ -17144,8 +17146,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 24.817503
+  m_fontSizeMax: 99.27001
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -18223,12 +18225,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23.862192
+  m_fontSize: 26.42738
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 13.055303
-  m_fontSizeMax: 23.862192
+  m_fontSizeMin: 14.458749
+  m_fontSizeMax: 26.42738
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

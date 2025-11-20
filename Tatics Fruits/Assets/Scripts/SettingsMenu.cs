@@ -38,8 +38,14 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private Button deleteAccountButton;
     [SerializeField] private Button termsButton;
 
+    [Header("Popups")]
+    [SerializeField] private CreditsPopup creditsPopupPrefab;
+    [SerializeField] private Transform popupParent;
+
     [Header("Optional: disable these while open")]
     [SerializeField] private Button[] buttonsToDisable;
+
+    private CreditsPopup _currentCreditsPopup;
 
     public bool IsOpen { get; private set; }
 
@@ -81,7 +87,7 @@ public class SettingsMenu : MonoBehaviour
         _animating = false;
         
         HookButtonWithFeedback(deleteAccountButton, "Delete Account (futuro)");
-        HookButtonWithFeedback(creditsButton, () => Application.OpenURL("https://example.com/credits"));
+        HookButtonWithFeedback(creditsButton, OnCreditsButtonClicked);
         HookButtonWithFeedback(termsButton,   () => Application.OpenURL("https://example.com/terms"));
         
         audioToggle.isOn = _settings.musicOn;
@@ -283,5 +289,15 @@ public class SettingsMenu : MonoBehaviour
         c.a = isSelected ? 1f : unselectedAlpha;
         img.color = c;
         btn.interactable = !isSelected;
+    }
+
+    private void OnCreditsButtonClicked()
+    {
+        if (!creditsPopupPrefab) return;
+
+        Transform parent = popupParent ? popupParent : transform.root;
+        
+        _currentCreditsPopup = Instantiate(creditsPopupPrefab, parent);
+        _currentCreditsPopup.Show();
     }
 }
