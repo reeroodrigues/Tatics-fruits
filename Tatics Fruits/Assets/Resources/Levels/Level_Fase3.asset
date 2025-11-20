@@ -15,8 +15,8 @@ MonoBehaviour:
   levelId: fase_3
   displayName: Fase 3
   description: "Fa\xE7a {0} pontos em {0} segundos!"
-  targetScore: 200
-  initialTimeSeconds: 50
+  targetScore: 150
+  initialTimeSeconds: 120
   handSize: 6
   deckSize: 60
   timeBonusOnPair: 3

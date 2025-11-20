@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Fase 7
   description: "Fa\xE7a {0} pontos em {0} segundos!"
   targetScore: 200
-  initialTimeSeconds: 50
+  initialTimeSeconds: 60
   handSize: 6
   deckSize: 60
   timeBonusOnPair: 3
