@@ -1,5 +1,6 @@
 using DG.Tweening;
 using New_GameplayCore.Services;
+using UI.Views;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -90,7 +91,7 @@ public class MainMenuController : MonoBehaviour
         _progress.SetCurrentIndex(idx);
         _progress.Save();
         
-        SceneManager.LoadScene("Gameplay Scene");
+        LoadingManager.LoadScene("Gameplay Scene");
     }
 
     private void OnDisable()

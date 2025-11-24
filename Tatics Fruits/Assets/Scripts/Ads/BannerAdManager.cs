@@ -44,18 +44,29 @@ namespace Ads
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            Debug.Log($"[BannerAdManager] OnSceneLoaded: {scene.name}");
             CheckCurrentScene();
             
-            if (_bannerProvider == null) return;
+            if (_bannerProvider == null)
+            {
+                Debug.LogWarning("[BannerAdManager] Banner provider not set when scene loaded. Waiting for provider initialization.");
+                return;
+            }
             
             if (enableBanners && _isCurrentSceneAllowed)
             {
-                ShowBanner();
+                StartCoroutine(ShowBannerAfterDelay(0.1f));
             }
             else
             {
                 HideBanner();
             }
+        }
+
+        private System.Collections.IEnumerator ShowBannerAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            ShowBanner();
         }
 
         private void CheckCurrentScene()
@@ -78,8 +89,9 @@ namespace Ads
 
             CheckCurrentScene();
             
-            if (enableBanners && showBannerOnStart && _isCurrentSceneAllowed)
+            if (enableBanners && _isCurrentSceneAllowed)
             {
+                Debug.Log($"[BannerAdManager] Auto-showing banner after provider set in scene: {SceneManager.GetActiveScene().name}");
                 ShowBanner();
             }
         }

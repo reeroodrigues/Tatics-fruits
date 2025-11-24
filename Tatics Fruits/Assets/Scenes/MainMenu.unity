@@ -12777,6 +12777,7 @@ MonoBehaviour:
   enableBanners: 1
   scenesWithBanners:
   - MainMenu
+  - Loading
 --- !u!114 &1693729827
 MonoBehaviour:
   m_ObjectHideFlags: 0

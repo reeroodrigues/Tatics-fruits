@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.SaveSystem;
 
 #region Missões diárias (igual ao seu)
 [Serializable]
@@ -46,7 +47,7 @@ public class DailySystemData
 }
 
 [Serializable]
-public class PlayerProfileData
+public class PlayerProfileData : ISaveData
 {
     public string playerName = "Jogador";
     public int avatarIndex = 0;
@@ -64,4 +65,19 @@ public class PlayerProfileData
     
     public List<string> ownedCards = new List<string>();
     public List<string> equippedDeck = new List<string>();
+
+    public string GetFileName() => "player_profile.json";
+
+    public void OnBeforeSave()
+    {
+    }
+
+    public void OnAfterLoad()
+    {
+        if (ownedCards == null) ownedCards = new List<string>();
+        if (equippedDeck == null) equippedDeck = new List<string>();
+        if (daily == null) daily = new DailySystemData();
+        if (daily.login == null) daily.login = new DailyLoginData();
+        if (BestScores == null) BestScores = new Dictionary<string, int>();
+    }
 }

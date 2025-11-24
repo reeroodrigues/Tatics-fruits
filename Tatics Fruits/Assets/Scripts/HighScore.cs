@@ -1,20 +1,24 @@
 using UnityEngine;
-using System.IO;
+using Core.SaveSystem;
 
 namespace DefaultNamespace
 {
     public class HighScore : MonoBehaviour
     {
-        private string FilePath => Application.persistentDataPath + "/highscore.json";
+        private HighScoreData _data;
+
+        private void Awake()
+        {
+            _data = SaveManager.Instance.Load<HighScoreData>();
+        }
 
         public int GetHighScore()
         {
-            if (File.Exists(FilePath))
+            if (_data == null)
             {
-                string json = File.ReadAllText(FilePath);
-                return JsonUtility.FromJson<ScoreData>(json).score;
+                _data = SaveManager.Instance.Load<HighScoreData>();
             }
-            return 0;
+            return _data.score;
         }
 
         public void TrySetHighScore(int newScore)
@@ -22,16 +26,10 @@ namespace DefaultNamespace
             int currentHighScore = GetHighScore();
             if (newScore > currentHighScore)
             {
-                string json = JsonUtility.ToJson(new ScoreData { score = newScore });
-                File.WriteAllText(FilePath, json);
+                _data.score = newScore;
+                SaveManager.Instance.Save(_data);
                 Debug.Log($"Novo High Score Salvo: {newScore}");
             }
-        }
-
-        [System.Serializable]
-        private class ScoreData
-        {
-            public int score;
         }
     }
 }

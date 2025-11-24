@@ -24,8 +24,14 @@
   "claimed_collect_button" : "Coletado",
   "purchase": "Comprado",
   "special_daily_bonus": "Bônus especial a cada 7 dias!",
-  
-  "time_plus_name": "Relógio+",
+  "loading": "Carregando",
+  "loading_tip_1": "Dica: Combine frutas da mesma cor para combos maiores!",
+  "loading_tip_2": "Dica: Planeje seus movimentos com antecedência!",
+  "loading_tip_3": "Dica: Use power-ups estrategicamente!",
+  "loading_tip_4": "Dica: Fique de olho no tempo restante!",
+
+
+"time_plus_name": "Relógio+",
   "time_plus_desc": "Adiciona +{0} segundos ao cronômetro.",
   
   "combo_boost_name": "Combo x{0}",

@@ -24,6 +24,11 @@
   "claimed_collect_button": "Collected",
   "purchase": "Purchased",
   "special_daily_bonus": "Special bonus every 7 days!",
+  "loading": "Loading",
+  "loading_tip_1": "Tip: Combine fruits of the same color for bigger combos!",
+  "loading_tip_2": "Tip: Plan your moves ahead!",
+  "loading_tip_3": "Tip: Use power-ups strategically!",
+  "loading_tip_4": "Tip: Keep an eye on the remaining time!",
 
   "time_plus_name": "Clock+",
   "time_plus_desc": "Adds +{0} seconds to the timer.",

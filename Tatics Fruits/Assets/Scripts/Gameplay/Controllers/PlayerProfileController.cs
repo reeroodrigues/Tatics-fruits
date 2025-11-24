@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 using UnityEngine.Serialization;
+using Core.SaveSystem;
 
 public class PlayerProfileController : MonoBehaviour
 {
@@ -27,7 +28,6 @@ public class PlayerProfileController : MonoBehaviour
     [SerializeField] private int deckLimit = 5;
 
     private int goldHudRefCount = 0;
-    private const string FileName = "player_profile.json";
     private const string NameRegex = @"^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$";
     public bool IsLoaded { get; private set; }
     public event Action OnProfileLoaded;
@@ -36,21 +36,9 @@ public class PlayerProfileController : MonoBehaviour
 
     private void Awake()
     {
-        if (!JsonDataService.TryLoad<PlayerProfileData>(FileName, out var loaded))
-        {
-            Data = new PlayerProfileData();
-            MigrateFromPlayerPrefsIfNeeded();
-            Save();
-        }
-        else
-        {
-            Data = loaded ?? new PlayerProfileData();
-            if (Data.ownedCards == null)    Data.ownedCards = new System.Collections.Generic.List<string>();
-            if (Data.equippedDeck == null)  Data.equippedDeck = new System.Collections.Generic.List<string>();
-            if (Data.daily == null)         Data.daily = new DailySystemData();
-            if (Data.daily.login == null)   Data.daily.login = new DailyLoginData();
-        }
-
+        Data = SaveManager.Instance.Load<PlayerProfileData>();
+        MigrateFromPlayerPrefsIfNeeded();
+        
         IsLoaded = true;
         OnProfileLoaded?.Invoke();
 
@@ -60,20 +48,6 @@ public class PlayerProfileController : MonoBehaviour
 
     private void Start()
     {
-        if (!JsonDataService.TryLoad<PlayerProfileData>(FileName, out var loaded))
-        {
-            Data = new PlayerProfileData();
-            MigrateFromPlayerPrefsIfNeeded();
-            Save();
-        }
-        else
-        {
-            Data = loaded ?? new PlayerProfileData();
-            if (Data.ownedCards == null) Data.ownedCards = new System.Collections.Generic.List<string>();
-            
-            if (Data.equippedDeck == null) Data.equippedDeck = new System.Collections.Generic.List<string>();
-        }
-        
         ApplyProfileUI();
         UpdateGoldUI();
         
@@ -128,6 +102,8 @@ public class PlayerProfileController : MonoBehaviour
             var legacyAvatar = PlayerPrefs.GetInt("AvatarIndex", 0);
             Data.avatarIndex = Mathf.Clamp(legacyAvatar, 0, avatars != null && avatars.Length > 0 ? avatars.Length - 1 : 0);
         }
+        
+        SaveManager.Instance.Save(Data);
     }
 
     private void ApplyProfileUI()
@@ -151,7 +127,10 @@ public class PlayerProfileController : MonoBehaviour
         OnGoldChanged?.Invoke(Data.gold);
     }
 
-    private void Save() => JsonDataService.Save(FileName, Data);
+    private void Save()
+    {
+        SaveManager.Instance.Save(Data);
+    }
     
 
     public void OpenProfile()  => profilePanel?.SetActive(true);
@@ -252,7 +231,7 @@ public class PlayerProfileController : MonoBehaviour
 
     public void SaveProfile()
     {
-        JsonDataService.Save("player_profile.json", Data);
+        Save();
     }
 
     public void AddGoldAndSave(int amount)
@@ -261,7 +240,7 @@ public class PlayerProfileController : MonoBehaviour
             return;
         
         Data.gold = Mathf.Max(0, Data.gold + amount);
-        SaveProfile();
+        Save();
         UpdateGoldUI();
     }
 }

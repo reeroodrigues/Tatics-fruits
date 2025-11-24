@@ -1,25 +1,28 @@
 using System.Collections.Generic;
-using UnityEngine.VFX;
+using Core.SaveSystem;
 
 namespace New_GameplayCore.Services
 {
     public class PlayerProfileService
     {
-        private const string FILE = "player_profile.json";
         private PlayerProfileData _data;
 
         public PlayerProfileData Data => _data;
 
         public void Load()
         {
-            if (!JsonDataService.TryLoad(FILE, out _data))
-            {
-                _data = new PlayerProfileData();
-                Save();
-            }
+            _data = SaveManager.Instance.Load<PlayerProfileData>();
         }
         
-        public void Save() => JsonDataService.Save(FILE, _data);
+        public void Save()
+        {
+            SaveManager.Instance.Save(_data);
+        }
+
+        public void MarkDirty()
+        {
+            SaveManager.Instance.MarkDirty<PlayerProfileData>();
+        }
 
         public void AddGold(int amount)
         {
