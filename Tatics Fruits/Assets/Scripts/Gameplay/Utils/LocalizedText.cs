@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using Gameplay.Utils;
 
 [RequireComponent(typeof(Graphic))]
 public class LocalizedText : MonoBehaviour

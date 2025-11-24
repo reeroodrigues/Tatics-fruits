@@ -91,7 +91,7 @@
   "swap_one_card": "Swap one card",
 
   "pre_round_play": "Stage {0}",
-  "pre_round_objective": "Score <b>{0}</b> points in <b>{1}</b> seconds to earn <b>3</b> stars!",
+  "pre_round_objective": "Score {0} points in {1} seconds to earn 3 stars!",
 
   "defeat_title_timeup": "Time's up! Not this time.",
   "defeat_score_line": "You scored: {0} points.",

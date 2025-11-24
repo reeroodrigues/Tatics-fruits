@@ -91,7 +91,7 @@
   "swap_one_card": "Cambiar una carta",
 
   "pre_round_play": "Fase {0}",
-  "pre_round_objective": "Consigue <b>{0}</b> puntos en <b>{1}</b> segundos para ganar las <b>3</b> estrellas!",
+  "pre_round_objective": "Consigue {0} puntos en {1} segundos para ganar las 3 estrellas!",
 
   "defeat_title_timeup": "¡Se acabó el tiempo! No fue esta vez.",
   "defeat_score_line": "Hiciste: {0} puntos.",

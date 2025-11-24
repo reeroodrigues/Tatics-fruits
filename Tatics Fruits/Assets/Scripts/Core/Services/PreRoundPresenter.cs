@@ -1,10 +1,11 @@
+using Gameplay.Controllers;
 using UnityEngine;
 
 namespace New_GameplayCore.Services
 {
     public class PreRoundPresenter : IPreRoundPresenter
     {
-        private readonly Controllers.GameController _controller;
+        private readonly GameController _controller;
         private readonly LevelConfigSO _cfg;
         private readonly IDeckService _deck;
         private readonly IHighScoreService  _highscores;
@@ -13,7 +14,7 @@ namespace New_GameplayCore.Services
         public System.Action<PreRoundModel> OnModelReady;
         public System.Action OnRequestClose;
 
-        public PreRoundPresenter(Controllers.GameController controller, LevelConfigSO cfg, IDeckService deck,
+        public PreRoundPresenter(GameController controller, LevelConfigSO cfg, IDeckService deck,
             IHighScoreService highscores)
         {
             _controller = controller;

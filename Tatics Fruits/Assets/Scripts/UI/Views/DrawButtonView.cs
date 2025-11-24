@@ -1,4 +1,5 @@
 using System;
+using Gameplay.Controllers;
 using New_GameplayCore.Services;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,7 +35,7 @@ namespace New_GameplayCore.Views
 
         private void OnDraw()
         {
-            if (_controller is New_GameplayCore.Controllers.GameController gc)
+            if (_controller is GameController gc)
             {
                 if (gc.TryDrawOne())
                     RefreshInteractable();

@@ -1,10 +1,11 @@
+using Gameplay.Utils;
 using New_GameplayCore.Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace New_GameplayCore.Views
+namespace UI.Views
 {
     public class VictoryView : MonoBehaviour
     {

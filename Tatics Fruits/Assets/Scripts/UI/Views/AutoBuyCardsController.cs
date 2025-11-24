@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gameplay.Controllers;
 using New_GameplayCore;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class AutoBuyCardsController : MonoBehaviour
 
     private IHandService _hand;
     private IDeckService _deck;
-    private New_GameplayCore.Controllers.GameController _gameController;
+    private GameController _gameController;
 
     [Header("Settings")]
     [SerializeField] private int minCardsInHand = 6;
@@ -23,7 +24,7 @@ public class AutoBuyCardsController : MonoBehaviour
     {
         _hand = bootstrap.Hand;
         _deck = bootstrap.Deck;
-        _gameController = bootstrap.Controller as New_GameplayCore.Controllers.GameController;
+        _gameController = bootstrap.Controller as GameController;
 
         if (_hand != null)
             _hand.OnHandChanged += OnHandChanged;
