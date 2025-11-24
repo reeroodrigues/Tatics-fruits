@@ -79,6 +79,8 @@ namespace Ads
             Debug.Log("[InterstitialAdManager] Showing interstitial ad...");
             _isShowingAd = true;
             Time.timeScale = 0f;
+            
+            Managers.AnalyticsManager.Instance?.TrackAdStarted("interstitial", "auto");
 
             _adProvider.ShowAd(
                 onAdCompleted: OnAdCompleted,
@@ -89,6 +91,7 @@ namespace Ads
         private void OnAdCompleted()
         {
             Debug.Log("[InterstitialAdManager] Interstitial ad completed successfully.");
+            Managers.AnalyticsManager.Instance?.TrackAdCompleted("interstitial", true);
             ResetAdTimer();
             ResumeGame();
             LoadNextAd();
@@ -97,6 +100,7 @@ namespace Ads
         private void OnAdFailed()
         {
             Debug.LogWarning("[InterstitialAdManager] Interstitial ad failed to show.");
+            Managers.AnalyticsManager.Instance?.TrackAdCompleted("interstitial", false);
             ResetAdTimer();
             ResumeGame();
             LoadNextAd();

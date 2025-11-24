@@ -142,6 +142,8 @@ public class DailyMissionsPanelTabs : MonoBehaviour
         _animating = true;
 
         gameObject.SetActive(true);
+        
+        Managers.AnalyticsManager.Instance?.TrackMenuOpened("daily_missions");
 
         if (panelCanvasGroup)
         {

@@ -78,6 +78,7 @@ public class MainMenuController : MonoBehaviour
         settingsButton.onClick.AddListener(() =>
         {
             if (!settingsPanel) return;
+            Managers.AnalyticsManager.Instance?.TrackMenuOpened("settings");
             settingsPanel.Toggle();
         });
         
@@ -90,6 +91,8 @@ public class MainMenuController : MonoBehaviour
 
         _progress.SetCurrentIndex(idx);
         _progress.Save();
+        
+        Managers.AnalyticsManager.Instance?.TrackMenuOpened("gameplay");
         
         LoadingManager.LoadScene("Gameplay Scene");
     }
@@ -159,6 +162,8 @@ public class MainMenuController : MonoBehaviour
     {
         if (_switching) return;
         _switching = true;
+        
+        Managers.AnalyticsManager.Instance?.TrackStoreOpened();
         
         if (dailyMissionsPanel && dailyMissionsPanel.gameObject.activeInHierarchy)
             dailyMissionsPanel.Hide();

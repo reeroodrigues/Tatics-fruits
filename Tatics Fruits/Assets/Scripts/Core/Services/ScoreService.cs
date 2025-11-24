@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UnityEngine;
 
 namespace New_GameplayCore.Services
@@ -38,6 +39,11 @@ namespace New_GameplayCore.Services
         {
             _currentCombo++;
             _bestCombo = Mathf.Max(_bestCombo, _currentCombo);
+            
+            if (_currentCombo >= 3)
+            {
+                AnalyticsManager.Instance?.TrackCombo(_currentCombo, _total);
+            }
         }
     }
 }

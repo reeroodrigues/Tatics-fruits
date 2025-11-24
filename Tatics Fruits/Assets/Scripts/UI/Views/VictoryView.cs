@@ -69,12 +69,21 @@ namespace New_GameplayCore.Views
             SetStar(star3, model.starsEarned >= 3);
             
             nextButton.onClick.RemoveAllListeners();
-            nextButton.onClick.AddListener(_presenter.ClickNext);
+            nextButton.onClick.AddListener(() =>
+            {
+                Managers.AnalyticsManager.Instance?.TrackButtonClicked("victory_next");
+                _presenter.ClickNext();
+            });
             replayButton.onClick.RemoveAllListeners();
-            replayButton.onClick.AddListener(_presenter.ClickReplay);
+            replayButton.onClick.AddListener(() =>
+            {
+                Managers.AnalyticsManager.Instance?.TrackButtonClicked("victory_replay");
+                _presenter.ClickReplay();
+            });
             menuButton.onClick.RemoveAllListeners();
             menuButton.onClick.AddListener(() =>
             {
+                Managers.AnalyticsManager.Instance?.TrackButtonClicked("victory_menu");
                 SceneManager.LoadScene("MainMenu");
             });
             

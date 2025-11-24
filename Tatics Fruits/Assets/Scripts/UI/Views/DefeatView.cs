@@ -48,12 +48,20 @@ namespace New_GameplayCore.Views
             if (replayButton)
             {
                 replayButton.onClick.RemoveAllListeners();
-                replayButton.onClick.AddListener(_presenter.ClickReplay);
+                replayButton.onClick.AddListener(() =>
+                {
+                    Managers.AnalyticsManager.Instance?.TrackButtonClicked("defeat_replay");
+                    _presenter.ClickReplay();
+                });
             }
             if (menuButton)
             {
                 menuButton.onClick.RemoveAllListeners();
-                menuButton.onClick.AddListener(_presenter.ClickMenu);
+                menuButton.onClick.AddListener(() =>
+                {
+                    Managers.AnalyticsManager.Instance?.TrackButtonClicked("defeat_menu");
+                    _presenter.ClickMenu();
+                });
             }
             Show();
         }

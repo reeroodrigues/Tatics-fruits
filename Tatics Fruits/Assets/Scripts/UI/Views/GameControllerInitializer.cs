@@ -128,6 +128,11 @@ namespace New_GameplayCore.Views
             {
                 _highscores.TryReportScore(GetLevelId(), total);
             };
+            
+            Managers.AnalyticsManager.Instance?.TrackLevelStarted(
+                Progress.CurrentIndex + 1, 
+                levelConfig.name
+            );
         }
 
         private void HandleTutorialFinished()
@@ -209,6 +214,24 @@ namespace New_GameplayCore.Views
                 Progress.Advance(levelSet);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             };
+            
+            var timeSpent = levelConfig.initialTimeSeconds - _time.TimeLeftSeconds;
+            Managers.AnalyticsManager.Instance?.TrackLevelCompleted(
+                Progress.CurrentIndex + 1,
+                totalScore,
+                model.starsEarned,
+                timeSpent,
+                true
+            );
+            
+            if (rewardGold > 0)
+            {
+                Managers.AnalyticsManager.Instance?.TrackCurrencyEarned(
+                    rewardGold,
+                    "level_complete",
+                    "gold"
+                );
+            }
         }
 
         private void ShowDefeat()
@@ -233,6 +256,14 @@ namespace New_GameplayCore.Views
             {
                 SceneManager.LoadScene("MainMenu");
             };
+            
+            var timeSpent = levelConfig.initialTimeSeconds - _time.TimeLeftSeconds;
+            Managers.AnalyticsManager.Instance?.TrackLevelFailed(
+                Progress.CurrentIndex + 1,
+                _score.Total,
+                timeSpent,
+                "time_up"
+            );
         }
 
         private void HandleEnterPreRound()

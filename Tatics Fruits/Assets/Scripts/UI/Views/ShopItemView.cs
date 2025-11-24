@@ -185,6 +185,19 @@ public class ShopItemView : MonoBehaviour
 
         if (_profile.TryPurchaseCard(_cardId, _price))
         {
+            Managers.AnalyticsManager.Instance?.TrackItemPurchased(
+                _cardId,
+                "powerup_card",
+                _price,
+                "gold"
+            );
+            
+            Managers.AnalyticsManager.Instance?.TrackCurrencySpent(
+                _price,
+                "powerup_purchase",
+                "gold"
+            );
+            
             if (buyButton)
             {
                 buyButton.transform.DOKill();

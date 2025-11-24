@@ -13,6 +13,7 @@ public class DailyMissionSo : ScriptableObject
     public int target = 1;
     public int rewardGold = 50;
     public int levelParam = 0;
+    public string missionType;
 
     [Header("Localization")]
     [Tooltip("Chave no arquivo de idiomas. Ex.: mission_win_level")]

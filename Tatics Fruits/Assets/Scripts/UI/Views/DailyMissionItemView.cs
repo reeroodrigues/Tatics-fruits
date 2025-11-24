@@ -149,6 +149,18 @@ public class DailyMissionItemView : MonoBehaviour
 
         if (_ctrl.TryClaimMission(_state.missionId))
         {
+            Managers.AnalyticsManager.Instance?.TrackDailyMissionCompleted(
+                _state.missionId,
+                _def?.missionType ?? "unknown",
+                _state.rewardGold
+            );
+            
+            Managers.AnalyticsManager.Instance?.TrackCurrencyEarned(
+                _state.rewardGold,
+                "daily_mission",
+                "gold"
+            );
+            
             var spawn = coinSpawnPoint ? coinSpawnPoint : (RectTransform)transform;
             CoinCollectFx.Instance?.PlayFromUI(spawn, _state.rewardGold);
 

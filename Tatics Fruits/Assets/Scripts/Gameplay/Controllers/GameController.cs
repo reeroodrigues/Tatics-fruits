@@ -53,6 +53,7 @@ namespace New_GameplayCore.Controllers
         public void StartLevel(LevelConfigSO cfg, DeckConfigSo deckCfg)
         {
             _cfg = cfg;
+            
             var rng = cfg.useFixedSeed ? new Random(cfg.fixedSeed) : new Random();
             _deck.Build(deckCfg, rng);
             

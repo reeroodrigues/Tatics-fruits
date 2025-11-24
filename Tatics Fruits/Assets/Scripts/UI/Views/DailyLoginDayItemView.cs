@@ -95,6 +95,17 @@ public class DailyLoginDayItemView : MonoBehaviour
 
         if (ok)
         {
+            Managers.AnalyticsManager.Instance?.TrackDailyLoginClaimed(
+                _index + 1,
+                _info.Reward
+            );
+            
+            Managers.AnalyticsManager.Instance?.TrackCurrencyEarned(
+                _info.Reward,
+                "daily_login",
+                "gold"
+            );
+            
             var spawn = coinSpawnPoint ? coinSpawnPoint : (RectTransform)transform;
             CoinCollectFx.Instance?.PlayFromUI(spawn, _info.Reward);
 

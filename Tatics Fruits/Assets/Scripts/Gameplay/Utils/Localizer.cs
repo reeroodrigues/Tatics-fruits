@@ -66,6 +66,7 @@ public class Localizer : MonoBehaviour
 
     public void SetLanguage(string language, bool save = true)
     {
+        string oldLanguage = CurrentLanguage;
         CurrentLanguage = language;
         LoadTable(language);
         if (save)
@@ -73,6 +74,11 @@ public class Localizer : MonoBehaviour
             var s = SettingsRepository.Get();
             s.language = language;
             SettingsRepository.Save(s);
+        }
+        
+        if (oldLanguage != language)
+        {
+            Managers.AnalyticsManager.Instance?.TrackLanguageChanged(oldLanguage, language);
         }
         
         OnLanguageChanged?.Invoke();
