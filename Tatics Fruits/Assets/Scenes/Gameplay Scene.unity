@@ -909,7 +909,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 169387760}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -918,7 +918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.3697414, y: 130.90997}
+  m_AnchoredPosition: {x: 416.37, y: -875.56}
   m_SizeDelta: {x: 233.689, y: 249.545}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &169387762
@@ -1352,16 +1352,15 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1718528335}
-  - {fileID: 2111936332}
   - {fileID: 169387761}
   - {fileID: 401637898}
   m_Father: {fileID: 2082077804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00018311, y: -155.47}
-  m_SizeDelta: {x: 1057.4, y: 697.49}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 82.44995, y: -54.630127}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &241955251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1376,18 +1375,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI.Views.CountdownView
   countdownText: {fileID: 401637899}
   subtitleText: {fileID: 169387762}
-  punchRoot: {fileID: 401637898}
-  color3: {r: 1, g: 0.9, b: 0.2, a: 1}
-  color2: {r: 1, g: 0.6, b: 0.1, a: 1}
-  color1: {r: 1, g: 0.2, b: 0.2, a: 1}
-  colorGo: {r: 0.2, g: 1, b: 0.2, a: 1}
   numberDuration: 1
-  goDuration: 0.8
   scalePunch: 1.3
-  goScalePunch: 1.6
-  flashOverlay: {fileID: 2111936335}
-  flashMaxAlpha: 0.65
-  flashDuration: 0.15
 --- !u!1 &344111145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1490,7 +1479,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 401637897}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1499,7 +1488,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -13.771219, y: -123.52998}
+  m_AnchoredPosition: {x: 398.229, y: -1130}
   m_SizeDelta: {x: 1021.508, y: 249.545}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401637899
@@ -5050,7 +5039,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1718528334}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5059,7 +5048,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 4.3667507, y: 130.91136}
+  m_AnchoredPosition: {x: 416.36697, y: -875.5587}
   m_SizeDelta: {x: 1884.427, y: 2564.889}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1718528336
@@ -6136,94 +6125,6 @@ MonoBehaviour:
   swapOneButton: {fileID: 1201055234}
   timeDeltaAnchor: {fileID: 94323881}
   timeDeltaToast: {fileID: 2981652402924991672, guid: d2c14d4142eca4c4ebc0ff2a3718f809, type: 3}
---- !u!1 &2111936331
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2111936332}
-  - component: {fileID: 2111936334}
-  - component: {fileID: 2111936333}
-  - component: {fileID: 2111936335}
-  m_Layer: 5
-  m_Name: Image (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2111936332
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2111936331}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 241955250}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -25.800241, y: 0.003967285}
-  m_SizeDelta: {x: 1045.6, y: 697.485}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2111936333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2111936331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &2111936334
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2111936331}
-  m_CullTransparentMesh: 1
---- !u!225 &2111936335
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2111936331}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!222 &48806441947852642
 CanvasRenderer:
   m_ObjectHideFlags: 0
