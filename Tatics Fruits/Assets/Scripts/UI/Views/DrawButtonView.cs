@@ -1,6 +1,7 @@
 using System;
 using Gameplay.Controllers;
 using New_GameplayCore.Services;
+using UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
 

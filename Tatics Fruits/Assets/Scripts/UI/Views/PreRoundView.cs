@@ -3,6 +3,7 @@ using System.Collections;
 using Gameplay.Utils;
 using New_GameplayCore.Services;
 using TMPro;
+using UI.Views;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +24,9 @@ namespace New_GameplayCore.Views
         [Header("Buttons")]
         [SerializeField] private Button mainMenuButton;
         [SerializeField] private Button nextButton;
+
+        [Header("Countdown")]
+        private CountdownView _countdown;
         
         private IPreRoundPresenter _presenter;
         private PreRoundModel _model;
@@ -78,6 +82,11 @@ namespace New_GameplayCore.Views
             StartCoroutine(FadeCanvas(0f, 1f, 0.2f));
         }
 
+        public void SetupCountdown(CountdownView countdown)
+        {
+            _countdown = countdown;
+        }
+
 
         private void OnStart()
         {
@@ -87,6 +96,11 @@ namespace New_GameplayCore.Views
         private IEnumerator CloseThen(Action callback)
         {
             yield return FadeCanvas(1f, 0f, 0.15f);
+
+            if (_countdown != null)
+                yield return _countdown.PlayCountdown();
+            
+            
             callback?.Invoke();
             Destroy(gameObject);
         }

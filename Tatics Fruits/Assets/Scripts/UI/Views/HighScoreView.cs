@@ -1,6 +1,7 @@
 using System;
 using New_GameplayCore.Services;
 using TMPro;
+using UI.Views;
 using UnityEngine;
 
 namespace New_GameplayCore.Views

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -1,6 +1,7 @@
 using DG.Tweening;
 using New_GameplayCore.Views;
 using TMPro;
+using UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
 

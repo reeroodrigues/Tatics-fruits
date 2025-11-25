@@ -4,6 +4,7 @@ using New_GameplayCore;
 using UnityEngine;
 using UnityEngine.UI;
 using New_GameplayCore.Views;
+using UI.Views;
 
 public class AutoBuyCardsController : MonoBehaviour
 {

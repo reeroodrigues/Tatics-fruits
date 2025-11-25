@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using New_GameplayCore.Views;
+using UI.Views;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

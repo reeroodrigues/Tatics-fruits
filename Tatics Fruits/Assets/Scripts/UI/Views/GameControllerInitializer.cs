@@ -1,14 +1,15 @@
 using System;
 using DefaultNamespace.New_GameplayCore;
 using Gameplay.Controllers;
+using New_GameplayCore;
 using New_GameplayCore.GameState;
 using New_GameplayCore.Services;
+using New_GameplayCore.Views;
 using TMPro;
-using UI.Views;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace New_GameplayCore.Views
+namespace UI.Views
 {
     public class GameControllerInitializer : MonoBehaviour
     {
@@ -25,6 +26,7 @@ namespace New_GameplayCore.Views
         [SerializeField] private PlayerProfileService _profileService;
         [SerializeField] private TutorialManager tutorialManager;
         [SerializeField] private GameplaySettings gameplaySettings;
+        [SerializeField] private CountdownView countdownView;
 
         public IRuleEngine RuleEngine => _rule;
         public IGameController Controller => _controller;
@@ -280,6 +282,9 @@ namespace New_GameplayCore.Views
 
             _preRoundInstance = Instantiate(preRoundView, uiRoot);
             _preRoundInstance.Bind(_preRoundPresenter, model);
+
+            if (countdownView != null)
+                _preRoundInstance.SetupCountdown(countdownView);
         }
 
         private void Update()
