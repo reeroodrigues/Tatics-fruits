@@ -93,6 +93,11 @@
   "pre_round_play": "Fase {0}",
   "pre_round_objective": "Consigue {0} puntos en {1} segundos para ganar las 3 estrellas!",
 
+  "countdown_3": "PREPARAR",
+  "countdown_2": "LISTOS",
+  "countdown_1": "HACED PAREJAS!",
+  "countdown_go": "YA!",
+
   "defeat_title_timeup": "¡Se acabó el tiempo! No fue esta vez.",
   "defeat_score_line": "Hiciste: {0} puntos.",
 

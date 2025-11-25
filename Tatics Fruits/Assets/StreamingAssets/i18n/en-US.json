@@ -93,6 +93,11 @@
   "pre_round_play": "Stage {0}",
   "pre_round_objective": "Score {0} points in {1} seconds to earn 3 stars!",
 
+  "countdown_3": "READY",
+  "countdown_2": "SET",
+  "countdown_1": "MATCH!",
+  "countdown_go": "GO!",
+
   "defeat_title_timeup": "Time's up! Not this time.",
   "defeat_score_line": "You scored: {0} points.",
 

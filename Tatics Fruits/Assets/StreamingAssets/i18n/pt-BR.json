@@ -93,6 +93,11 @@
   
   "pre_round_play": "Fase {0}",
   "pre_round_objective": "Faça {0} pontos em {1} segundos para ganhar as 3 estrelas!",
+
+  "countdown_3": "PREPARAR",
+  "countdown_2": "APONTAR",
+  "countdown_1": "FAÇA PARES!",
+  "countdown_go": "JÁ!",
   
   "defeat_title_timeup": "Tempo esgotado! Não foi dessa vez.",
   "defeat_score_line": "Você fez: {0} pontos.",

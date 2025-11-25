@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using DG.Tweening;
 using Gameplay.Utils;
@@ -8,10 +7,10 @@ using UnityEngine;
 namespace UI.Views
 {
     public class CountdownView : MonoBehaviour
-    { 
+    {
         [Header("UI")]
-        [SerializeField] private TextMeshProUGUI countdownTime;
         [SerializeField] private TextMeshProUGUI countdownText;
+        [SerializeField] private TextMeshProUGUI subtitleText;
 
         [Header("Config")]
         [SerializeField] private float numberDuration = 1f;
@@ -20,36 +19,47 @@ namespace UI.Views
         public IEnumerator PlayCountdown()
         {
             gameObject.SetActive(true);
-
-            countdownText.text = "Preparar...apontar...faça pares!";
-            countdownText.alpha = 0;
-
-            countdownText.DOFade(1f, 0.5f);
-
-            yield return ShowNumber("3");
-            yield return ShowNumber("2");
-            yield return ShowNumber("1");
-            yield return ShowNumber("Já!");
-
-            countdownTime.DOFade(0, 0.4f);
-            countdownText.DOFade(0, 0.4f);
             
+            countdownText.alpha = 0;
+            subtitleText.alpha = 0;
+            
+            yield return ShowStep("3", Localizer.Instance.Tr("countdown_3", "PREPARAR"));
+            
+            yield return ShowStep("2", Localizer.Instance.Tr("countdown_2", "APONTAR"));
+            
+            yield return ShowStep("1", Localizer.Instance.Tr("countdown_1", "FAÇA PARES!"));
+            
+            yield return ShowStep(Localizer.Instance.Tr("countdown_go", "JÁ!"), "");
+            
+            countdownText.DOFade(0, 0.3f);
+            subtitleText.DOFade(0, 0.3f);
+
+            yield return new WaitForSeconds(0.3f);
+
             gameObject.SetActive(false);
         }
 
-        private IEnumerator ShowNumber(string value)
+        private IEnumerator ShowStep(string number, string subtitle)
         {
-            countdownTime.text = value;
-            countdownTime.alpha = 0f;
-            countdownTime.rectTransform.localScale = Vector3.one * 0.5f;
+            countdownText.text = number;
+            subtitleText.text = subtitle;
 
-            countdownTime.DOFade(1f, 0.2f);
-            countdownTime.rectTransform.DOScale(scalePunch, 0.25f).SetEase(Ease.OutBack);
+            countdownText.alpha = 0;
+            subtitleText.alpha = 0;
+
+            countdownText.rectTransform.localScale = Vector3.one * 0.5f;
+            
+            countdownText.DOFade(1f, 0.2f);
+            countdownText.rectTransform
+                .DOScale(scalePunch, 0.25f)
+                .SetEase(Ease.OutBack);
+
+            subtitleText.DOFade(1f, 0.25f);
 
             yield return new WaitForSeconds(numberDuration);
-
-            countdownTime.DOFade(0f, 0.2f);
-
+            
+            countdownText.DOFade(0f, 0.2f);
+            subtitleText.DOFade(0f, 0.2f);
         }
     }
 }
