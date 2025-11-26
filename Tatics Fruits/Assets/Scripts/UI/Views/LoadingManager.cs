@@ -52,7 +52,13 @@ namespace UI.Views
         {
             if (Ads.BannerAdManager.Instance != null)
             {
+                Debug.Log("[LoadingManager] Requesting banner ad to show...");
                 Ads.BannerAdManager.Instance.ShowBanner();
+            }
+            else
+            {
+                Debug.LogWarning("[LoadingManager] BannerAdManager.Instance is NULL! AdSystem may not be initialized.");
+                Debug.LogWarning("[LoadingManager] Make sure you start from MainMenu scene, not directly from Loading scene.");
             }
         }
 

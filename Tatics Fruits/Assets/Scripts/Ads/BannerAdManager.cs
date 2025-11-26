@@ -11,7 +11,7 @@ namespace Ads
         
         [Header("Scene Control")]
         [Tooltip("List of scene names where banners should be shown")]
-        [SerializeField] private string[] scenesWithBanners = { "MainMenu" };
+        [SerializeField] private string[] scenesWithBanners = { "MainMenu", "Loading"};
 
         private IBannerAdProvider _bannerProvider;
         private bool _isCurrentSceneAllowed;

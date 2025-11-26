@@ -94,6 +94,12 @@ namespace UI.Views
 
         private void Start()
         {
+            if (Progress == null)
+            {
+                Debug.LogError("[GameControllerInitializer] Progress is null! Initialization may have failed.");
+                return;
+            }
+            
             if (tutorialManager == null)
             {
                 StartGameplay();
@@ -289,7 +295,10 @@ namespace UI.Views
 
         private void Update()
         {
-            _controller.UpdateTick(Time.deltaTime);
+            if (_controller != null)
+            {
+                _controller.UpdateTick(Time.deltaTime);
+            }
         }
     
         private string GetLevelId()

@@ -361,8 +361,15 @@ namespace Managers
         {
             if (_isInitialized)
             {
-                AnalyticsService.Instance.Flush();
-                Debug.Log("[Analytics] Flushed analytics data on quit");
+                try
+                {
+                    AnalyticsService.Instance.Flush();
+                    Debug.Log("[Analytics] Flushed analytics data on quit");
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"[Analytics] Failed to flush on quit: {e.Message}");
+                }
             }
         }
     }

@@ -23,6 +23,18 @@ namespace New_GameplayCore.Views
 
         private void Start()
         {
+            if (bootstrap.IsReady)
+            {
+                Initialize();
+            }
+            else
+            {
+                bootstrap.OnReady += Initialize;
+            }
+        }
+
+        private void Initialize()
+        {
             _score = bootstrap.Score;
             _cfg = bootstrap.LevelConfig;
             
@@ -32,6 +44,9 @@ namespace New_GameplayCore.Views
 
         private void OnDestroy()
         {
+            if (bootstrap != null)
+                bootstrap.OnReady -= Initialize;
+                
             if (_score != null)
                 _score.OnScoreChanged -= Refresh;
         }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using Core;
 
 namespace Ads
 {
@@ -77,11 +78,11 @@ namespace Ads
             if (interstitialProvider != null && InterstitialAdManager.Instance != null)
             {
                 InterstitialAdManager.Instance.SetAdProvider(interstitialProvider);
-                Debug.Log($"[AdInitializer] Interstitial ad provider initialized: {providerType}");
+                DebugLogger.Log($"[AdInitializer] Interstitial ad provider initialized: {providerType}");
             }
             else
             {
-                Debug.LogError("[AdInitializer] Failed to initialize interstitial ad provider or InterstitialAdManager not found.");
+                DebugLogger.LogError("[AdInitializer] Failed to initialize interstitial ad provider or InterstitialAdManager not found.");
             }
         }
 
@@ -97,11 +98,11 @@ namespace Ads
             if (bannerProvider != null && BannerAdManager.Instance != null)
             {
                 BannerAdManager.Instance.SetBannerProvider(bannerProvider);
-                Debug.Log($"[AdInitializer] Banner ad provider initialized: {providerType}");
+                DebugLogger.Log($"[AdInitializer] Banner ad provider initialized: {providerType}");
             }
             else
             {
-                Debug.LogError("[AdInitializer] Failed to initialize banner ad provider or BannerAdManager not found.");
+                DebugLogger.LogError("[AdInitializer] Failed to initialize banner ad provider or BannerAdManager not found.");
             }
         }
 

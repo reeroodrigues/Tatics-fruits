@@ -18,6 +18,18 @@ namespace New_GameplayCore.Views
 
         private void Start()
         {
+            if (bootstrap.IsReady)
+            {
+                Initialize();
+            }
+            else
+            {
+                bootstrap.OnReady += Initialize;
+            }
+        }
+
+        private void Initialize()
+        {
             _controller = bootstrap.Controller;
             _hand = bootstrap.Hand;
             _deck = bootstrap.Deck;
@@ -30,6 +42,9 @@ namespace New_GameplayCore.Views
 
         private void OnDestroy()
         {
+            if (bootstrap != null)
+                bootstrap.OnReady -= Initialize;
+                
             if (_hand != null)
                 _hand.OnHandChanged -= _ => RefreshInteractable();
         }
