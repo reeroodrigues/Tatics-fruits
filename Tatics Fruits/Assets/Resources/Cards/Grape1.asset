@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Grape1
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.CardTypeSOI
   id: grape1
-  sprite: {fileID: 3609127053864480804, guid: 56d6d7e401ee5424583f13db8ca736db, type: 3}
+  sprite: {fileID: 5450126471612841573, guid: 500e43091c5d8594496d70da7da511da, type: 3}
   baseValue: 6
   rarity: 0

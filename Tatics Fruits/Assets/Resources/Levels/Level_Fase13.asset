@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69aff33fcf794d92a54294792eda83c6, type: 3}
-  m_Name: Level_Fase1
+  m_Name: Level_Fase13
   m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.LevelConfigSO
-  levelId: fase_1
-  displayName: Fase 1
+  levelId: fase_13
+  displayName: Fase 13
   description: "Fa\xE7a {0} pontos em {0} segundos!"
-  targetScore: 50
+  targetScore: 150
   initialTimeSeconds: 120
   handSize: 6
-  deckSize: 56
+  deckSize: 60
   timeBonusOnPair: 3
-  swapAllTimePenalty: 5
-  swapRandomTimePenalty: 2
+  swapAllTimePenalty: 6
+  swapRandomTimePenalty: 3
   allowEmptyDeckRefill: 1
-  deck: {fileID: 11400000, guid: 2e74fcf8bbee2644c9ae6030dd455b4c, type: 2}
+  deck: {fileID: 11400000, guid: 83e47937cd362614fa6755d86f46658b, type: 2}
   useFixedSeed: 0
   fixedSeed: 0
   scorePerPairBase: 0

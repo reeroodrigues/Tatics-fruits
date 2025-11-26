@@ -1099,7 +1099,6 @@ GameObject:
   - component: {fileID: 6529370392288295991}
   - component: {fileID: 8305703880940371996}
   - component: {fileID: 2663688111192914132}
-  - component: {fileID: 8641127991620543244}
   m_Layer: 5
   m_Name: Score Text
   m_TagString: Untagged
@@ -1225,20 +1224,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8641127991620543244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7525958809996904174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
-  key: victory_score_line
-  fallback: 
 --- !u!1 &7554237894670956729
 GameObject:
   m_ObjectHideFlags: 0
