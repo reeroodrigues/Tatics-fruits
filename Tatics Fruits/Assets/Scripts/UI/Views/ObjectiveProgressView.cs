@@ -1,3 +1,4 @@
+using Core.ScriptableObjects;
 using DG.Tweening;
 using UI.Views;
 using UnityEngine;

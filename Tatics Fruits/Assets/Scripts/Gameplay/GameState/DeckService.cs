@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Core.ScriptableObjects;
 using UnityEngine;
 
 namespace New_GameplayCore.Services

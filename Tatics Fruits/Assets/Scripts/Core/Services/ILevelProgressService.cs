@@ -1,3 +1,5 @@
+using Core.ScriptableObjects;
+
 namespace New_GameplayCore.Services
 {
     public interface ILevelProgressService

@@ -1,7 +1,10 @@
 using System;
+using Core.ScriptableObjects;
+using New_GameplayCore;
+using New_GameplayCore.Services;
 using UnityEngine;
 
-namespace New_GameplayCore.Services
+namespace Core.Services
 {
     public class VictoryPresenter
     {

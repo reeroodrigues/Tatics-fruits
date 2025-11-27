@@ -1,6 +1,7 @@
+using New_GameplayCore;
 using UnityEngine;
 
-namespace New_GameplayCore
+namespace Core.ScriptableObjects
 {
     [System.Serializable]
     public struct DeckEntrySummary { public CardTypeSo type; public int quantity; }

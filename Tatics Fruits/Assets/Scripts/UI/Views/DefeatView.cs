@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace New_GameplayCore.Views
+namespace UI.Views
 {
     public class DefeatView : MonoBehaviour
     {

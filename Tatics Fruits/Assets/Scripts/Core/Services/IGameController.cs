@@ -1,7 +1,9 @@
 using System;
+using Core.ScriptableObjects;
 using DefaultNamespace.New_GameplayCore;
+using New_GameplayCore;
 
-namespace New_GameplayCore
+namespace Core.Services
 {
     public interface IGameController
     {

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Core.ScriptableObjects;
+using Core.Services;
 using DefaultNamespace.New_GameplayCore;
 using New_GameplayCore;
 using New_GameplayCore.GameState;

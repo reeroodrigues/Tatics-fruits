@@ -1,3 +1,4 @@
+using Core.ScriptableObjects;
 using UnityEngine;
 
 namespace New_GameplayCore

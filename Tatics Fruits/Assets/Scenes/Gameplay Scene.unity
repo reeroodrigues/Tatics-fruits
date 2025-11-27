@@ -1942,8 +1942,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.5735016, y: 1.049}
-  m_SizeDelta: {x: 366.1487, y: 143.2243}
+  m_AnchoredPosition: {x: 0.16799927, y: 1.049}
+  m_SizeDelta: {x: 347.497, y: 143.224}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &541493113
 MonoBehaviour:
@@ -1965,7 +1965,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Troque todas as cartas
+  m_text: Swap all cards
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
   m_sharedMaterial: {fileID: -4171563015097924827, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
@@ -1992,7 +1992,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51.85
+  m_fontSize: 52.25
   m_fontSizeBase: 21.44
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -2673,8 +2673,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.42829895, y: 1.7136}
-  m_SizeDelta: {x: 367.307, y: 140.8838}
+  m_AnchoredPosition: {x: 1.765, y: 1.7136}
+  m_SizeDelta: {x: 333.19, y: 140.884}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &798164991
 MonoBehaviour:
@@ -2696,7 +2696,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Troque uma carta
+  m_text: Swap on card
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
   m_sharedMaterial: {fileID: -4171563015097924827, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
@@ -2723,7 +2723,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51
+  m_fontSize: 53.95
   m_fontSizeBase: 21.44
   m_fontWeight: 400
   m_enableAutoSizing: 1

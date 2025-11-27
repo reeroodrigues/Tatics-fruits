@@ -235,8 +235,8 @@ MonoBehaviour:
   titleText: {fileID: 4339705010118402715}
   scoreText: {fileID: 2663688111192914132}
   star1: {fileID: 6745130484996466470}
-  star2: {fileID: 748133763917965968}
-  star3: {fileID: 7014472475933016216}
+  star2: {fileID: 6745130484996466470}
+  star3: {fileID: 6745130484996466470}
   replayButton: {fileID: 2524627742016067720}
   menuButton: {fileID: 4528030208632875428}
 --- !u!1 &836052152751879222
@@ -1141,7 +1141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
-  key: defeat_title_timeup
+  key: 
   fallback: 
 --- !u!1 &7923311657506594518
 GameObject:

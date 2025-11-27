@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
 using Gameplay.Utils;
+using New_GameplayCore;
 using New_GameplayCore.Services;
 using TMPro;
-using UI.Views;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace New_GameplayCore.Views
+namespace UI.Views
 {
     public class PreRoundView : MonoBehaviour
     {

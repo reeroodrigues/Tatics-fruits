@@ -1,4 +1,5 @@
 using System;
+using Core.ScriptableObjects;
 using Managers;
 using UnityEngine;
 

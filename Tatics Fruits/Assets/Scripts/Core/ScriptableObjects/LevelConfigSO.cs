@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace New_GameplayCore
+namespace Core.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Create LevelConfigSO", fileName = "LevelConfigSO", order = 0)]
     public class LevelConfigSO : ScriptableObject

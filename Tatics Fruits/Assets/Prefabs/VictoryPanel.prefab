@@ -225,8 +225,8 @@ MonoBehaviour:
   titleText: {fileID: 4339705010118402715}
   scoreText: {fileID: 2663688111192914132}
   recordText: {fileID: 4895292174208723623}
-  star1: {fileID: 748133763917965968}
-  star2: {fileID: 7014472475933016216}
+  star1: {fileID: 6745130484996466470}
+  star2: {fileID: 6745130484996466470}
   star3: {fileID: 6745130484996466470}
   starOn: {fileID: 5754163482525733906, guid: a7ab94ec152b1d8428cdb0ee8bbf6d90, type: 3}
   starOff: {fileID: -1560252160693202648, guid: c46642d395d97df46b879005ea481d1b, type: 3}
@@ -936,7 +936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
-  key: victory_new_record
+  key: 
   fallback: 
 --- !u!1 &5892001334301966238
 GameObject:
@@ -1494,7 +1494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
-  key: victory_title
+  key: 
   fallback: 
 --- !u!1 &7923311657506594518
 GameObject:

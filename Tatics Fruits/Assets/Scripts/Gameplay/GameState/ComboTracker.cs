@@ -1,4 +1,5 @@
 using System;
+using Core.ScriptableObjects;
 
 namespace New_GameplayCore.GameState
 {
