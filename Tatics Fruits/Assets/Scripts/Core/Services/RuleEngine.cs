@@ -41,7 +41,13 @@ namespace New_GameplayCore.Services
             float multiplier = _cfg.comboMultipliers[comboIndex];
 
             _score.AddPairScore(a, b, multiplier, out int added);
-            int bonus = _cfg.timeBonusOnPair + Mathf.FloorToInt((_combo.CurrentCombo - 1) * 1);
+            
+            int pairValue = a.Type.baseValue;
+            
+            int bonus = pairValue;
+            
+            bonus += Mathf.Max(0, _combo.CurrentCombo - 1);
+            
             _time.Add(bonus);
 
             _hand.TryRemove(a);

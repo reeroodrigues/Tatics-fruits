@@ -19,7 +19,7 @@ MonoBehaviour:
   initialTimeSeconds: 120
   handSize: 6
   deckSize: 56
-  timeBonusOnPair: 3
+  timeBonusOnPair: 0
   swapAllTimePenalty: 5
   swapRandomTimePenalty: 2
   allowEmptyDeckRefill: 1
