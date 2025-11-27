@@ -90,7 +90,7 @@
   "swap_all_cards": "Cambiar todas las cartas",
   "swap_one_card": "Cambiar una carta",
 
-  "pre_round_play": "Fase {0}",
+  "pre_round_play": "¿Listo?",
   "pre_round_objective": "Consigue {0} puntos en {1} segundos para ganar las 3 estrellas!",
 
   "countdown_3": "PREPARAR",

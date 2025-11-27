@@ -91,7 +91,7 @@
   "swap_all_cards": "Troque todas as cartas",
   "swap_one_card": "Troque uma carta",
   
-  "pre_round_play": "Fase {0}",
+  "pre_round_play": "Pronto?",
   "pre_round_objective": "Faça {0} pontos em {1} segundos para ganhar as 3 estrelas!",
 
   "countdown_3": "PREPARAR",

@@ -90,7 +90,7 @@
   "swap_all_cards": "Swap all cards",
   "swap_one_card": "Swap one card",
 
-  "pre_round_play": "Stage {0}",
+  "pre_round_play": "Ready?",
   "pre_round_objective": "Score {0} points in {1} seconds to earn 3 stars!",
 
   "countdown_3": "READY",
