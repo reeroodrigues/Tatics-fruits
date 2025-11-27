@@ -14,7 +14,7 @@ namespace Core.Services
         void StartLevel(LevelConfigSO cfg, DeckConfigSo deckCfg);
         void UpdateTick(float deltaTime);
         void OnCardSelected(CardInstance card);
-        void BeginPlayFromPreRound(New_GameplayCore.PreRoundModel model);
+        void BeginPlayFromPreRound(PreRoundModel model);
         void BackToLevelSelect();
         void OnSwapAllRequested();
         void OnSwapRandomRequested();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Core.ScriptableObjects;
 using Gameplay.Utils;
 using New_GameplayCore;
 using New_GameplayCore.Services;

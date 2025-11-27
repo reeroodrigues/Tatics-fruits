@@ -1,3 +1,5 @@
+using Core.ScriptableObjects;
+
 namespace New_GameplayCore
 {
     public readonly struct CardInstance

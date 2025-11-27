@@ -15,7 +15,7 @@ MonoBehaviour:
   levelId: fase_14
   displayName: Fase 14
   description: "Fa\xE7a {0} pontos em {0} segundos!"
-  targetScore: 200
+  targetScore: 180
   initialTimeSeconds: 90
   handSize: 6
   deckSize: 60

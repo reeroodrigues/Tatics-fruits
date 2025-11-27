@@ -1,7 +1,6 @@
-using Core.ScriptableObjects;
 using UnityEngine;
 
-namespace New_GameplayCore
+namespace Core.ScriptableObjects
 {
     [CreateAssetMenu(menuName = "Create CardTypeSO", fileName = "CardTypeSO", order = 0)]
     public class CardTypeSo : ScriptableObject

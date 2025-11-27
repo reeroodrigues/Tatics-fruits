@@ -1,8 +1,10 @@
 using Core.ScriptableObjects;
 using Gameplay.Controllers;
+using New_GameplayCore;
+using New_GameplayCore.Services;
 using UnityEngine;
 
-namespace New_GameplayCore.Services
+namespace Core.Services
 {
     public class PreRoundPresenter : IPreRoundPresenter
     {
