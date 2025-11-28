@@ -1,0 +1,9 @@
+# Keep Unity Push Notifications SDK classes
+-keep class com.unity.services.pushnotifications.** { *; }
+
+# Keep Firebase Messaging classes
+-keep class com.google.firebase.messaging.** { *; }
+-keep class com.google.firebase.iid.** { *; }
+
+# Keep Google Play Services classes used by Push Notifications
+-keep class com.google.android.gms.** { *; }

@@ -8,6 +8,13 @@
         "com.unity.nuget.newtonsoft-json": "3.2.1"
       }
     },
+    "com.google.external-dependency-manager": {
+      "version": "https://github.com/googlesamples/unity-jar-resolver.git?path=upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "6eee66190fb6d7182518cc3b41e3919e054699b6"
+    },
     "com.unity.2d.animation": {
       "version": "12.0.2",
       "depth": 1,
@@ -144,7 +151,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.device-simulator.devices": {
-      "version": "1.0.0",
+      "version": "1.0.1",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
@@ -181,11 +188,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.23",
+      "version": "2.0.25",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.9"
+        "com.unity.test-framework": "1.1.31"
       },
       "url": "https://packages.unity.com"
     },
@@ -210,6 +217,15 @@
       "depth": 0,
       "source": "registry",
       "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mobile.notifications": {
+      "version": "2.4.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.androidjni": "1.0.0"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer.center": {
@@ -242,7 +258,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.purchasing": {
-      "version": "5.0.2",
+      "version": "5.0.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -349,6 +365,17 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity.services.push-notifications": {
+      "version": "4.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.services.core": "1.10.1",
+        "com.unity.services.analytics": "6.0.1",
+        "com.unity.mobile.notifications": "2.2.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.shadergraph": {
       "version": "17.2.0",
       "depth": 1,
@@ -400,7 +427,7 @@
       }
     },
     "com.unity.visualscripting": {
-      "version": "1.9.7",
+      "version": "1.9.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {

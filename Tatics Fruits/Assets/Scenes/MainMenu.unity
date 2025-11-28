@@ -6055,6 +6055,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 727917562}
   m_CullTransparentMesh: 1
+--- !u!1 &728060450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 728060451}
+  - component: {fileID: 728060452}
+  m_Layer: 0
+  m_Name: PushNotificationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &728060451
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728060450}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 338.02383, y: 854.85803, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &728060452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728060450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27cc052e6503476a8144fa05d601bb79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Ads.PushNotificationManager
 --- !u!1 &728246785
 GameObject:
   m_ObjectHideFlags: 0
@@ -17191,8 +17235,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 19.935001
-  m_fontSizeMax: 79.740005
+  m_fontSizeMin: 43.200005
+  m_fontSizeMax: 172.80002
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -18270,12 +18314,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.42738
+  m_fontSize: 31.33273
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 14.458749
-  m_fontSizeMax: 26.42738
+  m_fontSizeMin: 31.33273
+  m_fontSizeMax: 57.269268
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -18596,3 +18640,4 @@ SceneRoots:
   - {fileID: 6531584249899158323}
   - {fileID: 1693729824}
   - {fileID: 92721113}
+  - {fileID: 728060451}
