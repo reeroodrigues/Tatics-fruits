@@ -17191,8 +17191,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 19.935001
-  m_fontSizeMax: 79.740005
+  m_fontSizeMin: 20.9925
+  m_fontSizeMax: 83.97
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -17403,6 +17403,7 @@ GameObject:
   - component: {fileID: 2082077802}
   - component: {fileID: 2082077801}
   - component: {fileID: 2082077805}
+  - component: {fileID: 2082077806}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -17542,6 +17543,23 @@ MonoBehaviour:
   tiltDuration: 0.18
   returnDuration: 0.22
   iconsStagger: 0.07
+--- !u!114 &2082077806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082077800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed792b795e00824d8ef77a8597b0209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gameplay.Utils.ResponsiveCanvasManager
+  referenceResolution: {x: 1080, y: 1920}
+  portraitMatch: 0.2
+  landscapeMatch: 0.8
+  tabletAspectThreshold: 1.5
+  ultraWideThreshold: 2.1
 --- !u!1 &2093363566
 GameObject:
   m_ObjectHideFlags: 0
