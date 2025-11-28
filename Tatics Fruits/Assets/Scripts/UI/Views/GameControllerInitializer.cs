@@ -259,8 +259,10 @@ namespace UI.Views
 
         private void ShowAllLevelsCompleted()
         {
+            //Managers.AnalyticsManager.Instance?.TrackEvent("all_levels_completed");
+            
             var view = Instantiate(allLevelsCompletedView, uiRoot);
-            view.Initialized(() =>
+            view.Initialize(() =>
             {
                 SceneManager.LoadScene("MainMenu");
             });
