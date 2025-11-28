@@ -29,6 +29,7 @@ namespace UI.Views
         [SerializeField] private TutorialManager tutorialManager;
         [SerializeField] private GameplaySettings gameplaySettings;
         [SerializeField] private CountdownView countdownView;
+        [SerializeField] private AllLevelsCompletedView allLevelsCompletedView;
 
         public IRuleEngine RuleEngine => _rule;
         public IGameController Controller => _controller;
@@ -223,8 +224,18 @@ namespace UI.Views
             };
             presenter.OnNext += () =>
             {
-                Progress.Advance(levelSet);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                var currentIndex  = Progress.CurrentIndex;
+                var totalLevels = levelSet.levels.Length;
+
+                if (currentIndex >= totalLevels - 1)
+                {
+                    ShowAllLevelsCompleted();
+                }
+                else
+                {
+                    Progress.Advance(levelSet);
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
             };
             
             var timeSpent = levelConfig.initialTimeSeconds - _time.TimeLeftSeconds;
@@ -244,6 +255,15 @@ namespace UI.Views
                     "gold"
                 );
             }
+        }
+
+        private void ShowAllLevelsCompleted()
+        {
+            var view = Instantiate(allLevelsCompletedView, uiRoot);
+            view.Initialized(() =>
+            {
+                SceneManager.LoadScene("MainMenu");
+            });
         }
 
         private void ShowDefeat()

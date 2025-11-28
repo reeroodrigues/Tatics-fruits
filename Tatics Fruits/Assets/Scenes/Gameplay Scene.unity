@@ -4273,6 +4273,7 @@ MonoBehaviour:
   tutorialManager: {fileID: 1014608234}
   gameplaySettings: {fileID: 1923058688}
   countdownView: {fileID: 241955251}
+  allLevelsCompletedView: {fileID: 8590934228772649784, guid: db5f22bac4e24224ca9a8f951dcf469b, type: 3}
 --- !u!1001 &1448547642
 PrefabInstance:
   m_ObjectHideFlags: 0

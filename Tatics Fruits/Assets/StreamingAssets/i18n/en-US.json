@@ -107,6 +107,9 @@
   "victory_previous_record": "Previous record: {0}",
   "buy_cards_auto": "Auto buy",
 
+  "level_completed_title": "Congratulations!",
+  "level_completed_subtitle": "You've completed all the levels!\nNew levels coming soon!!",
+
   "quit_gameplay": "Quit game?",
   "quit_gameplay_confirm": "When you quit, you will lose all current progress in this stage."
 }
