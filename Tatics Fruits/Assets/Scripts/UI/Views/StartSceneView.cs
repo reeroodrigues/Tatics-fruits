@@ -18,6 +18,7 @@ namespace UI.Views
         [SerializeField] private TextMeshProUGUI titleTermsText;
         [SerializeField] private GameObject guestPanel;
         [SerializeField] private GameObject termsPanel;
+        [SerializeField] private GameObject helpPanel;
 
         [Header("Guest Panel")] 
         [SerializeField] private Button guestYesButton;
@@ -58,6 +59,9 @@ namespace UI.Views
 
             if (guestNoButton != null)
                 guestNoButton.onClick.AddListener(OnGuestNoClicked);
+            
+            if(helpButton != null)
+                helpButton.onClick.AddListener(OnHelpClicked);
 
             if (titleTermsText != null && titleTermsText.canvas != null)
             {
@@ -118,6 +122,18 @@ namespace UI.Views
         {
             if(termsPanel != null)
                 termsPanel.SetActive(false);
+        }
+        
+        private void OnHelpClicked()
+        {
+            if(helpPanel != null)
+                helpPanel.SetActive(true);
+        }
+
+        public void CloseHelpPanel()
+        {
+            if(helpPanel != null)
+                helpPanel.SetActive(false);
         }
 
         private void OnGuestButtonClicked()
