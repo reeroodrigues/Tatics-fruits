@@ -8006,7 +8006,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1250548557}
         m_TargetAssemblyTypeName: DataSaver, Assembly-CSharp
-        m_MethodName: LoadDataFn
+        m_MethodName: LoadData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9762,12 +9762,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5fb712109c45984f942b3bea6edb265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataSaver
-  dts:
+  userId: user001
+  dataToSave:
     userName: 
     totalCoins: 0
     crrLevel: 0
     highScore: 0
-  userId: user001
+    lastUpdatedTicks: 0
 --- !u!1 &1251724882
 GameObject:
   m_ObjectHideFlags: 0
@@ -12180,7 +12181,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1250548557}
         m_TargetAssemblyTypeName: DataSaver, Assembly-CSharp
-        m_MethodName: SaveDataFn
+        m_MethodName: SavaData
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16346,6 +16347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a70a9ce008d0462fb9a23a5fdfe5611b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoginManager
+  dataSaver: {fileID: 1250548557}
 --- !u!1 &1989095737
 GameObject:
   m_ObjectHideFlags: 0
@@ -17297,8 +17299,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 19.935001
-  m_fontSizeMax: 79.740005
+  m_fontSizeMin: 10.800001
+  m_fontSizeMax: 43.200005
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

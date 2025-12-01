@@ -10,7 +10,7 @@ namespace Editor
         private static string _previousScene = "";
         private static bool _sceneLoad = false;
 
-        private const string START_SCENE_PATH = "Assets/Scenes/MainMenu.unity";
+        private const string START_SCENE_PATH = "Assets/Scenes/StartScene.unity";
 
         static AutoStartSceneEditor()
         {

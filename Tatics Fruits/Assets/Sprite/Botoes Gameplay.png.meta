@@ -129,45 +129,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ChatGPT_Image_22_de_out._de_2025__10_07_46-removebg-preview_0
+      name: Botoes Gameplay_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 262
-        width: 391
-        height: 172
+        x: 56
+        y: 263
+        width: 389
+        height: 170
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 44, y: 40, z: 44, w: 40}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4b28be4af8c00dd50800000000000000
-      internalID: 6759916851769868980
+      spriteID: 81f42a33a3ee3434298ea9216a1b8b6b
+      internalID: -1862416818
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChatGPT_Image_22_de_out._de_2025__10_07_46-removebg-preview_1
+      name: Botoes Gameplay_1
       rect:
         serializedVersion: 2
-        x: 55
+        x: 56
         y: 60
-        width: 391
-        height: 173
+        width: 388
+        height: 172
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: bd838a0e3b9d7c220800000000000000
-      internalID: 2506211084246464731
+      spriteID: 475ee7fac36e0214c9782ef33dd14012
+      internalID: -865799225
       vertices: []
       indices: 
       edges: []
@@ -184,10 +184,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      ChatGPT_Image_22_de_out._de_2025__10_07_46-removebg-preview_0: 6759916851769868980
-      ChatGPT_Image_22_de_out._de_2025__10_07_46-removebg-preview_1: 2506211084246464731
+      Botoes Gameplay_0: -1862416818
+      Botoes Gameplay_1: -865799225
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
