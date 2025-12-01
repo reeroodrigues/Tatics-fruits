@@ -89,7 +89,7 @@ public class SettingsMenu : MonoBehaviour
         
         HookButtonWithFeedback(deleteAccountButton, "Delete Account (futuro)");
         HookButtonWithFeedback(creditsButton, OnCreditsButtonClicked);
-        HookButtonWithFeedback(termsButton,   () => Application.OpenURL("https://example.com/terms"));
+        HookButtonWithFeedback(termsButton,  "Load Data(futuro)");
         
         audioToggle.isOn = _settings.musicOn;
         sfxToggle.isOn   = _settings.sfxOn;
