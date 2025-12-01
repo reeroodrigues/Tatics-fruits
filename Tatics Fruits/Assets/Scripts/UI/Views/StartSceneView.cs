@@ -47,7 +47,9 @@ namespace UI.Views
         {
             if (titleTermsText != null)
                 _termsOriginalColor = titleTermsText.color;
-                
+            
+            if(googleButton != null)
+                googleButton.onClick.AddListener(OnGoogleButtonClicked);
 
             if (guestPanel != null)
                 guestPanel.SetActive(false);
@@ -115,7 +117,6 @@ namespace UI.Views
             }
         }
 
-
         private void OpenTermsPanel()
         {
             if(termsPanel != null)
@@ -140,6 +141,20 @@ namespace UI.Views
         {
             if(helpPanel != null)
                 helpPanel.SetActive(false);
+        }
+        
+        private void OnGoogleButtonClicked()
+        {
+            if(checkTerms == null)
+                return;
+
+            if (!checkTerms.isOn)
+            {
+                FlashTermsTitleOnce();
+                return;
+            }
+            
+            SceneManager.LoadScene(mainMenuSceneName);
         }
 
         private void OnGuestButtonClicked()
