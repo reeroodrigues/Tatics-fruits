@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -36,6 +37,7 @@ namespace UI.Views
 
         private Color _termsOriginalColor;
         private bool _isBlinkingTerms;
+        private Camera _uiCamera;
 
         private void Awake()
         {
@@ -56,6 +58,14 @@ namespace UI.Views
 
             if (guestNoButton != null)
                 guestNoButton.onClick.AddListener(OnGuestNoClicked);
+
+            if (titleTermsText != null && titleTermsText.canvas != null)
+            {
+                var canvas = titleTermsText.canvas;
+                _uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay
+                    ? null
+                    : canvas.worldCamera;
+            }
         }
 
         private void OnDestroy()
@@ -68,6 +78,46 @@ namespace UI.Views
             
             if(guestNoButton != null)
                 guestNoButton.onClick.RemoveAllListeners();
+        }
+
+        private void Update()
+        {
+            DetectTermsTextClick();
+        }
+
+        private void DetectTermsTextClick()
+        {
+            if (titleTermsText == null)
+                return;
+
+            if (!Input.GetMouseButtonDown(0))
+                return;
+
+            var mousePosition = Input.mousePosition;
+            
+            var isOverText = TMP_TextUtilities.IsIntersectingRectTransform(
+                titleTermsText.rectTransform,
+                mousePosition,
+                _uiCamera
+            );
+
+            if (isOverText)
+            {
+                OpenTermsPanel();
+            }
+        }
+
+
+        private void OpenTermsPanel()
+        {
+            if(termsPanel != null)
+                termsPanel.SetActive(true);
+        }
+
+        public void CloseTermsPanel()
+        {
+            if(termsPanel != null)
+                termsPanel.SetActive(false);
         }
 
         private void OnGuestButtonClicked()

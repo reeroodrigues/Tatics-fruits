@@ -4618,7 +4618,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1342048131}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2082077805}
+        m_TargetAssemblyTypeName: UI.Views.StartSceneView, Assembly-CSharp
+        m_MethodName: CloseTermsPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1342048131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7307,7 +7319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Por favor, aceite nossos termos de uso antes de prosseguir.
+  m_text: <u>Por favor, aceite nossos termos de uso antes de prosseguir.</u>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
   m_sharedMaterial: {fileID: -4171563015097924827, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
