@@ -4084,6 +4084,7 @@ GameObject:
   - component: {fileID: 1022378547}
   - component: {fileID: 1022378549}
   - component: {fileID: 1022378548}
+  - component: {fileID: 1022378550}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -4209,6 +4210,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022378546}
   m_CullTransparentMesh: 1
+--- !u!114 &1022378550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022378546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: guest_button
+  fallback: 
 --- !u!1 &1026828216
 GameObject:
   m_ObjectHideFlags: 0
@@ -5534,67 +5549,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1266447624}
   m_CullTransparentMesh: 1
---- !u!1 &1294999268
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1294999269}
-  - component: {fileID: 1294999270}
-  m_Layer: 0
-  m_Name: LoadingManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1294999269
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1294999268}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 215.50653, y: 444.02875, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1294999270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1294999268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a329a13c3d84a5cbd4922ae91977f8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UI.Views.StartSceneView
-  guestButton: {fileID: 0}
-  googleButton: {fileID: 0}
-  helpButton: {fileID: 0}
-  checkTerms: {fileID: 0}
-  titleTermsText: {fileID: 0}
-  descriptionTermsText: {fileID: 0}
-  guestPanel: {fileID: 0}
-  termsPanel: {fileID: 0}
-  helpPanel: {fileID: 0}
-  guestYesButton: {fileID: 0}
-  guestNoButton: {fileID: 0}
-  mainMenuSceneName: MainMenu
-  termsWarningColor: {r: 1, g: 0, b: 0, a: 1}
-  termsBlinkDuration: 0.15
-  minimumLoadingTime: 2
-  progressBarSpeed: 3
-  loadingTextKey: loading
 --- !u!1 &1304508513
 GameObject:
   m_ObjectHideFlags: 0
@@ -8270,6 +8224,7 @@ GameObject:
   - component: {fileID: 1937435354}
   - component: {fileID: 1937435356}
   - component: {fileID: 1937435355}
+  - component: {fileID: 1937435357}
   m_Layer: 5
   m_Name: Title Text
   m_TagString: Untagged
@@ -8395,6 +8350,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937435353}
   m_CullTransparentMesh: 1
+--- !u!114 &1937435357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937435353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: terms_title
+  fallback: 
 --- !u!1 &1952437708
 GameObject:
   m_ObjectHideFlags: 0
@@ -8644,6 +8613,7 @@ GameObject:
   - component: {fileID: 1974976127}
   - component: {fileID: 1974976129}
   - component: {fileID: 1974976128}
+  - component: {fileID: 1974976130}
   m_Layer: 5
   m_Name: Terms Text
   m_TagString: Untagged
@@ -8769,6 +8739,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974976126}
   m_CullTransparentMesh: 1
+--- !u!114 &1974976130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974976126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: terms_toggle
+  fallback: 
 --- !u!1 &1989095737
 GameObject:
   m_ObjectHideFlags: 0
@@ -9537,6 +9521,7 @@ MonoBehaviour:
   checkTerms: {fileID: 1919655993}
   titleTermsText: {fileID: 1974976128}
   descriptionTermsText: {fileID: 2124354972}
+  guestText: {fileID: 1022378548}
   guestPanel: {fileID: 1026828216}
   termsPanel: {fileID: 2073487184}
   helpPanel: {fileID: 190247025}
@@ -10085,4 +10070,3 @@ SceneRoots:
   - {fileID: 1780655301}
   - {fileID: 788910605}
   - {fileID: 6531584249899158323}
-  - {fileID: 1294999269}

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Core.SaveSystem;
 
-namespace New_GameplayCore.Services
+namespace Core.Services
 {
     public class PlayerProfileService
     {

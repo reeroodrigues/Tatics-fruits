@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Gameplay.Utils;
+using Google.MiniJSON;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,6 +10,11 @@ using UnityEngine.UI;
 
 namespace UI.Views
 {
+    [Serializable]
+    public class StartFlagsData
+    {
+        public bool hasGuestLogin;
+    }
     public class StartSceneView : MonoBehaviour
     {
         [Header("UI")]
@@ -18,6 +24,7 @@ namespace UI.Views
         [SerializeField] private Toggle checkTerms;
         [SerializeField] private TextMeshProUGUI titleTermsText;
         [SerializeField] private TextMeshProUGUI descriptionTermsText;
+        [SerializeField] private TextMeshProUGUI guestText;
         [SerializeField] private GameObject guestPanel;
         [SerializeField] private GameObject termsPanel;
         [SerializeField] private GameObject helpPanel;
@@ -42,14 +49,20 @@ namespace UI.Views
         private bool _isBlinkingTerms;
         private Camera _uiCamera;
         private Localizer _localizer;
+        private const string StartFlagsFileName = "start_flags.json";
+        private StartFlagsData _startFlags;
 
         private void Awake()
         {
+            _localizer = FindAnyObjectByType<Localizer>();
+            
             if (titleTermsText != null)
             {
                 _termsOriginalColor = titleTermsText.color;
                 titleTermsText.text = _localizer.Tr("terms_toggle");
             }
+            
+            guestText.text = _localizer.Tr("guest_button");
             
             if(googleButton != null)
                 googleButton.onClick.AddListener(OnGoogleButtonClicked);
@@ -78,6 +91,17 @@ namespace UI.Views
                 _uiCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay
                     ? null
                     : canvas.worldCamera;
+            }
+        }
+
+        private void Start()
+        {
+            _startFlags = JsonDataService.Load<StartFlagsData>(StartFlagsFileName);
+
+            if (_startFlags != null && _startFlags.hasGuestLogin)
+            {
+                if(!string.IsNullOrEmpty(mainMenuSceneName))
+                    SceneManager.LoadScene(mainMenuSceneName); 
             }
         }
 
@@ -193,6 +217,13 @@ namespace UI.Views
         {
             if(string.IsNullOrEmpty(mainMenuSceneName))
                 return;
+            
+            if(_startFlags == null)
+                _startFlags = new StartFlagsData();
+
+            _startFlags.hasGuestLogin = true;
+            
+            JsonDataService.Save(StartFlagsFileName, _startFlags);
             
             SceneManager.LoadScene(mainMenuSceneName);
         }
