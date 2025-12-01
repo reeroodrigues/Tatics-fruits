@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Gameplay.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,6 +17,7 @@ namespace UI.Views
         [SerializeField] private Button helpButton;
         [SerializeField] private Toggle checkTerms;
         [SerializeField] private TextMeshProUGUI titleTermsText;
+        [SerializeField] private TextMeshProUGUI descriptionTermsText;
         [SerializeField] private GameObject guestPanel;
         [SerializeField] private GameObject termsPanel;
         [SerializeField] private GameObject helpPanel;
@@ -39,11 +41,13 @@ namespace UI.Views
         private Color _termsOriginalColor;
         private bool _isBlinkingTerms;
         private Camera _uiCamera;
+        private Localizer _localizer;
 
         private void Awake()
         {
-            if(titleTermsText != null)
+            if (titleTermsText != null)
                 _termsOriginalColor = titleTermsText.color;
+                
 
             if (guestPanel != null)
                 guestPanel.SetActive(false);
@@ -116,6 +120,8 @@ namespace UI.Views
         {
             if(termsPanel != null)
                 termsPanel.SetActive(true);
+            
+            descriptionTermsText.text = _localizer.Tr("descriptionTerms_text");
         }
 
         public void CloseTermsPanel()

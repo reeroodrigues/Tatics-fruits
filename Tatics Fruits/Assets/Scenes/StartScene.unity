@@ -1718,8 +1718,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.0003261883}
-  m_SizeDelta: {x: 0, y: 962.82}
+  m_AnchoredPosition: {x: 12, y: 0}
+  m_SizeDelta: {x: 0, y: 3481.941}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &492029100
 GameObject:
@@ -2502,7 +2502,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1952437709}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.69947654}
+  m_AnchorMin: {x: 0, y: 0.9168998}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -2822,8 +2822,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 688267220}
   m_HandleRect: {fileID: 688267219}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.30052346
+  m_Value: 1
+  m_Size: 0.0831002
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5583,6 +5583,7 @@ MonoBehaviour:
   helpButton: {fileID: 0}
   checkTerms: {fileID: 0}
   titleTermsText: {fileID: 0}
+  descriptionTermsText: {fileID: 0}
   guestPanel: {fileID: 0}
   termsPanel: {fileID: 0}
   helpPanel: {fileID: 0}
@@ -9535,6 +9536,7 @@ MonoBehaviour:
   helpButton: {fileID: 930677657}
   checkTerms: {fileID: 1919655993}
   titleTermsText: {fileID: 1974976128}
+  descriptionTermsText: {fileID: 2124354972}
   guestPanel: {fileID: 1026828216}
   termsPanel: {fileID: 2073487184}
   helpPanel: {fileID: 190247025}
@@ -9838,6 +9840,7 @@ GameObject:
   - component: {fileID: 2124354971}
   - component: {fileID: 2124354973}
   - component: {fileID: 2124354972}
+  - component: {fileID: 2124354974}
   m_Layer: 5
   m_Name: Description Text
   m_TagString: Untagged
@@ -9861,8 +9864,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 6.9995117, y: -4}
-  m_SizeDelta: {x: 735.429, y: 962.82}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 735.429, y: 3481.941}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2124354972
 MonoBehaviour:
@@ -9884,21 +9887,63 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Ao aceitar os termos, voc\xEA concorda em compartilhar seus dados com
-    os desenvolvedores para fins comerciais, como por exemplo, envio de e-mails,
-    sms, whatsapp marketing. Voc\xEA tamb\xE9m concorda em compartilhar informa\xE7\xF5es
-    verdadeiras e sob total responsabilidade do usu\xE1rio.\nAo aceitar os termos,
-    voc\xEA concorda em compartilhar seus dados com os desenvolvedores para fins
-    comerciais, como por exemplo, envio de e-mails, sms, whatsapp marketing. Voc\xEA
-    tamb\xE9m concorda em compartilhar informa\xE7\xF5es verdadeiras e sob total
-    responsabilidade do usu\xE1rio.\nAo aceitar os termos, voc\xEA concorda em compartilhar
-    seus dados com os desenvolvedores para fins comerciais, como por exemplo, envio
-    de e-mails, sms, whatsapp marketing. Voc\xEA tamb\xE9m concorda em compartilhar
-    informa\xE7\xF5es verdadeiras e sob total responsabilidade do usu\xE1rio.\nAo
-    aceitar os termos, voc\xEA concorda em compartilhar seus dados com os desenvolvedores
-    para fins comerciais, como por exemplo, envio de e-mails, sms, whatsapp marketing.
-    Voc\xEA tamb\xE9m concorda em compartilhar informa\xE7\xF5es verdadeiras e sob
-    total responsabilidade do usu\xE1rio.\n"
+  m_text: "1. Aceita\xE7\xE3o dos Termos\r\nAcordo Vinculante: Estes Termos constituem
+    um acordo legal entre voc\xEA e Suricatus Games (\"N\xF3s\", \"Nosso\" ou \"a
+    Empresa\") em rela\xE7\xE3o ao seu uso do Jogo.\r\n\r\nIdade M\xEDnima: Voc\xEA
+    declara ter pelo menos 13 anos de idade. Se voc\xEA for menor de idade, deve
+    revisar estes Termos e a Pol\xEDtica de Privacidade com seus pais ou respons\xE1vel
+    legal para garantir que eles compreendam e concordem com eles.\r\n\r\n2. Informa\xE7\xF5es
+    Pessoais Compartilhadas pelo Jogador\r\nAo utilizar o Jogo, voc\xEA pode optar
+    por compartilhar determinadas informa\xE7\xF5es pessoais conosco, incluindo,
+    mas n\xE3o se limitando a:\r\n\r\nDados de Perfil: Seu nome de usu\xE1rio, apelido,
+    foto de perfil (avatar), localiza\xE7\xE3o aproximada (se ativada) e outras informa\xE7\xF5es
+    que voc\xEA optar por incluir no seu perfil do Jogo.\r\n\r\nComunica\xE7\xF5es:
+    Mensagens de chat, postagens em f\xF3runs ou em \xE1reas de coment\xE1rios dentro
+    do Jogo.\r\n\r\nConex\xF5es de M\xEDdia Social: Se voc\xEA vincular sua conta
+    do Jogo a uma conta de terceiros (ex: Facebook, Google), poderemos acessar e
+    armazenar informa\xE7\xF5es que voc\xEA permitiu que o provedor de terceiros
+    compartilhe conosco.\r\n\r\nConte\xFAdo Gerado pelo Usu\xE1rio: Quaisquer dados,
+    textos, fotos, gr\xE1ficos ou outras informa\xE7\xF5es que voc\xEA carrega, publica
+    ou compartilha no Jogo.\r\n\r\n3. Uso e Prote\xE7\xE3o de Suas Informa\xE7\xF5es
+    Pessoais\r\nSeu Consentimento: Ao compartilhar suas informa\xE7\xF5es pessoais
+    no Jogo, voc\xEA concorda expressamente com a coleta, uso, armazenamento e divulga\xE7\xE3o
+    de suas informa\xE7\xF5es por N\xF3s, conforme estabelecido em nossa Pol\xEDtica
+    de Privacidade.\r\n\r\nProp\xF3sito: Usamos suas informa\xE7\xF5es para operar,
+    melhorar e personalizar o Jogo, fornecer atendimento ao cliente, comunica\xE7\xE3o
+    e fins de seguran\xE7a.\r\n\r\nVisibilidade: Observe que as informa\xE7\xF5es
+    que voc\xEA compartilha em seu perfil, bate-papos p\xFAblicos ou f\xF3runs podem
+    se tornar p\xFAblicas e acess\xEDveis a outros usu\xE1rios do Jogo. Voc\xEA \xE9
+    o \xFAnico respons\xE1vel pelas informa\xE7\xF5es que opta por tornar p\xFAblicas.\r\n\r\n4.
+    Conduta do Jogador e Conte\xFAdo Gerado pelo Usu\xE1rio (CGU)\r\nConte\xFAdo
+    Inaceit\xE1vel: Voc\xEA concorda em n\xE3o publicar ou compartilhar qualquer
+    Conte\xFAdo Gerado pelo Usu\xE1rio que seja ilegal, difamat\xF3rio, amea\xE7ador,
+    obsceno, odioso, racial ou etnicamente ofensivo, ou que infrinja os direitos
+    de propriedade intelectual de terceiros.\r\n\r\nDireito de Monitorar: Reservamo-nos
+    o direito (mas n\xE3o a obriga\xE7\xE3o) de monitorar, filtrar, editar, bloquear
+    ou remover qualquer CGU, a Nosso exclusivo crit\xE9rio e sem aviso pr\xE9vio.\r\n\r\nConcess\xE3o
+    de Licen\xE7a: Ao enviar CGU, voc\xEA concede \xE0 Empresa uma licen\xE7a mundial,
+    n\xE3o exclusiva, perp\xE9tua, irrevog\xE1vel, livre de royalties e totalmente
+    sublicenci\xE1vel para usar, reproduzir, modificar, adaptar, publicar, traduzir,
+    criar trabalhos derivados, distribuir e exibir tal CGU em conex\xE3o com a opera\xE7\xE3o
+    do Jogo.\r\n\r\n5. Sua Conta e Seguran\xE7a\r\nResponsabilidade da Conta: Voc\xEA
+    \xE9 o \xFAnico respons\xE1vel por manter a confidencialidade de sua senha e
+    por todas as atividades que ocorrerem em sua conta.\r\n\r\nComunica\xE7\xE3o:
+    Voc\xEA concorda em nos notificar imediatamente sobre qualquer uso n\xE3o autorizado
+    de sua conta ou qualquer outra viola\xE7\xE3o de seguran\xE7a.\r\n\r\n6. Direitos
+    de Propriedade Intelectual\r\nPropriedade do Jogo: Todos os direitos, t\xEDtulos
+    e interesses no Jogo (incluindo c\xF3digo, gr\xE1ficos, design, jogabilidade
+    e software) s\xE3o de propriedade exclusiva da Empresa.\r\n\r\nLicen\xE7a Limitada:
+    A Empresa concede a voc\xEA uma licen\xE7a pessoal, n\xE3o exclusiva, intransfer\xEDvel,
+    revog\xE1vel e limitada para instalar e usar o Jogo em seu dispositivo pessoal
+    para seu uso recreativo e n\xE3o comercial, sujeita a estes Termos.\r\n\r\n7.
+    Altera\xE7\xF5es aos Termos\r\nA Empresa pode atualizar ou revisar estes Termos
+    periodicamente. As altera\xE7\xF5es entrar\xE3o em vigor ap\xF3s a publica\xE7\xE3o
+    no Jogo ou em Nosso website. Seu uso continuado do Jogo ap\xF3s tais altera\xE7\xF5es
+    constitui sua aceita\xE7\xE3o dos novos Termos.\r\n\r\n8. Contato\r\nSe voc\xEA
+    tiver alguma d\xFAvida sobre estes Termos, entre em contato conosco em:\r\n\r\nEmail:
+    suricatusgames@gmail.com\r\n\r\nAo clicar em \"Aceitar\", \"Concordar\" ou ao
+    usar o Jogo, voc\xEA confirma que leu e concorda com todos os termos e condi\xE7\xF5es
+    contidos neste documento."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
   m_sharedMaterial: {fileID: -4171563015097924827, guid: 23616b1d3aa4e449dae482e465a926a6, type: 2}
@@ -9925,7 +9970,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.05
+  m_fontSize: 25.2
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -9977,6 +10022,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2124354970}
   m_CullTransparentMesh: 1
+--- !u!114 &2124354974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124354970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc125989bb1a48908ae57f58c2516fdd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LocalizedText
+  key: descriptionTerms_text
+  fallback: 
 --- !u!1 &2138534886
 GameObject:
   m_ObjectHideFlags: 0
