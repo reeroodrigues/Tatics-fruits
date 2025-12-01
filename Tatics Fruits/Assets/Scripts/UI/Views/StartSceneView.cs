@@ -46,7 +46,10 @@ namespace UI.Views
         private void Awake()
         {
             if (titleTermsText != null)
+            {
                 _termsOriginalColor = titleTermsText.color;
+                titleTermsText.text = _localizer.Tr("terms_toggle");
+            }
             
             if(googleButton != null)
                 googleButton.onClick.AddListener(OnGoogleButtonClicked);
