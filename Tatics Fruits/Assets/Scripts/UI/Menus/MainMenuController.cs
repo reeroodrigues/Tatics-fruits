@@ -14,6 +14,7 @@ namespace UI.Menus
         [SerializeField] private Button storeButton;
         [SerializeField] private Button dailyMissionsButton;
         [SerializeField] private Button settingsButton;
+        [SerializeField] private Button profileButton;
 
         [Header("Title")]
         [SerializeField] private RectTransform titleTransform;
@@ -35,6 +36,7 @@ namespace UI.Menus
         [Header("Panels")]
         //[SerializeField] private ShopPanelController shopPanel;
         [SerializeField] private DailyMissionsPanelTabs dailyMissionsPanel;
+        [SerializeField] private GameObject profilePanel;
 
         [Header("Animação de tilt")]
         [SerializeField] private float initialDelay = 1.5f;
@@ -65,6 +67,7 @@ namespace UI.Menus
             // });
 
             storeButton.onClick.AddListener(OpenStorePanel);
+            profileButton.onClick.AddListener(OpenProfilePanel);
             dailyMissionsButton.onClick.AddListener(OpenDailyPanel);
         
             if (dailyController)
@@ -185,6 +188,12 @@ namespace UI.Menus
             if (dailyMissionsPanel) dailyMissionsPanel.Show();
 
             DOVirtual.DelayedCall(0.05f, () => _switching = false);
+        }
+        
+        public void OpenProfilePanel()
+        {
+            if(profilePanel != null)
+                profilePanel.SetActive(true);
         }
     }
 }

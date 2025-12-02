@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f458b724ce034d19b805dcd800509000, type: 3}
+  m_Name: AvatarConfig 10
+  m_EditorClassIdentifier: Assembly-CSharp::Core.ScriptableObjects.AvatarConfig
+  avatarId: 11
+  avatarSprite: {fileID: -1419982024085140276, guid: bd8984a157a750441b0cdda2db1ff523, type: 3}
+  avatarName: 
+  unlockPrice: 1000
+  isDefault: 0

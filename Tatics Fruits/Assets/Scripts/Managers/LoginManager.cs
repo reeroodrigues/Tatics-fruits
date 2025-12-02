@@ -151,16 +151,18 @@ public class LoginManager : MonoBehaviour
     private void OnSignedInToUGS()
     {
         string playerId = AuthenticationService.Instance.PlayerId;
-        Debug.Log($"[LoginManager] Signed in to UGS. PlayerId: {playerId}");
+        string playerName = PlayGamesPlatform.Instance.GetUserDisplayName();
 
         if (dataSaver != null)
         {
             dataSaver.SetUserId(playerId);
             dataSaver.LoadData();
-        }
-        else
-        {
-            Debug.LogWarning("[LoginManager] DataSaver não está configurado no inspector.");
+
+            if (!string.IsNullOrEmpty(playerName))
+            {
+                dataSaver.dataToSave.userName = playerName;
+                dataSaver.SaveData();
+            }
         }
     }
 }

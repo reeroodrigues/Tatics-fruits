@@ -13,10 +13,6 @@ public class PlayerProfileController : MonoBehaviour
     [SerializeField] private GameObject profilePanel;
     [SerializeField] private TextMeshProUGUI playerNameText;
     [SerializeField] private Image avatarImage;
-    [SerializeField] private Sprite[] avatars;
-    [SerializeField] private TMP_InputField playerNameInput;
-    [SerializeField] private TextMeshProUGUI playerNameErrorText;
-    [SerializeField] private GameObject avatarSelectionPanel;
     [SerializeField] private Button closeAvatarPanelButton;
 
     [Header("UI / Economia")]
@@ -50,12 +46,6 @@ public class PlayerProfileController : MonoBehaviour
     {
         ApplyProfileUI();
         UpdateGoldUI();
-        
-        if (playerNameInput != null)
-            playerNameInput.onEndEdit.AddListener(ValidatePlayerName);
-        
-        if (closeAvatarPanelButton != null)
-            closeAvatarPanelButton.onClick.AddListener(CloseAvatarSelection);
     }
 
     private GameObject GoldHudTarget()
@@ -100,7 +90,6 @@ public class PlayerProfileController : MonoBehaviour
         if (Data.avatarIndex == 0)
         {
             var legacyAvatar = PlayerPrefs.GetInt("AvatarIndex", 0);
-            Data.avatarIndex = Mathf.Clamp(legacyAvatar, 0, avatars != null && avatars.Length > 0 ? avatars.Length - 1 : 0);
         }
         
         SaveManager.Instance.Save(Data);
@@ -111,14 +100,6 @@ public class PlayerProfileController : MonoBehaviour
         if (playerNameText)
             playerNameText.text = Data.playerName;
         
-        if (playerNameInput) 
-            playerNameInput.text = Data.playerName;
-
-        if (avatars != null && avatars.Length > 0 && avatarImage)
-        {
-            var idx = Mathf.Clamp(Data.avatarIndex, 0, avatars.Length - 1);
-            avatarImage.sprite = avatars[idx];
-        }
     }
 
     private void UpdateGoldUI()
@@ -136,40 +117,24 @@ public class PlayerProfileController : MonoBehaviour
     public void OpenProfile()  => profilePanel?.SetActive(true);
     public void CloseProfile() => profilePanel?.SetActive(false);
 
-    public void OpenAvatarSelection()  => avatarSelectionPanel?.SetActive(true);
-    public void CloseAvatarSelection() => avatarSelectionPanel?.SetActive(false);
-
     public void ChangeAvatar()
     {
-        if (avatars == null || avatars.Length == 0) 
-            return;
-        
-        Data.avatarIndex = (Data.avatarIndex + 1) % avatars.Length;
-        avatarImage.sprite = avatars[Data.avatarIndex];
         Save();
     }
 
     public void SelectAvatar(int avatarIndex)
     {
-        if (avatars == null || avatars.Length == 0) 
-            return;
         
-        Data.avatarIndex = Mathf.Clamp(avatarIndex, 0, avatars.Length - 1);
-        avatarImage.sprite = avatars[Data.avatarIndex];
         Save();
-        CloseAvatarSelection();
     }
 
     private void ValidatePlayerName(string name)
     {
         if (!Regex.IsMatch(name, NameRegex))
         {
-            if (playerNameErrorText) playerNameErrorText.text = "Nome inválido! Apenas letras são permitidas.";
-            if (playerNameInput)     playerNameInput.text = Data.playerName;
         }
         else
         {
-            if (playerNameErrorText) playerNameErrorText.text = "";
             if (playerNameText)      playerNameText.text = name;
             Data.playerName = name;
             Save();
