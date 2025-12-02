@@ -16,14 +16,14 @@ namespace UI.Views
         [SerializeField] private TextMeshProUGUI priceText;
 
         private AvatarConfig _config;
-        private AvatarService  _avatarService;
+        private AvatarServiceWrapper _avatarServiceWrapper;
         private bool _isUnlocked;
         private bool _isSelected;
 
-        public void Setup(AvatarConfig avatarConfig,  AvatarService avatarService, bool unlocked, bool selected)
+        public void Setup(AvatarConfig avatarConfig, AvatarServiceWrapper avatarServiceWrapper, bool unlocked, bool selected)
         {
             _config = avatarConfig;
-            _avatarService = avatarService;
+            _avatarServiceWrapper = avatarServiceWrapper;
             _isUnlocked = unlocked;
             _isSelected = selected;
             
@@ -73,17 +73,21 @@ namespace UI.Views
 
         private void OnClick()
         {
-            if (_avatarService == null)
+            if (_avatarServiceWrapper == null)
             {
-                Debug.LogWarning("[AvatarItemView] AvatarService is null - cannot select avatar");
+                Debug.LogWarning("[AvatarItemView] AvatarServiceWrapper is null - cannot select avatar");
                 return;
             }
             
             if(_isUnlocked)
-                _avatarService.SelectAvatar(_config.avatarId);
+            {
+                Debug.Log($"[AvatarItemView] Selecting unlocked avatar {_config.avatarId}");
+                _avatarServiceWrapper.SelectAvatar(_config.avatarId);
+            }
             else
             {
-                _avatarService.TryPurchaseAvatar(_config.avatarId);
+                Debug.Log($"[AvatarItemView] Attempting to purchase avatar {_config.avatarId}");
+                _avatarServiceWrapper.TryPurchaseAvatar(_config.avatarId);
             }
         }
     }

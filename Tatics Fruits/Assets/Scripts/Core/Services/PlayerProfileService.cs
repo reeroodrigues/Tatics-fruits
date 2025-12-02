@@ -9,6 +9,11 @@ namespace Core.Services
 
         public PlayerProfileData Data => _data;
 
+        public void Initialize(PlayerProfileData data)
+        {
+            _data = data;
+        }
+
         public void Load()
         {
             _data = SaveManager.Instance.Load<PlayerProfileData>();

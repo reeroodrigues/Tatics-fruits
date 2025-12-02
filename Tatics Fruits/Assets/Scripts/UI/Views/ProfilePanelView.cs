@@ -30,6 +30,7 @@ namespace UI.Views
         
         private PlayerProfileService _profileService;
         private AvatarService _avatarService;
+        private AvatarServiceWrapper _avatarServiceWrapper;
         private CanvasGroup _canvasGroup;
 
         private void Awake()
@@ -51,7 +52,25 @@ namespace UI.Views
                 _canvasGroup.interactable = true;
             }
             
+            EnsureAvatarServiceCreated();
             RefreshPanel();
+        }
+        
+        private void EnsureAvatarServiceCreated()
+        {
+            if (_avatarService == null && profileController != null && profileController.IsLoaded)
+            {
+                _avatarService = new AvatarService();
+                
+                _profileService = new PlayerProfileService();
+                _profileService.Initialize(profileController.Data);
+                
+                _avatarService.Initialize(allAvatars, _profileService);
+                
+                _avatarServiceWrapper = new AvatarServiceWrapper(_avatarService, profileController, this);
+                
+                Debug.Log("[ProfilePanelView] AvatarService created on-demand");
+            }
         }
         
         private void RefreshPanel()
@@ -78,6 +97,8 @@ namespace UI.Views
 
             _avatarService = new AvatarService();
             _avatarService.Initialize(allAvatars, _profileService);
+            
+            _avatarServiceWrapper = new AvatarServiceWrapper(_avatarService, profileController, this);
 
             RefreshUI();
             PopulateAvatarGrid();
@@ -102,6 +123,15 @@ namespace UI.Views
             if (currentAvatarImage != null && profileController.Data.avatarIndex >= 0)
             {
                 currentAvatarImage.enabled = true;
+            }
+        }
+
+        public void RefreshAvatarGrid()
+        {
+            if (profileController != null && profileController.IsLoaded)
+            {
+                RefreshUI();
+                PopulateAvatarGrid();
             }
         }
 
@@ -139,7 +169,7 @@ namespace UI.Views
                     
                     Debug.Log($"[ProfilePanelView] Avatar {avatarConfig.avatarId}: isUnlocked={isUnlocked}, isSelected={isSelected}, isDefault={avatarConfig.isDefault}");
                     
-                    view.Setup(avatarConfig, null, isUnlocked, isSelected);
+                    view.Setup(avatarConfig, _avatarServiceWrapper, isUnlocked, isSelected);
                 }
             }
         }
@@ -168,6 +198,67 @@ namespace UI.Views
             {
                 gameObject.SetActive(false);
             }
+        }
+    }
+    
+    public class AvatarServiceWrapper
+    {
+        private readonly AvatarService _avatarService;
+        private readonly PlayerProfileController _controller;
+        private readonly ProfilePanelView _view;
+
+        public AvatarServiceWrapper(AvatarService avatarService, PlayerProfileController controller, ProfilePanelView view)
+        {
+            _avatarService = avatarService;
+            _controller = controller;
+            _view = view;
+        }
+
+        public void SelectAvatar(int avatarId)
+        {
+            if (_avatarService == null)
+            {
+                Debug.LogWarning("[AvatarServiceWrapper] AvatarService is null!");
+                return;
+            }
+
+            _avatarService.SelectAvatar(avatarId);
+            
+            if (_controller != null)
+                _controller.SaveProfile();
+            
+            if (_view != null)
+                _view.RefreshAvatarGrid();
+            
+            Debug.Log($"[AvatarServiceWrapper] Selected avatar {avatarId}");
+        }
+
+        public bool TryPurchaseAvatar(int avatarId)
+        {
+            if (_avatarService == null)
+            {
+                Debug.LogWarning("[AvatarServiceWrapper] AvatarService is null!");
+                return false;
+            }
+
+            bool success = _avatarService.TryPurchaseAvatar(avatarId);
+            
+            if (success)
+            {
+                if (_controller != null)
+                    _controller.SaveProfile();
+                
+                if (_view != null)
+                    _view.RefreshAvatarGrid();
+                
+                Debug.Log($"[AvatarServiceWrapper] Purchased avatar {avatarId}");
+            }
+            else
+            {
+                Debug.LogWarning($"[AvatarServiceWrapper] Failed to purchase avatar {avatarId}");
+            }
+
+            return success;
         }
     }
 }
