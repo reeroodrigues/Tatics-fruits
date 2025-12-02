@@ -103,7 +103,7 @@ namespace UI.Views
             RefreshUI();
             PopulateAvatarGrid();
         }
-
+        
         private void RefreshUI()
         {
             if (profileController == null || profileController.Data == null)
@@ -120,9 +120,45 @@ namespace UI.Views
             if (lastLevelText != null)
                 lastLevelText.text = $"Last Level: {data.currentLevelIndex + 1}";
 
-            if (currentAvatarImage != null && profileController.Data.avatarIndex >= 0)
+            if (currentAvatarImage != null)
             {
-                currentAvatarImage.enabled = true;
+                Debug.Log($"[ProfilePanelView] RefreshUI - Looking for avatar with ID: {data.avatarIndex}");
+                Debug.Log($"[ProfilePanelView] Total avatars in list: {allAvatars?.Count ?? 0}");
+                
+                if (allAvatars != null && allAvatars.Count > 0)
+                {
+                    foreach (var avatar in allAvatars)
+                    {
+                        if (avatar != null)
+                        {
+                            Debug.Log($"[ProfilePanelView] Found avatar: ID={avatar.avatarId}, Sprite={(avatar.avatarSprite != null ? avatar.avatarSprite.name : "NULL")}");
+                        }
+                    }
+                }
+                
+                var selectedAvatar = allAvatars?.Find(a => a != null && a.avatarId == data.avatarIndex);
+                
+                if (selectedAvatar != null)
+                {
+                    Debug.Log($"[ProfilePanelView] Selected avatar found: ID={selectedAvatar.avatarId}");
+                    
+                    if (selectedAvatar.avatarSprite != null)
+                    {
+                        currentAvatarImage.sprite = selectedAvatar.avatarSprite;
+                        currentAvatarImage.enabled = true;
+                        Debug.Log($"[ProfilePanelView] Avatar image set to: {selectedAvatar.avatarSprite.name}");
+                    }
+                    else
+                    {
+                        currentAvatarImage.enabled = false;
+                        Debug.LogWarning($"[ProfilePanelView] Avatar {selectedAvatar.avatarId} has no sprite assigned!");
+                    }
+                }
+                else
+                {
+                    currentAvatarImage.enabled = false;
+                    Debug.LogWarning($"[ProfilePanelView] No avatar found with ID {data.avatarIndex}");
+                }
             }
         }
 
