@@ -145,19 +145,40 @@ public class PlayerProfileController : MonoBehaviour
 
     public void AddGold(int amount)
     {
-        if (amount == 0) return;
+        if(amount == 0)
+            return;
+        
         Data.gold = Mathf.Max(0, Data.gold + amount);
         Save();
-        UpdateGoldUI();
+        SyncToFirebase();
     }
 
     public bool TrySpendGold(int amount)
     {
-        if (!CanAfford(amount)) return false;
+        if(!CanAfford(amount))
+            return false;
+        
         Data.gold -= amount;
         Save();
         UpdateGoldUI();
+
+        SyncToFirebase();
         return true;
+    }
+
+    private void SyncToFirebase()
+    {
+        var firebaseSync = FindObjectOfType<Core.Services.FirebaseProfileSyncService>();
+        if (firebaseSync != null && firebaseSync.dataToSave != null)
+        {
+            firebaseSync.dataToSave.totalCoins = Data.gold;
+            firebaseSync.dataToSave.userName = Data.playerName;
+            firebaseSync.dataToSave.crrLevel = Data.currentLevelIndex;
+            firebaseSync.dataToSave.highScore = Data.highestLevelUnlocked;
+            firebaseSync.SaveData();
+            
+            Debug.Log($"[PlayerProfile] Synced to Firebase - Coins: {Data.gold}");
+        }
     }
 
     public bool HasCard(string cardId)

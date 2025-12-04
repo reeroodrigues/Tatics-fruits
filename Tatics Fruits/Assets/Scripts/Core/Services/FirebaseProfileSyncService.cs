@@ -138,6 +138,18 @@ namespace Core.Services
                 _databaseReference.Child("users").Child(userId).SetRawJsonValueAsync(json);
 
                 OnDataLoaded?.Invoke(dataToSave);
+
+                var profileController = FindObjectOfType<PlayerProfileController>();
+                if (profileController != null && profileController.Data != null)
+                {
+                    profileController.Data.playerName = dataToSave.userName;
+                    profileController.Data.gold = dataToSave.totalCoins;
+                    profileController.Data.currentLevelIndex = dataToSave.crrLevel;
+                    profileController.Data.highestLevelUnlocked = dataToSave.highScore;
+                    profileController.SaveProfile();
+
+                    Debug.Log($"[FirebaseSync] Loaded player data - Coins: {dataToSave.totalCoins}");
+                }
             }
             else
             {

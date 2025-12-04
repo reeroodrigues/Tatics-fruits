@@ -271,7 +271,7 @@ namespace Lofelt.NiceVibrations
         /// terminator</param>
         public static void Load(byte[] data)
         {
-            GamepadRumbler.Unload(GamepadRumbler.GetCurrentGamepadID());
+            //GamepadRumbler.Unload(GamepadRumbler.GetCurrentGamepadID());
             lastSeekTime = 0.0f;
             clipLoaded = true;
             clipLoadedDurationSecs = 0.0f;
@@ -313,7 +313,7 @@ namespace Lofelt.NiceVibrations
         {
             Load(json);
 
-            GamepadRumbler.Load(rumble, GamepadRumbler.GetCurrentGamepadID());
+            //GamepadRumbler.Load(rumble, GamepadRumbler.GetCurrentGamepadID());
             // GamepadRumbler.Load() resets the motor speed multiplication to 1.0, so the levels
             // need to be applied here again
             ApplyLevelsToGamepadRumbler();

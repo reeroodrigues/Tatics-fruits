@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_android_client_id,@string/default_web_client_id">
   <string name="firebase_database_url" translatable="false">https://fruit-tactics-default-rtdb.firebaseio.com</string>
   <string name="gcm_defaultSenderId" translatable="false">659488806200</string>
   <string name="google_storage_bucket" translatable="false">fruit-tactics.firebasestorage.app</string>
@@ -7,4 +7,6 @@
   <string name="google_api_key" translatable="false">AIzaSyCleiY_ERILDDToIf0T_NyQ1Kis1oVLjAc</string>
   <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCleiY_ERILDDToIf0T_NyQ1Kis1oVLjAc</string>
   <string name="google_app_id" translatable="false">1:659488806200:android:22937903d239c252b29dcd</string>
+  <string name="default_android_client_id" translatable="false">659488806200-c12o6kogh9e3tn0lvvt5dqhg8e8hl4vj.apps.googleusercontent.com</string>
+  <string name="default_web_client_id" translatable="false">659488806200-hcjl5h2jntj5sqdnn9v72vb878tbvpon.apps.googleusercontent.com</string>
 </resources>
