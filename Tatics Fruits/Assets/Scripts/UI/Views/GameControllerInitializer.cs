@@ -1,4 +1,5 @@
 using System;
+using Ads;
 using Core.ScriptableObjects;
 using Core.Services;
 using DefaultNamespace.New_GameplayCore;
@@ -187,6 +188,8 @@ namespace UI.Views
                     ShowDefeat();
                     break;
             }
+            
+            InterstitialAdManager.Instance.OnMatchCompleted();
         }
 
         private void ShowVictory()
@@ -259,8 +262,6 @@ namespace UI.Views
 
         private void ShowAllLevelsCompleted()
         {
-            //Managers.AnalyticsManager.Instance?.TrackEvent("all_levels_completed");
-            
             var view = Instantiate(allLevelsCompletedView, uiRoot);
             view.Initialize(() =>
             {

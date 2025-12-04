@@ -5,15 +5,15 @@ namespace Ads
 {
     public class InterstitialAdManager : MonoBehaviour
     {
-        private const float AD_INTERVAL_SECONDS = 180f;
-        private const float TEST_MODE_INTERVAL_SECONDS = 30f;
+        private const int MatchesBetweenAds = 3;
+        private const int TestModeMatches = 1;
 
         [SerializeField] private bool enableAds = true;
         [SerializeField] private bool testMode = false;
         
         private IInterstitialAdProvider _adProvider;
-        private float _timeSinceLastAd;
         private bool _isShowingAd;
+        private int _matchesSinceLastAd;
 
         public static InterstitialAdManager Instance { get; private set; }
 
@@ -31,27 +31,44 @@ namespace Ads
 
         private void Start()
         {
-            _timeSinceLastAd = 0f;
+            _matchesSinceLastAd = 0;
             LoadNextAd();
         }
 
-        private void Update()
+        public void OnMatchCompleted()
         {
-            if (!enableAds || _isShowingAd || _adProvider == null) return;
+            if(!enableAds)
+            {
+                Debug.Log("[InterstitialAdManager] Ads are disabled.");
+                return;
+            }
+    
+            if(_isShowingAd)
+            {
+                Debug.Log("[InterstitialAdManager] Already showing an ad.");
+                return;
+            }
 
-            _timeSinceLastAd += Time.deltaTime;
+            _matchesSinceLastAd++;
+    
+            int currentInterval = testMode ? TestModeMatches : MatchesBetweenAds;
+    
+            Debug.Log($"[InterstitialAdManager] Match completed! Count: {_matchesSinceLastAd}/{currentInterval}. Provider: {(_adProvider != null ? "SET" : "NULL")}");
 
-            float currentInterval = testMode ? TEST_MODE_INTERVAL_SECONDS : AD_INTERVAL_SECONDS;
-
-            if (_timeSinceLastAd >= currentInterval)
+            if (_matchesSinceLastAd >= currentInterval)
             {
                 ShowInterstitialAd();
+            }
+            else
+            {
+                Debug.Log($"[InterstitialAdManager] {currentInterval - _matchesSinceLastAd} more matches until next ad.");
             }
         }
 
         public void SetAdProvider(IInterstitialAdProvider provider)
         {
             _adProvider = provider;
+            Debug.Log($"[InterstitialAdManager] ✅ Ad provider SET: {provider.GetType().Name}");
             LoadNextAd();
         }
 
@@ -108,7 +125,7 @@ namespace Ads
 
         private void ResetAdTimer()
         {
-            _timeSinceLastAd = 0f;
+            _matchesSinceLastAd = 0;
         }
 
         private void ResumeGame()
@@ -127,17 +144,17 @@ namespace Ads
             enableAds = enable;
         }
 
-        public float GetTimeUntilNextAd()
+        public int GetMatchesUntilNextAd()
         {
-            float currentInterval = testMode ? TEST_MODE_INTERVAL_SECONDS : AD_INTERVAL_SECONDS;
-            return Mathf.Max(0f, currentInterval - _timeSinceLastAd);
+            int currentInterval = testMode ? TestModeMatches : MatchesBetweenAds;
+            return Mathf.Max(0, currentInterval - _matchesSinceLastAd);
         }
 
         public void ToggleTestMode()
         {
             testMode = !testMode;
             ResetAdTimer();
-            Debug.Log($"[InterstitialAdManager] Test mode {(testMode ? "ENABLED" : "DISABLED")}. Interval: {(testMode ? TEST_MODE_INTERVAL_SECONDS : AD_INTERVAL_SECONDS)}s");
+            Debug.Log($"[InterstitialAdManager] Test mode {(testMode ? "ENABLED" : "DISABLED")}. Interval: {(testMode ? TestModeMatches : MatchesBetweenAds)} matches");
         }
 
         public bool IsTestModeEnabled()

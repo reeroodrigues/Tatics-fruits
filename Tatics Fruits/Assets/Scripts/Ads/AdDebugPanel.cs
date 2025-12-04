@@ -52,7 +52,7 @@ namespace Ads
                 return;
             }
 
-            float timeUntilNextAd = InterstitialAdManager.Instance.GetTimeUntilNextAd();
+            float timeUntilNextAd = InterstitialAdManager.Instance.GetMatchesUntilNextAd();
             
             if (timerText != null)
             {

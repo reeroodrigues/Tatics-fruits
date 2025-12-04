@@ -1,4 +1,5 @@
 using System;
+using Ads;
 using Core.ScriptableObjects;
 using New_GameplayCore;
 using New_GameplayCore.Services;
@@ -64,6 +65,8 @@ namespace Core.Services
                 canGoNext = canNext,
                 levelIndex = _progress.CurrentIndex
             });
+            
+            InterstitialAdManager.Instance?.OnMatchCompleted();
         }
         
         public void ClickNext() => OnNext?.Invoke();

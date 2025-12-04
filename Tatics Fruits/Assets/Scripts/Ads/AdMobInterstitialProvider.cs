@@ -6,7 +6,7 @@ namespace Ads
 {
     public class AdMobInterstitialProvider : IInterstitialAdProvider
     {
-        private const string ANDROID_AD_UNIT_ID = "ca-app-pub-8609532543875876/2503434472";
+        private const string ANDROID_AD_UNIT_ID = "ca-app-pub-8609532543875876/3409474969";
         private const string IOS_AD_UNIT_ID = "ca-app-pub-3940256099942544/4411468910";
 
         private string _adUnitId;

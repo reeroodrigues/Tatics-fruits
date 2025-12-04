@@ -271,7 +271,7 @@ namespace Ads
                 return;
             }
 
-            float timeUntilNextAd = InterstitialAdManager.Instance.GetTimeUntilNextAd();
+            float timeUntilNextAd = InterstitialAdManager.Instance.GetMatchesUntilNextAd();
             
             int minutes = Mathf.FloorToInt(timeUntilNextAd / 60f);
             int seconds = Mathf.FloorToInt(timeUntilNextAd % 60f);

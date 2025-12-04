@@ -42,13 +42,16 @@ namespace Ads
 
         private System.Collections.IEnumerator InitializeAdsAfterDelay()
         {
+            Debug.Log("[AdInitializer] Waiting for Google Mobile Ads SDK initialization...");
             yield return new WaitForSeconds(1f);
 
             while (!GoogleMobileAdsInitializer.IsInitialized())
             {
+                Debug.Log("[AdInitializer] Still waiting for SDK initialization...");
                 yield return new WaitForSeconds(0.5f);
             }
 
+            Debug.Log("[AdInitializer] SDK initialized! Now initializing ad providers...");
             InitializeAds();
         }
 
@@ -78,11 +81,11 @@ namespace Ads
             if (interstitialProvider != null && InterstitialAdManager.Instance != null)
             {
                 InterstitialAdManager.Instance.SetAdProvider(interstitialProvider);
-                DebugLogger.Log($"[AdInitializer] Interstitial ad provider initialized: {providerType}");
+                Debug.Log($"[AdInitializer] Interstitial ad provider initialized: {providerType}");
             }
             else
             {
-                DebugLogger.LogError("[AdInitializer] Failed to initialize interstitial ad provider or InterstitialAdManager not found.");
+                Debug.LogError($"[AdInitializer] Failed to initialize interstitial ad provider or InterstitialAdManager not found. Provider: {interstitialProvider != null}, Manager: {InterstitialAdManager.Instance != null}");
             }
         }
 
@@ -98,11 +101,11 @@ namespace Ads
             if (bannerProvider != null && BannerAdManager.Instance != null)
             {
                 BannerAdManager.Instance.SetBannerProvider(bannerProvider);
-                DebugLogger.Log($"[AdInitializer] Banner ad provider initialized: {providerType}");
+                Debug.Log($"[AdInitializer] Banner ad provider initialized: {providerType}");
             }
             else
             {
-                DebugLogger.LogError("[AdInitializer] Failed to initialize banner ad provider or BannerAdManager not found.");
+                Debug.LogError($"[AdInitializer] Failed to initialize banner ad provider or BannerAdManager not found. Provider: {bannerProvider != null}, Manager: {BannerAdManager.Instance != null}");
             }
         }
 

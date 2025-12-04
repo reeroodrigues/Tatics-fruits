@@ -1,4 +1,5 @@
 using System;
+using Ads;
 using Core.ScriptableObjects;
 using Core.Services;
 using UnityEngine;
@@ -74,6 +75,8 @@ namespace New_GameplayCore.Services
                 newRecord = newRecord,
                 timeLeftSeconds = _time.TimeLeftSeconds
             });
+            
+            InterstitialAdManager.Instance?.OnMatchCompleted();
         }
     }
 }
