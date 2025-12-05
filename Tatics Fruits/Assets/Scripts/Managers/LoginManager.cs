@@ -19,6 +19,8 @@ namespace Managers
 
         private async void Awake()
         {
+            DontDestroyOnLoad(gameObject);
+            
             await InitializeFirebaseAsync();
         
             if (_currentUser == null)
