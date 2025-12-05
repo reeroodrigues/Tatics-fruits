@@ -59,6 +59,8 @@ public class PlayerProfileData : ISaveData
     public bool sfxOn = true;
     public bool vfxOn = true;
     public string language = "pt_BR";
+
+    public bool hasAcceptedLGPD = false;
     
     public DailySystemData daily = new DailySystemData();
     public Dictionary<string, int> BestScores = new Dictionary<string, int>();
@@ -67,7 +69,6 @@ public class PlayerProfileData : ISaveData
     public List<string> equippedDeck = new List<string>();
     public List<int> unlockedAvatars =  new List<int> {0};
     public List<int> purchasedAvatars =  new List<int>();
-    
 
     public string GetFileName() => "player_profile.json";
 

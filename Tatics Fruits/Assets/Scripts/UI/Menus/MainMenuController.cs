@@ -1,3 +1,4 @@
+using Core.SaveSystem;
 using DG.Tweening;
 using New_GameplayCore.Services;
 using UI.Views;
@@ -15,6 +16,9 @@ namespace UI.Menus
         [SerializeField] private Button dailyMissionsButton;
         [SerializeField] private Button settingsButton;
         [SerializeField] private Button profileButton;
+        
+        [Header("LGPD")]
+        [SerializeField] private LgpdView lgpdView;
 
         [Header("Title")]
         [SerializeField] private RectTransform titleTransform;
@@ -52,6 +56,18 @@ namespace UI.Menus
 
         private void Start()
         {
+            var profile = SaveManager.Instance.Load<PlayerProfileData>();
+            if (lgpdView != null)
+            {
+                if (!profile.hasAcceptedLGPD)
+                {
+                    lgpdView.gameObject.SetActive(true);
+                }
+                else
+                {
+                    lgpdView.gameObject.SetActive(false);
+                }
+            }
             _progress = new LevelProgressService();
             _progress.Load();
         

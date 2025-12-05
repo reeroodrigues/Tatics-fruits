@@ -1,33 +1,40 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Button = UnityEngine.UI.Button;
+using Core.SaveSystem;
 
 namespace UI.Views
 {
     public class LgpdView : MonoBehaviour
     {
+        [Header("UI")]
         [SerializeField] private GameObject lgpdPanel;
         [SerializeField] private TextMeshProUGUI lgpdText;
         [SerializeField] private Button acceptButton;
-        
+
+        [Header("Scroll")]
         [SerializeField] private ScrollRect scrollRect;
 
-        [SerializeField] private bool hasReachedEnd = false;
+        private bool hasReachedEnd = false;
 
         private void Start()
         {
+            var profile = SaveManager.Instance.Load<PlayerProfileData>();
+            if (profile.hasAcceptedLGPD)
+            {
+                lgpdPanel.SetActive(false);
+                return;
+            }
+            
             acceptButton.gameObject.SetActive(false);
             lgpdPanel.SetActive(true);
-            
+
             scrollRect.onValueChanged.AddListener(OnScrollValueChanged);
-            
             Canvas.ForceUpdateCanvases();
             scrollRect.verticalNormalizedPosition = 1f;
         }
 
-        private void OnScrollValueChanged(Vector2 scrollPos)
+        private void OnScrollValueChanged(Vector2 pos)
         {
             if (!hasReachedEnd && scrollRect.verticalNormalizedPosition <= 0.001f)
             {
@@ -38,6 +45,10 @@ namespace UI.Views
 
         public void AcceptLgpd()
         {
+            var profile = SaveManager.Instance.Load<PlayerProfileData>();
+            profile.hasAcceptedLGPD = true;
+            SaveManager.Instance.Save(profile);
+            
             lgpdPanel.SetActive(false);
         }
     }
