@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
@@ -142,13 +143,13 @@ namespace Managers
         {
             if (user == null)
             {
-                Debug.LogError("[LoginManager] User is null in OnFirebaseSignedIn!");
+                Debug.LogError($"[LoginManager] User is null in OnFirebaseSignedIn!");
                 return;
             }
-
-            string userId = user.UserId;
-            string displayName = user.DisplayName ?? "Guest";
-
+            
+            var userId = user.UserId;
+            var displayName = user.DisplayName ?? "Guest";
+            
             Debug.Log($"[LoginManager] User signed in - ID: {userId}, Name: {displayName}");
 
             if (dataSaver != null)
@@ -156,23 +157,26 @@ namespace Managers
                 dataSaver.SetUserId(userId);
                 dataSaver.LoadData();
 
-                if (!string.IsNullOrEmpty(displayName))
-                {
-                    dataSaver.dataToSave.userName = displayName;
-                }
-
                 var profileController = FindObjectOfType<PlayerProfileController>();
                 if (profileController != null && profileController.Data != null)
                 {
-                    dataSaver.dataToSave.userName = string.IsNullOrEmpty(displayName) || displayName == "Guest" 
-                        ? profileController.Data.playerName 
-                        : displayName;
-                    dataSaver.dataToSave.totalCoins = profileController.Data.gold;
+                    dataSaver.dataToSave.userName = string.IsNullOrEmpty(displayName) || displayName == "Guest" ? profileController.Data.playerName : displayName;
                     dataSaver.dataToSave.crrLevel = profileController.Data.currentLevelIndex;
                     dataSaver.dataToSave.highScore = profileController.Data.highestLevelUnlocked;
+                    dataSaver.dataToSave.ownedCards =  new List<string>(profileController.Data.ownedCards);
+                    dataSaver.dataToSave.equippedDeck = new List<string>(profileController.Data.equippedDeck);
+                    dataSaver.dataToSave.unlockedAvatar = new List<int>(profileController.Data.unlockedAvatars);
+                    dataSaver.dataToSave.purchasedAvatar = new List<int>(profileController.Data.purchasedAvatars);
+                    dataSaver.dataToSave.bestScores = new Dictionary<string, int>(profileController.Data.BestScores);
+                    dataSaver.dataToSave.musicOn = profileController.Data.musicOn;
+                    dataSaver.dataToSave.sfxOn = profileController.Data.sfxOn;
+                    dataSaver.dataToSave.vfxOn = profileController.Data.vfxOn;
+                    dataSaver.dataToSave.language = profileController.Data.language;
+                    dataSaver.dataToSave.dailyDayKey = profileController.Data.daily.dayKey;
+                    dataSaver.dataToSave.lastLoginDayKey = profileController.Data.daily.login.lastClaimDayKey;
+                    
                     dataSaver.SaveData();
-
-                    Debug.Log($"[LoginManager] ✅ Player synced to Firebase - ID: {userId}, Coins: {profileController.Data.gold}");
+                    Debug.Log($"[LoginManager] ✅ Full player profile synced to Firebase - Coins: {profileController.Data.gold}, Cards: {profileController.Data.ownedCards.Count}, Avatars: {profileController.Data.unlockedAvatars.Count}");
                 }
             }
             else

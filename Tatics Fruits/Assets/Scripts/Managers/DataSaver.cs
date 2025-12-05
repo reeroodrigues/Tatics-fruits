@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Firebase.Database;
 using UnityEngine;
@@ -14,6 +15,20 @@ namespace Managers
         public int crrLevel;
         public int highScore;
         public long lastUpdatedTicks;
+        public bool isVip;
+        public long vipExpirationTicks;
+        public List<string> ownedCards = new List<string>();
+        public List<string> equippedDeck = new List<string>();
+        public List<int> unlockedAvatar =  new List<int>{0};
+        public List<int> purchasedAvatar = new List<int>();
+        public Dictionary<string, int> bestScores =  new Dictionary<string, int>();
+
+        public bool musicOn = true;
+        public bool sfxOn = true;
+        public bool vfxOn = true;
+        public string language = "pt_BR";
+        public string dailyDayKey;
+        public string lastLoginDayKey;
     }
 
     public class DataSaver : MonoBehaviour

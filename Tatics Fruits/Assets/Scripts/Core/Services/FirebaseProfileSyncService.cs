@@ -16,11 +16,25 @@ namespace Core.Services
         public int crrLevel;
         public int highScore;
         public long lastUpdatedTicks;
+        public bool isVip;
+        public long vipExpirationTicks;
+        public List<string> ownedCards = new List<string>();
+        public List<string> equippedDeck = new List<string>();
+        public List<int> unlockedAvatar =  new List<int>{0};
+        public List<int> purchasedAvatar = new List<int>();
+        public Dictionary<string, int> bestScores =  new Dictionary<string, int>();
+
+        public bool musicOn = true;
+        public bool sfxOn = true;
+        public bool vfxOn = true;
+        public string language = "pt_BR";
+        public string dailyDayKey;
+        public string lastLoginDayKey;
     }
     public class FirebaseProfileSyncService : MonoBehaviour
     {
         [Header("Player Data")]
-        [SerializeField] private string userId; // defina isso pelo Firebase Auth ou outro sistema de ID
+        [SerializeField] private string userId;
         [SerializeField] public DataToSave dataToSave = new DataToSave();
 
         private DatabaseReference _databaseReference;
@@ -88,9 +102,9 @@ namespace Core.Services
         private IEnumerator LoadDataCoroutine()
         {
             var serverDataTask = _databaseReference.Child("users").Child(userId).GetValueAsync();
-            
+
             var localData = LoadLocal();
-            
+
             yield return new WaitUntil(() => serverDataTask.IsCompleted);
 
             DataToSave cloudData = null;
@@ -123,16 +137,16 @@ namespace Core.Services
                     Debug.Log("[DataSaver] Nenhum dado encontrado no Firebase pra esse usuário.");
                 }
             }
-            
+
             dataToSave = ResolveDataConflict(localData, cloudData);
 
             if (dataToSave != null)
             {
                 Debug.Log("[DataSaver] Dados finais resolvidos. Sincronizando local + Firebase.");
-                
+
                 if (dataToSave.lastUpdatedTicks == 0)
                     dataToSave.lastUpdatedTicks = DateTime.UtcNow.Ticks;
-                
+
                 SaveLocal();
                 var json = JsonUtility.ToJson(dataToSave);
                 _databaseReference.Child("users").Child(userId).SetRawJsonValueAsync(json);
@@ -146,20 +160,36 @@ namespace Core.Services
                     profileController.Data.gold = dataToSave.totalCoins;
                     profileController.Data.currentLevelIndex = dataToSave.crrLevel;
                     profileController.Data.highestLevelUnlocked = dataToSave.highScore;
+
+                    if (dataToSave.ownedCards != null)
+                        profileController.Data.ownedCards = new List<string>(dataToSave.ownedCards);
+
+                    if (dataToSave.equippedDeck != null)
+                        profileController.Data.equippedDeck = new List<string>(dataToSave.equippedDeck);
+
+                    if (dataToSave.unlockedAvatar != null)
+                        profileController.Data.unlockedAvatars = new List<int>(dataToSave.unlockedAvatar);
+
+                    if (dataToSave.purchasedAvatar != null)
+                        profileController.Data.purchasedAvatars = new List<int>(dataToSave.purchasedAvatar);
+
+                    if (dataToSave.bestScores != null)
+                        profileController.Data.BestScores = new Dictionary<string, int>(dataToSave.bestScores);
+
+                    profileController.Data.musicOn = dataToSave.musicOn;
+                    profileController.Data.sfxOn = dataToSave.sfxOn;
+                    profileController.Data.vfxOn = dataToSave.vfxOn;
+                    profileController.Data.language = dataToSave.language;
+
+                    if (profileController.Data.daily != null)
+                    {
+                        profileController.Data.daily.dayKey = dataToSave.dailyDayKey ?? "";
+                        if (profileController.Data.daily.login != null)
+                            profileController.Data.daily.login.lastClaimDayKey = dataToSave.lastLoginDayKey ?? "";
+                    }
+
                     profileController.SaveProfile();
-
-                    Debug.Log($"[FirebaseSync] Loaded player data - Coins: {dataToSave.totalCoins}");
                 }
-            }
-            else
-            {
-                Debug.Log("[DataSaver] Nenhum dado local nem remoto. Criando novo perfil padrão.");
-                dataToSave = CreateNewDefaultData();
-                SaveLocal();
-                var json = JsonUtility.ToJson(dataToSave);
-                _databaseReference.Child("users").Child(userId).SetRawJsonValueAsync(json);
-
-                OnDataNotFound?.Invoke();
             }
         }
 
@@ -242,13 +272,26 @@ namespace Core.Services
 
         private DataToSave CreateNewDefaultData()
         {
-            return new DataToSave
+            return new DataToSave()
             {
                 userName = "Guest",
                 totalCoins = 0,
                 crrLevel = 1,
                 highScore = 0,
-                lastUpdatedTicks = DateTime.UtcNow.Ticks
+                lastUpdatedTicks = DateTime.Now.Ticks,
+                isVip = false,
+                vipExpirationTicks = 0,
+                ownedCards = new List<string>(),
+                equippedDeck = new List<string>(),
+                unlockedAvatar = new List<int> { 0 },
+                purchasedAvatar = new List<int>(),
+                bestScores = new Dictionary<string, int>(),
+                musicOn = true,
+                sfxOn = true,
+                vfxOn = true,
+                language = "pt_BR",
+                dailyDayKey = "",
+                lastLoginDayKey = ""
             };
         }
 
@@ -262,9 +305,6 @@ namespace Core.Services
 
             return true;
         }
-
-        // Se você usar Firebase Auth, pode chamar isso após logar:
-        // public void SetUserId(string uid) => userId = uid;
 
         #endregion
         
@@ -346,6 +386,64 @@ namespace Core.Services
                 return 0;
             
             return _data.BestScores.TryGetValue(levelId, out int best) ? best : 0;
+        }
+
+        public void SetVipStatus(bool isVip, int durationDays = 30)
+        {
+            dataToSave.isVip = isVip;
+
+            if (isVip)
+            {
+                dataToSave.vipExpirationTicks = DateTime.UtcNow.AddDays(durationDays).Ticks;
+                Debug.Log($"[DataSaver] Vip acticated for {durationDays} days");
+            }
+            else
+            {
+                dataToSave.vipExpirationTicks = 0;
+                Debug.Log($"[DataSaver] Vip deactivated");
+            }
+            
+            SaveData();
+        }
+
+        public bool IsVipActive()
+        {
+            if(!dataToSave.isVip)
+                return false;
+
+            if (dataToSave.vipExpirationTicks == 0)
+                return true;
+            
+            var currentTicks = DateTime.Now.Ticks;
+            var isActive = currentTicks < dataToSave.vipExpirationTicks;
+
+            if (!isActive)
+            {
+                dataToSave.isVip = false;
+                SaveData();
+                Debug.Log($"[DataSaver] Vip expired");
+            }
+            return isActive;
+        }
+
+        public void UnlockCard(string cardId)
+        {
+            if (!dataToSave.ownedCards.Contains(cardId))
+            {
+                dataToSave.ownedCards.Add(cardId);
+                SaveData();
+                Debug.Log($"[DataSaver] Card unlocked: {cardId}");
+            }
+        }
+
+        public void UnlockAvatar(int avatarId)
+        {
+            if (!dataToSave.unlockedAvatar.Contains(avatarId))
+            {
+                dataToSave.unlockedAvatar.Add(avatarId);
+                SaveData();
+                Debug.Log($"[DataSaver] Avatar unlocked: {avatarId}");
+            }
         }
     }
 }
