@@ -2037,6 +2037,7 @@ GameObject:
   - component: {fileID: 268191035}
   - component: {fileID: 268191037}
   - component: {fileID: 268191036}
+  - component: {fileID: 268191038}
   m_Layer: 5
   m_Name: Fade
   m_TagString: Untagged
@@ -2101,6 +2102,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 268191034}
   m_CullTransparentMesh: 1
+--- !u!225 &268191038
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268191034}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &295222285
 GameObject:
   m_ObjectHideFlags: 0
@@ -10933,6 +10946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1275446576}
   - component: {fileID: 1275446578}
+  - component: {fileID: 1275446580}
   - component: {fileID: 1275446579}
   m_Layer: 5
   m_Name: LGPD
@@ -10982,10 +10996,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7638d542be324b6408ebf22edc7e1d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  lgpdPanel: {fileID: 1275446575}
+  rootPanel: {fileID: 1275446575}
+  panelRect: {fileID: 1275446576}
+  panelCanvasGroup: {fileID: 1275446580}
+  dimCanvasGroup: {fileID: 268191038}
   lgpdText: {fileID: 1765043075}
-  acceptButton: {fileID: 1977715739}
   scrollRect: {fileID: 1660716560}
+  acceptButton: {fileID: 1977715739}
+  acceptButtonCanvasGroup: {fileID: 1977715742}
+  acceptButtonRect: {fileID: 1977715738}
+  fadeDuration: 0.35
+  dimTargetAlpha: 0.6
+  panelScaleFrom: 0.9
+  panelSlideOffsetY: -20
+  buttonSlideOffsetY: -40
+  buttonFadeDuration: 0.25
+--- !u!225 &1275446580
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1275446575}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1286518638
 GameObject:
   m_ObjectHideFlags: 0
@@ -18895,6 +18932,7 @@ GameObject:
   - component: {fileID: 1977715741}
   - component: {fileID: 1977715740}
   - component: {fileID: 1977715739}
+  - component: {fileID: 1977715742}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -19016,6 +19054,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1977715737}
   m_CullTransparentMesh: 1
+--- !u!225 &1977715742
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977715737}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1989095737
 GameObject:
   m_ObjectHideFlags: 0
