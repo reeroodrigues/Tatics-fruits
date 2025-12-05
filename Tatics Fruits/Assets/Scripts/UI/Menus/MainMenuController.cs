@@ -18,7 +18,9 @@ namespace UI.Menus
         [SerializeField] private Button profileButton;
         
         [Header("LGPD")]
-        [SerializeField] private LgpdView lgpdView;
+        [SerializeField] private LgpdView lgpdViewPrefab;   // o prefab
+        [SerializeField] private Transform uiRoot;          // pai na UI (Canvas ou um panel root)
+
 
         [Header("Title")]
         [SerializeField] private RectTransform titleTransform;
@@ -57,20 +59,17 @@ namespace UI.Menus
         private void Start()
         {
             var profile = SaveManager.Instance.Load<PlayerProfileData>();
-            if (lgpdView != null)
+
+            if (!profile.hasAcceptedLGPD && lgpdViewPrefab != null)
             {
-                if (!profile.hasAcceptedLGPD)
-                {
-                    lgpdView.gameObject.SetActive(true);
-                }
-                else
-                {
-                    lgpdView.gameObject.SetActive(false);
-                }
+                // Instancia o prefab como filho do canvas principal
+                var instance = Instantiate(lgpdViewPrefab, uiRoot != null ? uiRoot : transform);
+                // Não precisa fazer mais nada, o LgpdView se auto-inicializa no Start()
             }
+
             _progress = new LevelProgressService();
             _progress.Load();
-        
+
             titleTransform.localScale = Vector3.zero;
             _titleSeq = DOTween.Sequence()
                 .Append(titleTransform.DOScale(1f, 0.8f).SetEase(Ease.OutBounce));

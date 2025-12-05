@@ -9,12 +9,12 @@ namespace UI.Views
     public class LgpdView : MonoBehaviour
     {
         [Header("Root / Panel")]
-        [SerializeField] private GameObject rootPanel;
-        [SerializeField] private RectTransform panelRect;
-        [SerializeField] private CanvasGroup panelCanvasGroup;
+        [SerializeField] private GameObject rootPanel;          // Raiz do prefab (normalmente o próprio GameObject)
+        [SerializeField] private RectTransform panelRect;       // RectTransform da janela
+        [SerializeField] private CanvasGroup panelCanvasGroup;  // CanvasGroup da janela
 
         [Header("Dim / Fundo escuro")]
-        [SerializeField] private CanvasGroup dimCanvasGroup;
+        [SerializeField] private CanvasGroup dimCanvasGroup;    // CanvasGroup do fundo escuro
 
         [Header("Conteúdo")]
         [SerializeField] private TextMeshProUGUI lgpdText;
@@ -33,8 +33,8 @@ namespace UI.Views
         [SerializeField] private float buttonSlideOffsetY = -40f;
         [SerializeField] private float buttonFadeDuration = 0.25f;
 
-        private bool _hasReachedEnd = false;
-        private bool _isTransitioning = false;
+        private bool hasReachedEnd = false;
+        private bool isTransitioning = false;
 
         private PlayerProfileData _profile;
         private Vector2 _panelOriginalPos;
@@ -42,23 +42,25 @@ namespace UI.Views
 
         private void Awake()
         {
+            // Garante que rootPanel esteja configurado (caso você esqueça no inspector)
+            if (rootPanel == null)
+                rootPanel = gameObject;
+
             _profile = SaveManager.Instance.Load<PlayerProfileData>();
         }
 
         private void Start()
         {
+            // Se por algum motivo instanciar mesmo depois de aceito, só se auto-destrói
             if (_profile != null && _profile.hasAcceptedLGPD)
             {
-                if (rootPanel != null)
-                    rootPanel.SetActive(false);
-
-                enabled = false;
+                rootPanel.SetActive(false);
+                Destroy(gameObject);
                 return;
             }
 
-            if (rootPanel != null)
-                rootPanel.SetActive(true);
-            
+            rootPanel.SetActive(true);
+
             if (panelRect != null)
                 _panelOriginalPos = panelRect.anchoredPosition;
             if (acceptButtonRect != null)
@@ -77,7 +79,7 @@ namespace UI.Views
                 dimCanvasGroup.blocksRaycasts = true;
                 dimCanvasGroup.interactable = false;
             }
-            
+
             if (panelCanvasGroup != null)
             {
                 panelCanvasGroup.alpha = 0f;
@@ -90,21 +92,15 @@ namespace UI.Views
                 panelRect.localScale = Vector3.one * panelScaleFrom;
                 panelRect.anchoredPosition = _panelOriginalPos + new Vector2(0f, panelSlideOffsetY);
             }
-            
+
             if (acceptButton != null)
-            {
                 acceptButton.gameObject.SetActive(false);
-            }
 
             if (acceptButtonCanvasGroup != null)
-            {
                 acceptButtonCanvasGroup.alpha = 0f;
-            }
 
             if (acceptButtonRect != null)
-            {
                 acceptButtonRect.anchoredPosition = _buttonOriginalPos + new Vector2(0f, buttonSlideOffsetY);
-            }
         }
 
         private void SetupScroll()
@@ -119,14 +115,14 @@ namespace UI.Views
 
         private void FadeIn()
         {
-            _isTransitioning = true;
-            
+            isTransitioning = true;
+
             if (dimCanvasGroup != null)
             {
                 dimCanvasGroup.DOFade(dimTargetAlpha, fadeDuration)
                     .SetEase(Ease.OutSine);
             }
-            
+
             Sequence seq = DOTween.Sequence();
 
             if (panelCanvasGroup != null)
@@ -142,7 +138,7 @@ namespace UI.Views
 
             seq.OnComplete(() =>
             {
-                _isTransitioning = false;
+                isTransitioning = false;
 
                 if (panelCanvasGroup != null)
                 {
@@ -154,16 +150,14 @@ namespace UI.Views
 
         private void FadeOut()
         {
-            if (_isTransitioning) return;
-            _isTransitioning = true;
+            if (isTransitioning) return;
+            isTransitioning = true;
 
             if (panelCanvasGroup != null)
-            {
                 panelCanvasGroup.interactable = false;
-            }
 
             Sequence seq = DOTween.Sequence();
-            
+
             if (panelCanvasGroup != null)
             {
                 seq.Join(panelCanvasGroup.DOFade(0f, fadeDuration).SetEase(Ease.InSine));
@@ -175,7 +169,7 @@ namespace UI.Views
                 seq.Join(panelRect.DOAnchorPos(_panelOriginalPos + new Vector2(0f, panelSlideOffsetY), fadeDuration)
                     .SetEase(Ease.InSine));
             }
-            
+
             if (dimCanvasGroup != null)
             {
                 seq.Join(dimCanvasGroup.DOFade(0f, fadeDuration).SetEase(Ease.InSine));
@@ -183,21 +177,19 @@ namespace UI.Views
 
             seq.OnComplete(() =>
             {
-                if (rootPanel != null)
-                    rootPanel.SetActive(false);
-
-                _isTransitioning = false;
-                enabled = false;
+                rootPanel.SetActive(false);
+                isTransitioning = false;
+                Destroy(gameObject);
             });
         }
 
         private void OnScrollValueChanged(Vector2 pos)
         {
-            if (_isTransitioning) return;
-            
-            if (!_hasReachedEnd && scrollRect != null && scrollRect.verticalNormalizedPosition <= 0.001f)
+            if (isTransitioning) return;
+
+            if (!hasReachedEnd && scrollRect != null && scrollRect.verticalNormalizedPosition <= 0.001f)
             {
-                _hasReachedEnd = true;
+                hasReachedEnd = true;
                 ShowAcceptButton();
             }
         }
@@ -218,7 +210,7 @@ namespace UI.Views
 
         public void AcceptLgpd()
         {
-            if (_isTransitioning) return;
+            if (isTransitioning) return;
 
             if (_profile == null)
                 _profile = SaveManager.Instance.Load<PlayerProfileData>();
