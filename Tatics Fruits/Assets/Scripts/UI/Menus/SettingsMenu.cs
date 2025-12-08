@@ -1,5 +1,6 @@
 using DG.Tweening;
 using Gameplay.Utils;
+using UI.Views;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,12 +42,14 @@ public class SettingsMenu : MonoBehaviour
 
     [Header("Popups")]
     [SerializeField] private CreditsPopup creditsPopupPrefab;
+    [SerializeField] private DeleteAccountView deleteAccountView;
     [SerializeField] private Transform popupParent;
 
     [Header("Optional: disable these while open")]
     [SerializeField] private Button[] buttonsToDisable;
 
     private CreditsPopup _currentCreditsPopup;
+    private DeleteAccountView _currentDeleteAccountView;
 
     public bool IsOpen { get; private set; }
 
@@ -87,7 +90,7 @@ public class SettingsMenu : MonoBehaviour
         IsOpen = false;
         _animating = false;
         
-        HookButtonWithFeedback(deleteAccountButton, "Delete Account (futuro)");
+        HookButtonWithFeedback(deleteAccountButton, OnDeleteAccountClicked);
         HookButtonWithFeedback(creditsButton, OnCreditsButtonClicked);
         HookButtonWithFeedback(termsButton,  "Load Data(futuro)");
         
@@ -300,5 +303,16 @@ public class SettingsMenu : MonoBehaviour
         
         _currentCreditsPopup = Instantiate(creditsPopupPrefab, parent);
         _currentCreditsPopup.Show();
+    }
+    
+    private void OnDeleteAccountClicked()
+    {
+        if(!deleteAccountView)
+            return;
+        
+        var parent = popupParent ? popupParent : transform.root;
+
+        _currentDeleteAccountView = Instantiate(deleteAccountView, parent);
+        _currentDeleteAccountView.Show();
     }
 }

@@ -4142,7 +4142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &518797695
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4246,6 +4246,7 @@ MonoBehaviour:
   deleteAccountButton: {fileID: 1593803870}
   termsButton: {fileID: 930964584}
   creditsPopupPrefab: {fileID: -279068186861314722, guid: 491148faf23cf7c4fbd82bda63c728bc, type: 3}
+  deleteAccountView: {fileID: 4549525327457130253, guid: d48714557d5ad2344ae5c788a6a3bf85, type: 3}
   popupParent: {fileID: 648363410}
   buttonsToDisable:
   - {fileID: 1208899202}
@@ -18946,8 +18947,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 10.800001
-  m_fontSizeMax: 43.200005
+  m_fontSizeMin: 19.935001
+  m_fontSizeMax: 79.740005
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
