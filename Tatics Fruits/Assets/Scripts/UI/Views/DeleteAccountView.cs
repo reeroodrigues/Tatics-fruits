@@ -168,20 +168,30 @@ namespace UI.Views
                 panelCanvasGroup.interactable = false;
                 panelCanvasGroup.blocksRaycasts = false;
             }
-            
+
+            var softDuration = fadeDuration * 1.2f;
+            var softScale = 0.97f;
+            var softMove = 8f;
+
             var seq = DOTween.Sequence();
-            
-            if(panelCanvasGroup != null)
-                seq.Join(panelCanvasGroup.DOFade(0f, fadeDuration).SetEase(Ease.InSine));
-        
+
+            if (panelCanvasGroup != null)
+            {
+                seq.Join(panelCanvasGroup.DOFade(0f, softDuration).SetEase(Ease.OutSine));
+            }
+
             if (panelRect != null)
             {
-                seq.Join(panelRect.DOScale(panelScaleFrom, fadeDuration).SetEase(Ease.InSine));
-                seq.Join(panelRect.DOScale(_panelOriginalPos + new Vector2(0f, panelSlideOffsetY), fadeDuration).SetEase(Ease.InSine));
+                seq.Join(panelRect.DOAnchorPos(_panelOriginalPos + new Vector2(0f, -softMove), softDuration)
+                    .SetEase(Ease.OutSine));
             }
-        
+            
+            seq.Join(panelRect.DOScale(softScale, softDuration).SetEase(Ease.OutSine));
+
             if (dimCanvasGroup != null)
-                seq.Join(dimCanvasGroup.DOFade(0f, fadeDuration).SetEase(Ease.InSine));
+            {
+                seq.Join(dimCanvasGroup.DOFade(0f, softDuration * 0.9f).SetEase(Ease.OutSine));
+            }
         
             seq.OnComplete(() =>
             {
