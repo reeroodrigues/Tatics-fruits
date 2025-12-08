@@ -107,6 +107,8 @@ public class SettingsMenu : MonoBehaviour
         brButton.onClick.AddListener(() => SelectLanguage("pt-BR"));
         usButton.onClick.AddListener(() => SelectLanguage("en-US"));
         esButton.onClick.AddListener(() => SelectLanguage("es-ES"));
+
+        Core.SoundManager.Instance.RefreshFromSettings();
     }
 
     private void OnDisable()
@@ -251,6 +253,7 @@ public class SettingsMenu : MonoBehaviour
         _settings.musicOn = isOn;
         SettingsRepository.Save(_settings);
         RefreshToggleVisuals();
+        Core.SoundManager.Instance.SetMusicEnabled(isOn);
     }
 
     private void OnSfxToggleChanged(bool isOn)
@@ -258,6 +261,7 @@ public class SettingsMenu : MonoBehaviour
         _settings.sfxOn = isOn;
         SettingsRepository.Save(_settings);
         RefreshToggleVisuals();
+        Core.SoundManager.Instance.SetSFXEnabled(isOn);
     }
 
     private void RefreshToggleVisuals()

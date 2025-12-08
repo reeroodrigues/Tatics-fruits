@@ -4238,8 +4238,6 @@ MonoBehaviour:
   sfxBackground: {fileID: 1822769546}
   onColor: {r: 0.38, g: 0.78, b: 0.35, a: 1}
   offColor: {r: 0.9, g: 0.3, b: 0.25, a: 1}
-  musicVolumeSlider: {fileID: 0}
-  sfxVolumeSlider: {fileID: 0}
   brButton: {fileID: 1408667831}
   usButton: {fileID: 421891161}
   esButton: {fileID: 136674917}
@@ -8689,57 +8687,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930964582}
   m_CullTransparentMesh: 1
---- !u!1 &932623331
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 932623332}
-  - component: {fileID: 932623333}
-  m_Layer: 0
-  m_Name: SoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &932623332
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932623331}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 196.78386, y: 383.2277, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &932623333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 932623331}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16463ee3dcf94d199d6a400bb2cc7fd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Managers.SoundManager
-  soundDatabase:
-  - {fileID: 11400000, guid: f56f16de145adfa41acf69f7a32c0991, type: 2}
-  masterVolume: 1
-  musicVolume: 1
-  sfxVolume: 1
-  isMusicEnabled: 1
-  isSfxEnabled: 1
 --- !u!1 &944697794
 GameObject:
   m_ObjectHideFlags: 0
@@ -14269,7 +14216,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -1.9999695, y: -830}
+  m_AnchoredPosition: {x: -2, y: -830}
   m_SizeDelta: {x: 118, y: 208}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1691091370
@@ -20497,8 +20444,8 @@ MonoBehaviour:
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 14.458749
-  m_fontSizeMax: 26.42738
+  m_fontSizeMin: 7.8331823
+  m_fontSizeMax: 14.317317
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -20821,4 +20768,3 @@ SceneRoots:
   - {fileID: 92721113}
   - {fileID: 728060451}
   - {fileID: 1250548556}
-  - {fileID: 932623332}

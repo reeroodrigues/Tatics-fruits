@@ -40,6 +40,8 @@ namespace Core
                 QualitySettings.vSyncCount = 0;
             }
 #endif
+
+            SoundManager.Instance.RefreshFromSettings();
         }
 
         private void OnApplicationPause(bool pauseStatus)
