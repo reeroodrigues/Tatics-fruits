@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69aff33fcf794d92a54294792eda83c6, type: 3}
+  m_Name: Level_Fase21
+  m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.LevelConfigSO
+  levelId: fase_21
+  displayName: Fase 21
+  description: "Fa\xE7a {0} pontos em {0} segundos!"
+  targetScore: 50
+  initialTimeSeconds: 120
+  handSize: 6
+  deckSize: 56
+  timeBonusOnPair: 0
+  swapAllTimePenalty: 5
+  swapRandomTimePenalty: 2
+  allowEmptyDeckRefill: 1
+  deck: {fileID: 11400000, guid: 2e74fcf8bbee2644c9ae6030dd455b4c, type: 2}
+  useFixedSeed: 0
+  fixedSeed: 0
+  scorePerPairBase: 0
+  scorePerCardValueFactor: 0
+  comboWindows: 0
+  comboMultipliers:
+  - 0
+  - 0
+  - 0
+  - 0
+  star1Threshold: 0.25
+  star2Threshold: 0.5
+  star3Threshold: 1
