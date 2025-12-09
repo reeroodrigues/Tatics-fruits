@@ -417,8 +417,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 174.49, y: 270}
-  m_SizeDelta: {x: 566.13, y: 658.03}
+  m_AnchoredPosition: {x: 175.86, y: 270}
+  m_SizeDelta: {x: 599.35, y: 658.03}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &83359192
 MonoBehaviour:
@@ -549,6 +549,7 @@ GameObject:
   - component: {fileID: 113509574}
   - component: {fileID: 113509573}
   - component: {fileID: 113509575}
+  - component: {fileID: 113509576}
   m_Layer: 5
   m_Name: Setting Button
   m_TagString: Untagged
@@ -570,11 +571,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2082077804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -383.0251, y: 957.99994}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 158, y: 158}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &113509573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -657,6 +658,29 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &113509576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113509571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa3bb48bfa2405488ff9be042b7b457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.Views.GameplaySettings
+  openSettingsButton: {fileID: 113509575}
+  settingsPanel: {fileID: 1923058686}
+  musicButton: {fileID: 1462776954}
+  sfxButton: {fileID: 1512090527}
+  quitButton: {fileID: 1101158353}
+  musicOnSprite: {fileID: 8178584159150834927, guid: b5087768be5ebd047b4a3ed23958fcd0, type: 3}
+  musicOffSprite: {fileID: 2299020519406842400, guid: 7a63ee8aa350b3d4994a6844fc5fa467, type: 3}
+  sfxOnSprite: {fileID: -5731114081525038041, guid: b5087768be5ebd047b4a3ed23958fcd0, type: 3}
+  sfxOffSprite: {fileID: -6792300705316684432, guid: 7a63ee8aa350b3d4994a6844fc5fa467, type: 3}
+  quitPopupPrefab: {fileID: 373463654744968627, guid: 9fc27a7617d76a44d98c4913cfc0e77f, type: 3}
+  canvasTransform: {fileID: 2082077804}
 --- !u!1 &123366805
 GameObject:
   m_ObjectHideFlags: 0
@@ -1472,8 +1496,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000045776, y: -193.499}
-  m_SizeDelta: {x: 915.11, y: 222.813}
+  m_AnchoredPosition: {x: -1.3225, y: -193.499}
+  m_SizeDelta: {x: 953.73, y: 222.813}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &344111149
 CanvasRenderer:
@@ -2097,7 +2121,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -301, y: 0}
+  m_AnchoredPosition: {x: -301, y: -87}
   m_SizeDelta: {x: 354.37, y: 637}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &607720898
@@ -3940,8 +3964,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 169.65994, y: -709.62}
-  m_SizeDelta: {x: -468.24, y: -1618.1}
+  m_AnchoredPosition: {x: 183.48001, y: -591.23}
+  m_SizeDelta: {x: -495.88, y: -1381.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1369335519
 MonoBehaviour:
@@ -4271,7 +4295,7 @@ MonoBehaviour:
   levelSet: {fileID: 11400000, guid: e2de82088fcc9144293855b79aeb9171, type: 2}
   phaseLabel: {fileID: 2489931806995890087}
   tutorialManager: {fileID: 1014608234}
-  gameplaySettings: {fileID: 1923058688}
+  gameplaySettings: {fileID: 0}
   countdownView: {fileID: 241955251}
   allLevelsCompletedView: {fileID: 8590934228772649784, guid: db5f22bac4e24224ca9a8f951dcf469b, type: 3}
 --- !u!1001 &1448547642
@@ -4485,8 +4509,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 174, y: 99.447}
-  m_SizeDelta: {x: 565.16, y: 538.67}
+  m_AnchoredPosition: {x: 183.47998, y: 99.44702}
+  m_SizeDelta: {x: 584.12, y: 538.67}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!82 &1473103882
 AudioSource:
@@ -5602,7 +5626,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1876256239}
   m_LocalRotation: {x: 0.0000003745071, y: 3.2969179e-12, z: 0.00000056624407, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5611,7 +5635,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -84, y: -82}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 290.93, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1876256241
@@ -5661,7 +5685,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1923058687}
-  - component: {fileID: 1923058688}
   m_Layer: 5
   m_Name: SettingsGameplay
   m_TagString: Untagged
@@ -5687,34 +5710,11 @@ RectTransform:
   - {fileID: 1101158352}
   m_Father: {fileID: 2082077804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 82.44995, y: -54.630127}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 23, y: 925}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0, y: 1}
---- !u!114 &1923058688
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1923058686}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aa3bb48bfa2405488ff9be042b7b457, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::New_GameplayCore.Views.GameplaySettings
-  openSettingsButton: {fileID: 113509575}
-  settingsPanel: {fileID: 1923058686}
-  musicButton: {fileID: 1462776954}
-  sfxButton: {fileID: 1512090527}
-  quitButton: {fileID: 1101158353}
-  musicOnSprite: {fileID: 8178584159150834927, guid: b5087768be5ebd047b4a3ed23958fcd0, type: 3}
-  musicOffSprite: {fileID: 2299020519406842400, guid: 7a63ee8aa350b3d4994a6844fc5fa467, type: 3}
-  sfxOnSprite: {fileID: -5731114081525038041, guid: b5087768be5ebd047b4a3ed23958fcd0, type: 3}
-  sfxOffSprite: {fileID: -6792300705316684432, guid: 7a63ee8aa350b3d4994a6844fc5fa467, type: 3}
-  quitPopupPrefab: {fileID: 373463654744968627, guid: 9fc27a7617d76a44d98c4913cfc0e77f, type: 3}
-  canvasTransform: {fileID: 2082077804}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1947176953
 GameObject:
   m_ObjectHideFlags: 0
@@ -11687,7 +11687,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -53.831997, y: 2.8166263}
+  m_AnchoredPosition: {x: -27, y: 2.8166263}
   m_SizeDelta: {x: 187.889, y: 187.889}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &2732004940946132832
@@ -12402,7 +12402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -235}
+  m_AnchoredPosition: {x: 30, y: -176}
   m_SizeDelta: {x: 915.108, y: 112.693}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &7752918358458571818
