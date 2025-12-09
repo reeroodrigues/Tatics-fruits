@@ -5,12 +5,11 @@ TagManager:
   serializedVersion: 3
   tags:
   - PlayArea
-  - Fruit
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Fruit
+  - 
   - Water
   - UI
   - 
