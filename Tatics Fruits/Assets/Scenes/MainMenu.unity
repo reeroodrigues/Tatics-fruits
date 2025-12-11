@@ -4238,8 +4238,6 @@ MonoBehaviour:
   sfxBackground: {fileID: 1822769546}
   onColor: {r: 0.38, g: 0.78, b: 0.35, a: 1}
   offColor: {r: 0.9, g: 0.3, b: 0.25, a: 1}
-  musicVolumeSlider: {fileID: 0}
-  sfxVolumeSlider: {fileID: 0}
   brButton: {fileID: 1408667831}
   usButton: {fileID: 421891161}
   esButton: {fileID: 136674917}
@@ -14269,7 +14267,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -1.9999695, y: -830}
+  m_AnchoredPosition: {x: -2, y: -830}
   m_SizeDelta: {x: 118, y: 208}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1691091370
@@ -19000,8 +18998,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 10.800001
-  m_fontSizeMax: 43.200005
+  m_fontSizeMin: 43.200005
+  m_fontSizeMax: 172.80002
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -20493,12 +20491,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26.42738
+  m_fontSize: 31.33273
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 14.458749
-  m_fontSizeMax: 26.42738
+  m_fontSizeMin: 31.33273
+  m_fontSizeMax: 57.269268
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
