@@ -27,6 +27,9 @@ namespace UI.Views
         [SerializeField] private float dangerShakeSpeed = 30f;
         [SerializeField] private float dangerShakeRange = 0.2f;
 
+        [Header("Score Feedback")]
+        [SerializeField] private MMF_Player scoreFeedback;
+
         private ITimeManager _time;
         private IScoreService _score;
         private ISwapService _swap;
@@ -126,6 +129,11 @@ namespace UI.Views
         private void UpdateScore(int total, int delta)
         {
             scoreText.text = total.ToString("N0");
+
+            if (delta > 0 && scoreFeedback != null)
+            {
+                scoreFeedback.PlayFeedbacks();
+            }
         }
 
         private void OnSwapAll() => _swap.TrySwapAll();
