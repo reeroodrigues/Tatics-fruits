@@ -1,9 +1,11 @@
-using System;
+using MoreMountains.Feedbacks;
+using New_GameplayCore;
+using New_GameplayCore.Views;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace New_GameplayCore.Views
+namespace UI.Views
 {
     public class HUDView : MonoBehaviour
     {
@@ -15,15 +17,24 @@ namespace New_GameplayCore.Views
         [SerializeField] private RectTransform timeDeltaAnchor;
         [SerializeField] private TimeDeltaToast timeDeltaToast;
 
+        [Header("Clock Shake")]
+        [SerializeField] private GameObject clockObject;
+        [SerializeField] private int shakeThreshold = 10;
+
         private ITimeManager _time;
         private IScoreService _score;
         private ISwapService _swap;
+        private MMScaleShaker _clockShaker;
+        private bool _isShaking = false;
 
         public void Initialize(ITimeManager time, IScoreService score, ISwapService swap)
         {
             _time = time;
             _score = score;
             _swap = swap;
+
+            if (clockObject != null)
+                _clockShaker = clockObject.GetComponent<MMScaleShaker>();
 
             _time.OnTimeChanged += UpdateTimer;
             _time.OnTimeDelta += ShowTimeDelta;
@@ -46,6 +57,9 @@ namespace New_GameplayCore.Views
 
             if (_score != null)
                 _score.OnScoreChanged -= UpdateScore;
+
+            if (_clockShaker != null && _isShaking)
+                _clockShaker.Stop();
         }
 
         private void ShowTimeDelta(int delta)
@@ -61,10 +75,26 @@ namespace New_GameplayCore.Views
         private void UpdateTimer(int value)
         {
             timerText.text = value.ToString("00");
-            if (value <= 10)
+            if (value <= shakeThreshold && value > 0)
+            {
                 timerText.color = Color.red;
-            else
-                timerText.color = Color.white;
+
+                if (!_isShaking && _clockShaker != null)
+                {
+                    _clockShaker.Play();
+                    _isShaking = true;
+                }
+                else
+                {
+                    timerText.color = Color.white;
+
+                    if (_isShaking && _clockShaker != null)
+                    {
+                        _clockShaker.Stop();
+                        _isShaking = false;
+                    }
+                }
+            }
         }
 
         private void UpdateScore(int total, int delta)

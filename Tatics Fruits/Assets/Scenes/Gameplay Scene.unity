@@ -3252,9 +3252,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3275093408626263536}
   - {fileID: 1708266478}
   - {fileID: 976067016}
+  - {fileID: 3275093408626263536}
   m_Father: {fileID: 2082077804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -11100,6 +11100,8 @@ MonoBehaviour:
   swapOneButton: {fileID: 1201055234}
   timeDeltaAnchor: {fileID: 94323881}
   timeDeltaToast: {fileID: 2981652402924991672, guid: d2c14d4142eca4c4ebc0ff2a3718f809, type: 3}
+  clockObject: {fileID: 9022809906991244056}
+  shakeThreshold: 10
 --- !u!222 &48806441947852642
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12824,7 +12826,7 @@ MonoBehaviour:
   DebugActive: 0
   InScriptDrivenPause: 0
   FeedbacksList:
-  - rid: 8152947173418074206
+  - rid: 8152947173418074210
   KeepPlayModeChanges: 0
   PerformanceMode: 0
   RestoreInitialValuesOnDisable: 0
@@ -12836,11 +12838,11 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 8152947173418074206
+    - rid: 8152947173418074210
       type: {class: MMF_ScaleShake, ns: MoreMountains.Feedbacks, asm: MoreMountains.Tools}
       data:
         Active: 1
-        UniqueID: -13151145
+        UniqueID: -1422601981
         Label: Scale Shake
         OriginalLabel: Scale Shake
         ChannelMode: 0
@@ -12974,7 +12976,7 @@ MonoBehaviour:
   ChannelMode: 0
   Channel: 0
   MMChannelDefinition: {fileID: 0}
-  ShakeDuration: 0.5
+  ShakeDuration: 1
   PlayOnAwake: 0
   PermanentShake: 0
   Interruptible: 1
@@ -12989,10 +12991,10 @@ MonoBehaviour:
   TargetRectTransform: {fileID: 0}
   ShakeSpeed: 20
   ShakeRange: 0.5
-  ShakeMainDirection: {x: 0, y: 1, z: 0}
-  RandomizeDirection: 0
+  ShakeMainDirection: {x: 0.5, y: 0.5, z: 0}
+  RandomizeDirection: 1
   ShakeAltDirection: {x: 0, y: 1, z: 0}
-  RandomizeDirectionOnPlay: 0
+  RandomizeDirectionOnPlay: 1
   AddDirectionalNoise: 1
   DirectionalNoiseStrengthMin: {x: 0.25, y: 0.25, z: 0.25}
   DirectionalNoiseStrengthMax: {x: 0.25, y: 0.25, z: 0.25}
@@ -13013,7 +13015,7 @@ MonoBehaviour:
       outWeight: 0
     - serializedVersion: 3
       time: 0.5
-      value: 1
+      value: 0.49903107
       inSlope: 0
       outSlope: 0
       tangentMode: 0
