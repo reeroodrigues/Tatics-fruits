@@ -20,12 +20,18 @@ namespace UI.Views
         [Header("Clock Shake")]
         [SerializeField] private GameObject clockObject;
         [SerializeField] private int shakeThreshold = 10;
+        
+        [Header("Shake Settings")]
+        [SerializeField] private float idleShakeSpeed = 10f;
+        [SerializeField] private float idleShakeRange = 0.05f;
+        [SerializeField] private float dangerShakeSpeed = 30f;
+        [SerializeField] private float dangerShakeRange = 0.2f;
 
         private ITimeManager _time;
         private IScoreService _score;
         private ISwapService _swap;
         private MMScaleShaker _clockShaker;
-        private bool _isShaking = false;
+        private bool _isInDangerZone = false;
 
         public void Initialize(ITimeManager time, IScoreService score, ISwapService swap)
         {
@@ -34,7 +40,14 @@ namespace UI.Views
             _swap = swap;
 
             if (clockObject != null)
+            {
                 _clockShaker = clockObject.GetComponent<MMScaleShaker>();
+                if (_clockShaker != null)
+                {
+                    SetIdleShake();
+                    _clockShaker.Play();
+                }
+            }
 
             _time.OnTimeChanged += UpdateTimer;
             _time.OnTimeDelta += ShowTimeDelta;
@@ -58,7 +71,7 @@ namespace UI.Views
             if (_score != null)
                 _score.OnScoreChanged -= UpdateScore;
 
-            if (_clockShaker != null && _isShaking)
+            if (_clockShaker != null)
                 _clockShaker.Stop();
         }
 
@@ -75,26 +88,39 @@ namespace UI.Views
         private void UpdateTimer(int value)
         {
             timerText.text = value.ToString("00");
+            
             if (value <= shakeThreshold && value > 0)
             {
                 timerText.color = Color.red;
 
-                if (!_isShaking && _clockShaker != null)
+                if (!_isInDangerZone && _clockShaker != null)
                 {
-                    _clockShaker.Play();
-                    _isShaking = true;
-                }
-                else
-                {
-                    timerText.color = Color.white;
-
-                    if (_isShaking && _clockShaker != null)
-                    {
-                        _clockShaker.Stop();
-                        _isShaking = false;
-                    }
+                    SetDangerShake();
+                    _isInDangerZone = true;
                 }
             }
+            else
+            {
+                timerText.color = Color.white;
+
+                if (_isInDangerZone && _clockShaker != null)
+                {
+                    SetIdleShake();
+                    _isInDangerZone = false;
+                }
+            }
+        }
+
+        private void SetIdleShake()
+        {
+            _clockShaker.ShakeSpeed = idleShakeSpeed;
+            _clockShaker.ShakeRange = idleShakeRange;
+        }
+
+        private void SetDangerShake()
+        {
+            _clockShaker.ShakeSpeed = dangerShakeSpeed;
+            _clockShaker.ShakeRange = dangerShakeRange;
         }
 
         private void UpdateScore(int total, int delta)
