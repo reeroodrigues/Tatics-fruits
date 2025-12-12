@@ -1,11 +1,10 @@
 using System;
 using Ads;
 using Core.ScriptableObjects;
-using Core.Services;
+using New_GameplayCore;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-namespace New_GameplayCore.Services
+namespace Core.Services
 {
     [System.Serializable]
     public struct DefeatModel
@@ -24,7 +23,6 @@ namespace New_GameplayCore.Services
         private readonly LevelConfigSO _cfg;
         private readonly IScoreService _score;
         private readonly ITimeManager _time;
-        private readonly IHighScoreService _hs;
         private readonly PlayerProfileService _profileService;
 
         public event Action<DefeatModel> OnModelReady;
@@ -37,21 +35,22 @@ namespace New_GameplayCore.Services
         public DefeatPresenter(LevelConfigSO cfg,
             IScoreService score,
             ITimeManager time,
-            IHighScoreService hs,
             PlayerProfileService profileService)
         {
             _cfg = cfg;
             _score = score;
             _time = time;
-            _hs = hs;
             _profileService = profileService;
         }
 
         public void Build()
         {
-            var id = string.IsNullOrEmpty(_cfg.levelId) ? _cfg.name : _cfg.levelId;
+            var levelId = string.IsNullOrEmpty(_cfg.levelId) ? _cfg.name : _cfg.levelId;
             var total = _score.Total;
-            var newRecord = _hs.TryReportScore(id, total);
+            var previousBest = _profileService.GetBestScore(levelId);
+            
+            _profileService.RegisterBestScore(levelId, total);
+            var newRecord = total > previousBest;
 
             var pct = Mathf.Clamp01(total / (float)_cfg.targetScore);
             var stars = 0;
@@ -59,19 +58,13 @@ namespace New_GameplayCore.Services
             if (pct >= _cfg.star2Threshold) stars = 2;
             if (pct >= _cfg.star3Threshold) stars = 3;
 
-            var levelId = _cfg.levelId;
-            if (string.IsNullOrEmpty(levelId))
-                levelId = _cfg.name;
-            
-            var best = _profileService.GetBestScore(levelId);
-
             OnModelReady?.Invoke(new DefeatModel
             {
-                levelId = id,
+                levelId = levelId,
                 totalScore = total,
                 targetScore = _cfg.targetScore,
                 starsEarned = stars,
-                bestBefore = best,
+                bestBefore = previousBest,
                 newRecord = newRecord,
                 timeLeftSeconds = _time.TimeLeftSeconds
             });

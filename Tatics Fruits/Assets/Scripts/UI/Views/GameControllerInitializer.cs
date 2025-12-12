@@ -42,7 +42,6 @@ namespace UI.Views
         public IDeckService Deck => _deck;
         public LevelConfigSO LevelConfig => levelConfig;
         public IScoreService Score => _score;
-        public IHighScoreService Highscores => _highscores;
         public LevelProgressService Progress;
         public PlayerProfileService Profile => _profileService;
         
@@ -55,7 +54,6 @@ namespace UI.Views
         private SwapService _swap;
         private RuleEngine _rule;
         private IGameController _controller;
-        private IHighScoreService _highscores;
         private PreRoundPresenter _preRoundPresenter;
         private PreRoundView _preRoundInstance;
 
@@ -87,7 +85,6 @@ namespace UI.Views
             _rule  = new RuleEngine(_hand, _deck, _score, _time, _combo, levelConfig);
             _controller = new GameController(
                 _fsm, _time, _deck, _hand, _rule, _swap, levelConfig, _score);
-            _highscores = new JsonHighScoreService();
             
             _controller.OnEnterPreRound += HandleEnterPreRound;
             _controller.OnLevelEnded += HandleLevelEnded;
@@ -138,10 +135,10 @@ namespace UI.Views
                 gameplaySettings.Initialize(_time);
             }
 
-            _score.OnScoreChanged += (total, delta) =>
-            {
-                _highscores.TryReportScore(GetLevelId(), total);
-            };
+            // _score.OnScoreChanged += (total, delta) =>
+            // {
+            //     _highscores.TryReportScore(GetLevelId(), total);
+            // };
             
             Managers.AnalyticsManager.Instance?.TrackLevelStarted(
                 Progress.CurrentIndex + 1, 
@@ -176,7 +173,7 @@ namespace UI.Views
             if (string.IsNullOrEmpty(levelId))
                 levelId = levelConfig.name;
 
-            _profileService.RegisterBestScore(levelId, totalScore);
+            //_profileService.RegisterBestScore(levelId, totalScore);
 
             switch (cause)
             {
@@ -195,7 +192,7 @@ namespace UI.Views
         private void ShowVictory()
         {
             var presenter = new VictoryPresenter(
-                levelConfig, _score, _time, _highscores, _profileService, Progress, levelSet);
+                levelConfig, _score, _time, _profileService, Progress, levelSet);
 
             VictoryModel model = default;
             presenter.OnModelReady += m => model = m;
@@ -213,7 +210,6 @@ namespace UI.Views
             var levelId = levelConfig.levelId;
             if (string.IsNullOrEmpty(levelId))
                 levelId = levelConfig.name;
-            _profileService.RegisterBestScore(levelId, totalScore);
             
             Progress.MarkNextUnlockedIfEligible(levelConfig, _score.Total, 0.75f);
 
@@ -271,7 +267,7 @@ namespace UI.Views
 
         private void ShowDefeat()
         {
-            var presenter = new DefeatPresenter(levelConfig, _score, _time, _highscores, _profileService);
+            var presenter = new DefeatPresenter(levelConfig, _score, _time, _profileService);
 
             DefeatModel model = default;
             presenter.OnModelReady += m => model = m;
@@ -307,9 +303,9 @@ namespace UI.Views
                 _controller as GameController,
                 levelConfig,
                 _deck,
-                _highscores);
+                _profileService);
 
-            var model = _preRoundPresenter.BuildModel(levelConfig, _deck, _highscores);
+            var model = _preRoundPresenter.BuildModel(levelConfig, _deck, _profileService);
 
             _preRoundInstance = Instantiate(preRoundView, uiRoot);
             _preRoundInstance.Bind(_preRoundPresenter, model);

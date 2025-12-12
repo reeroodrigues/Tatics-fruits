@@ -12,12 +12,11 @@ namespace Core.Services
         private readonly LevelConfigSO _cfg;
         private readonly IScoreService _score;
         private readonly ITimeManager  _time;
-        private readonly IHighScoreService _hs;
+        private readonly PlayerProfileService _profileService;
         private readonly ILevelProgressService _progress;
         private readonly LevelSetSO _levelSet;
 
         public Action<VictoryModel> OnModelReady;
-        private readonly PlayerProfileService _profileService;
         public event Action OnNext;
         public event Action OnReplay;
 
@@ -25,7 +24,6 @@ namespace Core.Services
             LevelConfigSO cfg,
             ScoreService score,
             ITimeManager time,
-            IHighScoreService hs,
             PlayerProfileService profileService,
             ILevelProgressService progress,
             LevelSetSO levelSet)
@@ -33,7 +31,6 @@ namespace Core.Services
             _cfg = cfg;
             _score = score;
             _time = time;
-            _hs = hs;
             _profileService = profileService;
             _progress = progress;
             _levelSet = levelSet;
@@ -50,7 +47,12 @@ namespace Core.Services
             if(pct >= _cfg.star2Threshold) stars = 2;
             if(pct >= _cfg.star3Threshold || total >= target) stars = 3;
 
-            var newRecord = _hs.TryReportScore(string.IsNullOrEmpty(_cfg.levelId) ? _cfg.name : _cfg.levelId, total);
+            var levelId = string.IsNullOrEmpty(_cfg.levelId) ? _cfg.name : _cfg.levelId;
+            var previousBest = _profileService.GetBestScore(levelId);
+            
+            _profileService.RegisterBestScore(levelId, total);
+            var newRecord = total > previousBest;
+            
             _progress.RecordResult(_cfg, total, stars);
 
             var canNext = _progress.CanAdvance(_cfg, total, 0.75f);
@@ -59,7 +61,7 @@ namespace Core.Services
             {
                 totalScore = total,
                 targetScore = target,
-                bestBefore = _profileService.GetBestScore(_cfg.levelId),
+                bestBefore = previousBest,
                 newRecord = newRecord,
                 starsEarned = stars,
                 canGoNext = canNext,

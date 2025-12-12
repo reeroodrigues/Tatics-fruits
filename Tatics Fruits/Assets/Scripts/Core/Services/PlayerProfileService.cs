@@ -69,17 +69,25 @@ namespace Core.Services
             Save();
         }
 
-        public void RegisterBestScore(string levelId, int score)
+        public bool RegisterBestScore(string levelId, int score)
         {
-            if(string.IsNullOrEmpty(levelId))
-                return;
-            
-            if(!_data.BestScores.ContainsKey(levelId))
-                _data.BestScores[levelId] = score;
-            else if(score > _data.BestScores[levelId])
-                _data.BestScores[levelId] = score;
+            if (string.IsNullOrEmpty(levelId))
+                return false;
 
-            Save();
+            if (!_data.BestScores.ContainsKey(levelId))
+            {
+                _data.BestScores[levelId] = score;
+                Save();
+                return true;
+            }
+            else if (score > _data.BestScores[levelId])
+            {
+                _data.BestScores[levelId] = score;
+                Save();
+                return true;
+            }
+
+            return false;
         }
 
         public int GetBestScore(string levelId)

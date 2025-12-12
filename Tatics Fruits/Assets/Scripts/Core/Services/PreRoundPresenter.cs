@@ -11,22 +11,22 @@ namespace Core.Services
         private readonly GameController _controller;
         private readonly LevelConfigSO _cfg;
         private readonly IDeckService _deck;
-        private readonly IHighScoreService  _highscores;
+        private readonly PlayerProfileService _profileService;
         private PreRoundModel _model;
 
         public System.Action<PreRoundModel> OnModelReady;
         public System.Action OnRequestClose;
 
         public PreRoundPresenter(GameController controller, LevelConfigSO cfg, IDeckService deck,
-            IHighScoreService highscores)
+            PlayerProfileService profileService)
         {
             _controller = controller;
             _cfg = cfg;
             _deck = deck;
-            _highscores = highscores;
+            _profileService = profileService;
         }
 
-        public PreRoundModel BuildModel(LevelConfigSO cfg, IDeckService deck, IHighScoreService hs)
+        public PreRoundModel BuildModel(LevelConfigSO cfg, IDeckService deck, PlayerProfileService profileService)
         {
             var total = 0;
             var list = new System.Collections.Generic.List<DeckEntrySummary>();
@@ -41,7 +41,7 @@ namespace Core.Services
             var s3 = cfg.targetScore;
             
             var levelId = string.IsNullOrEmpty(cfg.levelId) ? cfg.name : cfg.levelId;
-            var best = hs.GetBest(levelId);
+            var best = profileService.GetBestScore(levelId);
 
             _model = new PreRoundModel()
             {
@@ -67,7 +67,7 @@ namespace Core.Services
                 bestScore = best,
                 
                 useFixedSeed = cfg.useFixedSeed,
-                effectiveSeed = cfg.useFixedSeed ? cfg.fixedSeed : UnityEngine.Random.Range(int.MinValue, int.MaxValue),
+                effectiveSeed = cfg.useFixedSeed ? cfg.fixedSeed : Random.Range(int.MinValue, int.MaxValue),
             };
             
             OnModelReady?.Invoke(_model);
@@ -89,7 +89,7 @@ namespace Core.Services
         public void OnToggleUseFixedSeed(bool value)
         {
             _model.useFixedSeed = value;
-            _model.effectiveSeed = value ? _cfg.fixedSeed : UnityEngine.Random.Range(int.MinValue, int.MaxValue);
+            _model.effectiveSeed = value ? _cfg.fixedSeed : Random.Range(int.MinValue, int.MaxValue);
             OnModelReady?.Invoke(_model);
         }
     }

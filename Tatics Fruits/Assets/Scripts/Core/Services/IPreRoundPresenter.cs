@@ -1,10 +1,11 @@
 using Core.ScriptableObjects;
+using New_GameplayCore;
 
-namespace New_GameplayCore.Services
+namespace Core.Services
 {
     public interface IPreRoundPresenter
     {
-        PreRoundModel BuildModel(LevelConfigSO cfg, IDeckService deck, IHighScoreService highscores);
+        PreRoundModel BuildModel(LevelConfigSO cfg, IDeckService deck, PlayerProfileService profileService);
 
         void OnStartClicked();
         void OnBackClicked();
