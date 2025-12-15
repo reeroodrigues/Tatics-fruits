@@ -29,11 +29,6 @@ namespace UI.Views
 
         [Header("Score Feedback")]
         [SerializeField] private MMF_Player scoreFeedback;
-
-        [Header("Combo Feedback")] 
-        [SerializeField] private TextMeshProUGUI comboText;
-        [SerializeField] private MMF_Player comboIncreaseFeedback;
-        [SerializeField] private MMF_Player comboLostFeedback;
         
         [Header("Swap Feedbacks")]
         [SerializeField] private MMF_Player swapAllFeedback;
@@ -63,9 +58,6 @@ namespace UI.Views
                 }
             }
 
-            if (_comboTracker != null)
-                _comboTracker.OnComboChanged += UpdateCombo;
-
             _time.OnTimeChanged += UpdateTimer;
             _time.OnTimeDelta += ShowTimeDelta;
             _score.OnScoreChanged += UpdateScore;
@@ -90,26 +82,6 @@ namespace UI.Views
 
             if (_clockShaker != null)
                 _clockShaker.Stop();
-        }
-
-        private void UpdateCombo(int comboCount)
-        {
-            if (comboCount > 0)
-            {
-                comboText.text = $"COMBO X {comboCount}";
-                comboText.gameObject.SetActive(true);
-                
-                if(comboCount > _lastCombo)
-                    comboIncreaseFeedback?.PlayFeedbacks();
-            }
-            else
-            {
-                comboText.gameObject.SetActive(false);
-                if(_lastCombo > 0)
-                    comboLostFeedback?.PlayFeedbacks();
-            }
-            
-            _lastCombo = comboCount;
         }
 
         private void ShowTimeDelta(int delta)
