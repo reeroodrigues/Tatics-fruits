@@ -86,7 +86,7 @@ namespace Gameplay
                 var b = view.transform.position;
                 var mid = (a + b) * 0.5f;
 
-                matchFeedback.PlayFeedbacks(mid, matchFeedbackIntensity);
+                matchFeedback.PlayFeedbacks(mid, Random.Range(0.9f, 1.1f));
             }
         
             drag.AcceptDrop(dropContent);

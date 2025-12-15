@@ -22,9 +22,14 @@ namespace UI.Views
         [SerializeField] private MMF_Player starFeel1;
         [SerializeField] private MMF_Player starFeel2;
         [SerializeField] private MMF_Player starFeel3;
+        
+        [Header("Bar progress feel")]
+        [SerializeField] private MMF_Player progressFeel;
+        [SerializeField] private float tickMinDelta = 0.2f;
 
         private IScoreService _score;
         private LevelConfigSO _cfg;
+        private float _lastPct = -1f;
 
         private bool _star1Shown, _star2Shown, _star3Shown;
 
@@ -62,6 +67,10 @@ namespace UI.Views
         {
             var target = Mathf.Max(1, _cfg.targetScore);
             var pct = Mathf.Clamp01(total / (float)target);
+
+            if (delta > 0)
+                progressFeel?.PlayFeedbacks();
+
 
             if (progressFill)
                 progressFill.DOFillAmount(pct, 0.25f);
