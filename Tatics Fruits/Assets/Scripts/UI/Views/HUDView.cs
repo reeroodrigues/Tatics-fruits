@@ -39,9 +39,6 @@ namespace UI.Views
         [SerializeField] private MMF_Player swapAllFeedback;
         [SerializeField] private MMF_Player swapOneFeedback;
 
-        [Header("Time Feedback")]
-        [SerializeField] private MMF_Player timeBonusFeedback;
-
         private ITimeManager _time;
         private IScoreService _score;
         private ISwapService _swap;
@@ -72,7 +69,6 @@ namespace UI.Views
             _time.OnTimeChanged += UpdateTimer;
             _time.OnTimeDelta += ShowTimeDelta;
             _score.OnScoreChanged += UpdateScore;
-            _time.OnTimeDelta += OnTimeDelta;
             
             swapAllButton.onClick.AddListener(OnSwapAll);
             swapOneButton.onClick.AddListener(OnSwapOne);
@@ -94,12 +90,6 @@ namespace UI.Views
 
             if (_clockShaker != null)
                 _clockShaker.Stop();
-        }
-
-        private void OnTimeDelta(int delta)
-        {
-            if (delta > 0 && timeBonusFeedback != null)
-                timeBonusFeedback?.PlayFeedbacks();
         }
 
         private void UpdateCombo(int comboCount)
