@@ -28,7 +28,7 @@ MonoBehaviour:
   fixedSeed: 0
   scorePerPairBase: 0
   scorePerCardValueFactor: 0
-  comboWindows: 0
+  comboWindows: 5000
   comboMultipliers:
   - 0
   - 0

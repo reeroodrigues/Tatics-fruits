@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core.ScriptableObjects;
+using Core.Services;
 
 namespace New_GameplayCore.Services
 {

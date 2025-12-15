@@ -44,14 +44,23 @@ namespace Core.Services
 
             var comboIndex = Mathf.Clamp(_combo.CurrentCombo - 1, 0, _cfg.comboMultipliers.Length - 1);
             var multiplier = _cfg.comboMultipliers[comboIndex];
+            
+            var tier = _combo.CurrentTier;
+            if (tier != null)
+            {
+                multiplier *= tier.scoreMultiplier;
+            }
 
             _score.AddPairScore(a, b, multiplier, out var added);
             
             var pairValue = a.Type.baseValue;
-            
             var bonus = pairValue;
-            
             bonus += Mathf.Max(0, _combo.CurrentCombo - 1);
+            
+            if (tier != null)
+            {
+                bonus += tier.timeBonusExtra;
+            }
             
             _time.Add(bonus);
 

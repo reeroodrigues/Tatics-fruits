@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Core.ScriptableObjects;
+using New_GameplayCore;
 
-namespace New_GameplayCore
+namespace Core.Services
 {
     public interface ITimeManager
     {
@@ -30,10 +31,12 @@ namespace New_GameplayCore
     {
         int CurrentCombo { get; }
         float RemainingWindowsMs { get; }
+        ComboTierConfigSo.ComboTier CurrentTier { get; }
         void RegisterPair();
         void Tick(float deltaMs);
         void Reset();
-        event Action<int> OnComboChanged; 
+        event Action<int> OnComboChanged;
+        event Action<int, ComboTierConfigSo.ComboTier> OnComboTierChanged;
     }
 
     public interface IDeckService

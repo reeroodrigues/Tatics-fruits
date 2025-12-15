@@ -1,5 +1,6 @@
+using Core.ScriptableObjects;
+using Core.Services;
 using MoreMountains.Feedbacks;
-using New_GameplayCore;
 using New_GameplayCore.Views;
 using TMPro;
 using UnityEngine;
@@ -33,6 +34,9 @@ namespace UI.Views
         [Header("Swap Feedbacks")]
         [SerializeField] private MMF_Player swapAllFeedback;
         [SerializeField] private MMF_Player swapOneFeedback;
+        
+        [Header("Combo Display")]
+        [SerializeField] private ComboDisplayView comboDisplay;
 
         private ITimeManager _time;
         private IScoreService _score;
@@ -42,11 +46,12 @@ namespace UI.Views
         private bool _isInDangerZone = false;
         private int _lastCombo = 0;
 
-        public void Initialize(ITimeManager time, IScoreService score, ISwapService swap)
+        public void Initialize(ITimeManager time, IScoreService score, ISwapService swap, IComboTracker comboTracker, LevelConfigSO levelConfig)
         {
             _time = time;
             _score = score;
             _swap = swap;
+            _comboTracker = comboTracker;
 
             if (clockObject != null)
             {
@@ -56,6 +61,11 @@ namespace UI.Views
                     SetIdleShake();
                     _clockShaker.Play();
                 }
+            }
+            
+            if (comboDisplay != null)
+            {
+                comboDisplay.Initialize(comboTracker, levelConfig);
             }
 
             _time.OnTimeChanged += UpdateTimer;

@@ -4,6 +4,7 @@ using Core.ScriptableObjects;
 using Core.Services;
 using DefaultNamespace.New_GameplayCore;
 using Gameplay.Controllers;
+using Gameplay.GameState;
 using New_GameplayCore;
 using New_GameplayCore.GameState;
 using New_GameplayCore.Services;
@@ -31,6 +32,7 @@ namespace UI.Views
         [SerializeField] private GameplaySettings gameplaySettings;
         [SerializeField] private CountdownView countdownView;
         [SerializeField] private AllLevelsCompletedView allLevelsCompletedView;
+        [SerializeField] private ComboTierConfigSo comboTierConfig;
 
         public IRuleEngine RuleEngine => _rule;
         public IGameController Controller => _controller;
@@ -75,16 +77,21 @@ namespace UI.Views
             if (cfg != null)
                 levelConfig = cfg;
             
+            if (comboTierConfig == null)
+            {
+                comboTierConfig = Resources.Load<ComboTierConfigSo>("DefaultComboTierConfig");
+            }
+            
             _fsm   = new GameStateMachine();
             _time  = new TimeManager(levelConfig.initialTimeSeconds);
             _score = new ScoreService(levelConfig);
-            _combo = new ComboTracker(levelConfig);
+            _combo = new ComboTracker(levelConfig, comboTierConfig);
             _deck  = new DeckService();
             _hand  = new HandService(levelConfig.handSize);
             _swap  = new SwapService(_hand, _deck, _time, levelConfig);
             _rule  = new RuleEngine(_hand, _deck, _score, _time, _combo, levelConfig);
             _controller = new GameController(
-                _fsm, _time, _deck, _hand, _rule, _swap, levelConfig, _score);
+                _fsm, _time, _deck, _hand, _rule, _swap, _combo, levelConfig, _score);
             
             _controller.OnEnterPreRound += HandleEnterPreRound;
             _controller.OnLevelEnded += HandleLevelEnded;
@@ -127,18 +134,13 @@ namespace UI.Views
                 phaseLabel.text = $"Fase {Progress.CurrentIndex + 1}";
 
             _controller.StartLevel(levelConfig, deckConfig);
-            hudView.Initialize(_time, _score, _swap);
+            hudView.Initialize(_time, _score, _swap, _combo, levelConfig);
             handView.Initialize(_hand, _controller);
 
             if (gameplaySettings != null)
             {
                 gameplaySettings.Initialize(_time);
             }
-
-            // _score.OnScoreChanged += (total, delta) =>
-            // {
-            //     _highscores.TryReportScore(GetLevelId(), total);
-            // };
             
             Managers.AnalyticsManager.Instance?.TrackLevelStarted(
                 Progress.CurrentIndex + 1, 
@@ -172,8 +174,6 @@ namespace UI.Views
             var levelId = levelConfig.levelId;
             if (string.IsNullOrEmpty(levelId))
                 levelId = levelConfig.name;
-
-            //_profileService.RegisterBestScore(levelId, totalScore);
 
             switch (cause)
             {
