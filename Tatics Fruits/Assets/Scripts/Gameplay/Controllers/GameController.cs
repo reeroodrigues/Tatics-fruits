@@ -7,6 +7,8 @@ using DefaultNamespace.New_GameplayCore;
 using New_GameplayCore;
 using New_GameplayCore.GameState;
 using New_GameplayCore.Services;
+using UnityEngine;
+using Random = System.Random;
 
 namespace Gameplay.Controllers
 {
@@ -23,6 +25,8 @@ namespace Gameplay.Controllers
 
         private CardInstance? _selectedCard = null;
 
+        [SerializeField] private PairMatchFeedback _pairMatchFeedback;
+
         public event Action<EndCause> OnLevelEnded;
 
         public GameController(IGameStateMachine fsm, ITimeManager time, IDeckService deck, 
@@ -33,18 +37,18 @@ namespace Gameplay.Controllers
 
             _time.OnTimeChanged += t =>
             {
-                if (t <= 0 && _fsm.Current == DefaultNamespace.New_GameplayCore.GameState.Playing)
+                if (t <= 0 && _fsm.Current == GameState.Playing)
                 {
-                    _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Results);
+                    _fsm.SetState(GameState.Results);
                     OnLevelEnded?.Invoke(EndCause.TimeUp);
                 }
             };
             
             _score.OnScoreChanged += (total, delta) =>
             {
-                if (_fsm.Current == DefaultNamespace.New_GameplayCore.GameState.Playing && total >= _cfg.targetScore)
+                if (_fsm.Current == GameState.Playing && total >= _cfg.targetScore)
                 {
-                    _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Results);
+                    _fsm.SetState(GameState.Results);
                     OnLevelEnded?.Invoke(EndCause.TargetReached);
                 }
             };
@@ -61,7 +65,7 @@ namespace Gameplay.Controllers
             var rng = cfg.useFixedSeed ? new Random(cfg.fixedSeed) : new Random();
             _deck.Build(deckCfg, rng);
             
-            _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.PreRound);
+            _fsm.SetState(GameState.PreRound);
             OnEnterPreRound?.Invoke();
             
             var cards = new List<CardInstance>();
@@ -71,7 +75,7 @@ namespace Gameplay.Controllers
 
         public void UpdateTick(float deltaTime)
         {
-            if (_fsm.Current != DefaultNamespace.New_GameplayCore.GameState.Playing) return;
+            if (_fsm.Current != GameState.Playing) return;
             (_time as TimeManager)?.Tick(deltaTime);
         }
 
@@ -105,12 +109,12 @@ namespace Gameplay.Controllers
             
             OnExitPreRound?.Invoke();
             
-            _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Playing);
+            _fsm.SetState(GameState.Playing);
         }
 
         public void BackToLevelSelect()
         {
-            _fsm.SetState(DefaultNamespace.New_GameplayCore.GameState.Boot);
+            _fsm.SetState(GameState.Boot);
         }
 
         public bool TryDrawOne()

@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using Core.Services;
+using MoreMountains.Feedbacks;
+using New_GameplayCore;
 using UnityEngine;
 
-namespace New_GameplayCore.Views
+namespace UI.Views
 {
     public class HandView : MonoBehaviour
     {
@@ -44,6 +46,9 @@ namespace New_GameplayCore.Views
             {
                 var cv = Instantiate(cardPrefab, cardParent);
                 cv.Initialize(card, _game.OnCardSelected);
+
+                var feedback = cv.GetComponent<MMF_Player>();
+                feedback?.PlayFeedbacks();
                 _spawned.Add(cv);
             }
         }

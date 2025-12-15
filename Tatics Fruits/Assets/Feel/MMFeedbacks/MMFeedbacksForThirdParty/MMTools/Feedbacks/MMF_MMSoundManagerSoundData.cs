@@ -150,8 +150,8 @@ namespace MoreMountains.Feedbacks
 		[Tooltip("Sets how much this AudioSource is affected by 3D spatialisation calculations (attenuation, doppler etc). 0.0 makes the sound full 2D, 1.0 makes it full 3D.")]
 		[Range(0f,1f)]
 		public float SpatialBlend;
-		/// a Transform this sound can 'attach' to and follow it along as it plays
-		[Tooltip("a Transform this sound can 'attach' to and follow it along as it plays")]
+		/// a Transform this sound can 'attach' to and follow it along as it plays - when used on a feedback, will only apply if the feedback's AttachToTransform is empty
+		[Tooltip("a Transform this sound can 'attach' to and follow it along as it plays - when used on a feedback, will only apply if the feedback's AttachToTransform is empty")]
 		public Transform AttachToTransform;
 		
 		[Header("Effects")]

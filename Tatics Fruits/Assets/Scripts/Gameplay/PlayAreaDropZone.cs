@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using Core.Services;
 using DG.Tweening;
-using New_GameplayCore.Views;
+using MoreMountains.Feedbacks;
+using New_GameplayCore;
 using UI.Views;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace New_GameplayCore
+namespace Gameplay
 {
     public class PlayAreaDropZone : MonoBehaviour, IDropHandler
     {
@@ -19,6 +20,10 @@ namespace New_GameplayCore
         [SerializeField] private float pileFanAngle = 8f;
         [SerializeField] private float pileScale = 0.9f;
         [SerializeField] private float pileAnimDuration = 0.2f;
+        
+        [Header("Feel / Match VFX")]
+        [SerializeField] private MMF_Player matchFeedback;
+        [SerializeField] private float matchFeedbackIntensity = 1f;
 
         [Header("Refs")]
         [SerializeField] private GameControllerInitializer bootstrap;
@@ -73,6 +78,15 @@ namespace New_GameplayCore
             {
                 drag.ReturnToOrigin();
                 return;
+            }
+            
+            if (matchFeedback)
+            {
+                var a = first.view.transform.position;
+                var b = view.transform.position;
+                var mid = (a + b) * 0.5f;
+
+                matchFeedback.PlayFeedbacks(mid, matchFeedbackIntensity);
             }
         
             drag.AcceptDrop(dropContent);

@@ -30,11 +30,25 @@ namespace UI.Views
         [Header("Score Feedback")]
         [SerializeField] private MMF_Player scoreFeedback;
 
+        [Header("Combo Feedback")] 
+        [SerializeField] private TextMeshProUGUI comboText;
+        [SerializeField] private MMF_Player comboIncreaseFeedback;
+        [SerializeField] private MMF_Player comboLostFeedback;
+        
+        [Header("Swap Feedbacks")]
+        [SerializeField] private MMF_Player swapAllFeedback;
+        [SerializeField] private MMF_Player swapOneFeedback;
+
+        [Header("Time Feedback")]
+        [SerializeField] private MMF_Player timeBonusFeedback;
+
         private ITimeManager _time;
         private IScoreService _score;
         private ISwapService _swap;
+        private IComboTracker _comboTracker;
         private MMScaleShaker _clockShaker;
         private bool _isInDangerZone = false;
+        private int _lastCombo = 0;
 
         public void Initialize(ITimeManager time, IScoreService score, ISwapService swap)
         {
@@ -52,9 +66,13 @@ namespace UI.Views
                 }
             }
 
+            if (_comboTracker != null)
+                _comboTracker.OnComboChanged += UpdateCombo;
+
             _time.OnTimeChanged += UpdateTimer;
             _time.OnTimeDelta += ShowTimeDelta;
             _score.OnScoreChanged += UpdateScore;
+            _time.OnTimeDelta += OnTimeDelta;
             
             swapAllButton.onClick.AddListener(OnSwapAll);
             swapOneButton.onClick.AddListener(OnSwapOne);
@@ -76,6 +94,32 @@ namespace UI.Views
 
             if (_clockShaker != null)
                 _clockShaker.Stop();
+        }
+
+        private void OnTimeDelta(int delta)
+        {
+            if (delta > 0 && timeBonusFeedback != null)
+                timeBonusFeedback?.PlayFeedbacks();
+        }
+
+        private void UpdateCombo(int comboCount)
+        {
+            if (comboCount > 0)
+            {
+                comboText.text = $"COMBO X {comboCount}";
+                comboText.gameObject.SetActive(true);
+                
+                if(comboCount > _lastCombo)
+                    comboIncreaseFeedback?.PlayFeedbacks();
+            }
+            else
+            {
+                comboText.gameObject.SetActive(false);
+                if(_lastCombo > 0)
+                    comboLostFeedback?.PlayFeedbacks();
+            }
+            
+            _lastCombo = comboCount;
         }
 
         private void ShowTimeDelta(int delta)
@@ -136,7 +180,16 @@ namespace UI.Views
             }
         }
 
-        private void OnSwapAll() => _swap.TrySwapAll();
-        private void OnSwapOne() => _swap.TrySwapRandom();
+        private void OnSwapAll()
+        {
+            swapAllFeedback?.PlayFeedbacks();
+            _swap.TrySwapAll();
+        }
+
+        private void OnSwapOne()
+        { 
+            swapOneFeedback?.PlayFeedbacks();
+            _swap.TrySwapRandom();
+        } 
     }
 }

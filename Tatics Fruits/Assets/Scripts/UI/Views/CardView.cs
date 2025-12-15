@@ -1,14 +1,17 @@
+using MoreMountains.Feedbacks;
+using New_GameplayCore;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace New_GameplayCore.Views
+namespace UI.Views
 {
     public class CardView : MonoBehaviour
     {
         [SerializeField] private Image icon;
         [SerializeField] private TextMeshProUGUI rightValueText;
         [SerializeField] private TextMeshProUGUI leftValueText;
+        [SerializeField] private MMF_Player clickFeedback;
 
         private CardInstance _data;
         private System.Action<CardInstance> _onSelected;
@@ -25,6 +28,7 @@ namespace New_GameplayCore.Views
 
         public void OnClick()
         {
+            clickFeedback?.PlayFeedbacks();
             _onSelected?.Invoke(_data);
         }
     }

@@ -1,9 +1,9 @@
 using System;
-using System.Collections.Generic;
 using Core.ScriptableObjects;
+using New_GameplayCore;
 using UnityEngine;
 
-namespace New_GameplayCore.Services
+namespace Core.Services
 {
     public class RuleEngine : IRuleEngine
     {
@@ -15,6 +15,7 @@ namespace New_GameplayCore.Services
         private readonly LevelConfigSO _cfg;
 
         public event Action<PairResult> OnPairResolved;
+        public event Action OnInvalidPairAttempt;
 
         public RuleEngine(IHandService hand, IDeckService deck, IScoreService score, 
             ITimeManager time, IComboTracker combo, LevelConfigSO cfg)
@@ -33,18 +34,22 @@ namespace New_GameplayCore.Services
         public bool TryMakePair(CardInstance a, CardInstance b, out PairResult result)
         {
             result = default;
-            if (!IsValidPair(a, b)) return false;
+            if (!IsValidPair(a, b))
+            {
+                OnInvalidPairAttempt?.Invoke();
+                return false;
+            }
 
             _combo.RegisterPair();
 
-            int comboIndex = Mathf.Clamp(_combo.CurrentCombo - 1, 0, _cfg.comboMultipliers.Length - 1);
-            float multiplier = _cfg.comboMultipliers[comboIndex];
+            var comboIndex = Mathf.Clamp(_combo.CurrentCombo - 1, 0, _cfg.comboMultipliers.Length - 1);
+            var multiplier = _cfg.comboMultipliers[comboIndex];
 
-            _score.AddPairScore(a, b, multiplier, out int added);
+            _score.AddPairScore(a, b, multiplier, out var added);
             
-            int pairValue = a.Type.baseValue;
+            var pairValue = a.Type.baseValue;
             
-            int bonus = pairValue;
+            var bonus = pairValue;
             
             bonus += Mathf.Max(0, _combo.CurrentCombo - 1);
             

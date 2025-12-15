@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace New_GameplayCore.Views
+namespace UI.Views
 {
     public class PlayAreaView : MonoBehaviour
     {
