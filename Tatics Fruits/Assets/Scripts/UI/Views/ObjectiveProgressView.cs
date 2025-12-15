@@ -1,10 +1,11 @@
 using Core.ScriptableObjects;
 using DG.Tweening;
-using UI.Views;
+using MoreMountains.Feedbacks;
+using New_GameplayCore;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace New_GameplayCore.Views
+namespace UI.Views
 {
     public class ObjectiveProgressView : MonoBehaviour
     {
@@ -16,6 +17,11 @@ namespace New_GameplayCore.Views
         
         [Header("Refs")]
         [SerializeField] private GameControllerInitializer bootstrap;
+        
+        [Header("Feel/VFX")]
+        [SerializeField] private MMF_Player starFeel1;
+        [SerializeField] private MMF_Player starFeel2;
+        [SerializeField] private MMF_Player starFeel3;
 
         private IScoreService _score;
         private LevelConfigSO _cfg;
@@ -81,6 +87,10 @@ namespace New_GameplayCore.Views
                 shownFlag = true;
                 star.enabled = true;
                 PlayStarAnimation(star);
+                
+                if(star == star1) starFeel1?.PlayFeedbacks();
+                else if(star == star2) starFeel2?.PlayFeedbacks();
+                else if(star == star3) starFeel3?.PlayFeedbacks();
             }
             else if (!active)
             {
