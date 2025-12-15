@@ -122,7 +122,7 @@ namespace UI.Views
         private void OnComboChanged(int comboCount)
         {
             Debug.Log($"[ComboDisplayView] OnComboChanged called: {comboCount}");
-            
+    
             if (comboCount <= 0)
             {
                 HideCombo();
@@ -132,64 +132,58 @@ namespace UI.Views
             }
             
             if (comboContainer != null)
-            {
-                Debug.Log($"[ComboDisplayView] Activating comboContainer '{comboContainer.name}'");
                 comboContainer.SetActive(true);
+    
+            if (comboCountText != null)
+                comboCountText.text = $"x{comboCount}";
+            
+            AnimateComboPunch();
+            
+            FillBarTowardNextTier(comboCount);
+    
+            _previousCombo = comboCount;
+        }
+        
+        private void FillBarTowardNextTier(int currentCombo)
+        {
+            var currentTier = _comboTracker.CurrentTier;
+            var nextTier = GetNextTier(currentCombo);
+    
+            if (nextTier == null)
+            {
+                _targetFillAmount = 1f;
             }
             else
             {
-                Debug.LogError("[ComboDisplayView] comboContainer is NULL when trying to activate!");
+                int tierStart = currentTier?.minComboCount ?? 0;
+                int tierRange = nextTier.minComboCount - tierStart;
+                int progressInTier = currentCombo - tierStart;
+        
+                _targetFillAmount = Mathf.Clamp01((float)progressInTier / tierRange);
             }
             
-            if (comboCountText != null)
-            {
-                comboCountText.text = $"x{comboCount}";
-            }
-            
-            if (comboCount > _previousCombo)
-            {
-                Debug.Log($"[ComboDisplayView] Filling bar from {_targetFillAmount} to {_targetFillAmount + fillAmountPerCombo}");
-                FillBarIncremental();
-            }
-            
-            _previousCombo = comboCount;
-            AnimateComboPunch();
+            _barFillTween?.Kill();
+            _barFillTween = comboProgressBar.DOFillAmount(_targetFillAmount, fillAnimationDuration)
+                .SetEase(fillEase);
         }
 
         private void OnComboTierChanged(int comboCount, ComboTierConfigSo.ComboTier tier)
         {
-            if (tier == null)
-            {
-                HideCombo();
-                return;
-            }
+            if (tier == null || comboTierText == null) return;
             
-            comboContainer.SetActive(true);
+            comboTierText.text = tier.tierName;
+            comboTierText.color = tier.tierColor;
             
-            if (comboTierText != null)
-            {
-                comboTierText.DOKill();
-                comboTierText.text = tier.tierName;
-                comboTierText.color = tier.tierColor;
-                
-                comboTierText.alpha = 0f;
-                comboTierText.DOFade(1f, tierTextFadeInDuration)
-                    .SetEase(Ease.OutCubic);
-            }
+            comboTierText.transform.DOKill();
+            comboTierText.transform.localScale = Vector3.one;
+            comboTierText.transform.DOPunchScale(
+                Vector3.one * tierChangePunchScale, 
+                punchDuration, 
+                5, 
+                1f
+            );
             
-            if (comboBackground != null)
-            {
-                comboBackground.DOKill();
-                comboBackground.DOColor(tier.tierColor, 0.3f);
-            }
-            
-            if (comboProgressBar != null)
-            {
-                comboProgressBar.DOKill();
-                comboProgressBar.DOColor(tier.tierColor, 0.3f);
-            }
-            
-            AnimateTierChange(tier);
+            comboTierText.DOFade(1f, tierTextFadeInDuration);
         }
 
         private void FillBarIncremental()
@@ -293,6 +287,18 @@ namespace UI.Views
                         comboProgressBar.color = barDrainColor;
                     }
                 });
+        }
+        
+        private ComboTierConfigSo.ComboTier GetNextTier(int currentCombo)
+        {
+            if (_tierConfig == null) return null;
+    
+            foreach (var tier in _tierConfig.tiers)
+            {
+                if (tier.minComboCount > currentCombo)
+                    return tier;
+            }
+            return null;
         }
     }
 }

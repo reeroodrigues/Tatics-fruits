@@ -7909,8 +7909,8 @@ MonoBehaviour:
   comboContainer: {fileID: 202182892}
   comboCountText: {fileID: 857372213}
   comboTierText: {fileID: 1646121061}
-  comboProgressBar: {fileID: 1474495317}
-  comboBackground: {fileID: 1259459237}
+  comboProgressBar: {fileID: 1259459237}
+  comboBackground: {fileID: 1474495317}
   fillAmountPerCombo: 0.2
   fillAnimationDuration: 0.3
   fillEase: 9
