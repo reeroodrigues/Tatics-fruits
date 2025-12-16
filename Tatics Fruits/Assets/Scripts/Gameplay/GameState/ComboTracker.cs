@@ -16,6 +16,7 @@ namespace Gameplay.GameState
         public int CurrentCombo { get; private set; }
         public float RemainingWindowsMs  => _timer;
         public ComboTierConfigSo.ComboTier CurrentTier => _currentTier;
+        public ComboTierConfigSo TierConfig => _tierConfig;
         public event Action<int> OnComboChanged;
         public event Action<int, ComboTierConfigSo.ComboTier> OnComboTierChanged;
 

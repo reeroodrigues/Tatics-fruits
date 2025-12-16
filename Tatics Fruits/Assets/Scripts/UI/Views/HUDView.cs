@@ -46,7 +46,7 @@ namespace UI.Views
         private bool _isInDangerZone = false;
         private int _lastCombo = 0;
 
-        public void Initialize(ITimeManager time, IScoreService score, ISwapService swap, IComboTracker comboTracker, LevelConfigSO levelConfig)
+        public void Initialize(ITimeManager time, IScoreService score, ISwapService swap, IComboTracker comboTracker, LevelConfigSO levelConfig, ComboTierConfigSo tierConfig = null)
         {
             _time = time;
             _score = score;
@@ -65,7 +65,7 @@ namespace UI.Views
             
             if (comboDisplay != null)
             {
-                comboDisplay.Initialize(comboTracker, levelConfig);
+                comboDisplay.Initialize(comboTracker, levelConfig, tierConfig);
             }
 
             _time.OnTimeChanged += UpdateTimer;

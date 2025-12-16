@@ -32,6 +32,7 @@ namespace Core.Services
         int CurrentCombo { get; }
         float RemainingWindowsMs { get; }
         ComboTierConfigSo.ComboTier CurrentTier { get; }
+        ComboTierConfigSo TierConfig { get; }
         void RegisterPair();
         void Tick(float deltaMs);
         void Reset();

@@ -134,7 +134,7 @@ namespace UI.Views
                 phaseLabel.text = $"Fase {Progress.CurrentIndex + 1}";
 
             _controller.StartLevel(levelConfig, deckConfig);
-            hudView.Initialize(_time, _score, _swap, _combo, levelConfig);
+            hudView.Initialize(_time, _score, _swap, _combo, levelConfig, comboTierConfig);
             handView.Initialize(_hand, _controller);
 
             if (gameplaySettings != null)
