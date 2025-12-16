@@ -99,6 +99,12 @@
   "countdown_1": "FAÇA PARES!",
   "countdown_go": "JÁ!",
   
+  "combo": "Combo!",
+  "combo_good": "Bom!",
+  "combo_great": "Ótimo!",
+  "combo_amazing": "Impressionante!",
+  "combo_legendary": "Lenda!",
+  
   "defeat_title_timeup": "Tempo esgotado! Não foi dessa vez.",
   "defeat_score_line": "Você fez: {0} pontos.",
 

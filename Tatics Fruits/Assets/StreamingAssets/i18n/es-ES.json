@@ -98,6 +98,12 @@
   "countdown_1": "HACED PAREJAS!",
   "countdown_go": "YA!",
 
+  "combo": "Combo!",
+  "combo_good": "Bom!",
+  "combo_great": "Ótimo!",
+  "combo_amazing": "Impressionante!",
+  "combo_legendary": "Lenda!",
+
   "defeat_title_timeup": "¡Se acabó el tiempo! No fue esta vez.",
   "defeat_score_line": "Hiciste: {0} puntos.",
 

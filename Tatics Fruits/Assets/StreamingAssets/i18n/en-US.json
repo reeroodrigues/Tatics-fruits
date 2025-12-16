@@ -97,6 +97,12 @@
   "countdown_2": "SET",
   "countdown_1": "MATCH!",
   "countdown_go": "GO!",
+  
+  "combo": "Combo",
+  "combo_good": "Good!",
+  "combo_great": "Great!",
+  "combo_amazing": "Amazing!",
+  "combo_legendary": "Legendary!",
 
   "defeat_title_timeup": "Time's up! Not this time.",
   "defeat_score_line": "You scored: {0} points.",

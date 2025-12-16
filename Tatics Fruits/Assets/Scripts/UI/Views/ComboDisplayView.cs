@@ -1,6 +1,8 @@
 using Core.ScriptableObjects;
 using Core.Services;
 using DG.Tweening;
+using Gameplay.Utils;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,6 +31,15 @@ namespace UI.Views
         private Tween _barTween;
         private Tween _punchTween;
 
+        private static readonly string[] TierLocalizationKeys = new[]
+        {
+            "combo",
+            "combo_good",
+            "combo_great",
+            "combo_amazing",
+            "combo_legendary",
+        };
+
         #region Initialization
 
         public void Initialize(
@@ -51,12 +62,18 @@ namespace UI.Views
 
             comboTierText.alpha = 0f;
             comboCountText.alpha = 0f;
+
+            if (Localizer.IsReady)
+                Localizer.Instance.OnLanguageChanged += RefreshLocalization;
         }
 
         private void OnDestroy()
         {
             if (_comboTracker != null)
                 _comboTracker.OnComboChanged -= OnComboChanged;
+
+            if (Localizer.IsReady)
+                Localizer.Instance.OnLanguageChanged -= RefreshLocalization;
 
             _barTween?.Kill();
             _punchTween?.Kill();
@@ -83,13 +100,14 @@ namespace UI.Views
         private void ApplyStage(int stage)
         {
             var tier = _tierConfig.GetTierForCombo(stage);
+
+            var localizedTierName = GetLocalizedTierName(stage);
             
-            comboTierText.text = tier.tierName;
+            comboTierText.text = localizedTierName;
             comboTierText.color = tier.tierColor;
             comboTierText.DOKill();
             comboTierText.DOFade(1f, 0.2f);
-
-
+            
             if (stage == 1)
             {
                 comboCountText.text = "";
@@ -100,7 +118,7 @@ namespace UI.Views
                 comboCountText.DOFade(1f, 0.2f);
             }
             
-            float targetFill = stage == 1 ? 0.5f : 1f;
+            var targetFill = stage == 1 ? 0.5f : 1f;
 
             _barTween?.Kill();
             _barTween = comboProgressBar
@@ -114,6 +132,26 @@ namespace UI.Views
                 {
                     fillImage.DOColor(tier.tierColor, 0.15f);
                 }
+            }
+        }
+
+        private string GetLocalizedTierName(int stage)
+        {
+            var index = Mathf.Clamp(stage - 1, 0, TierLocalizationKeys.Length - 1);
+            var key = TierLocalizationKeys[index];
+
+            if (Localizer.IsReady)
+                return Localizer.Instance.Tr(key, key.ToUpper());
+            
+            return key.ToUpper();
+        }
+
+        private void RefreshLocalization()
+        {
+            if(_comboTracker != null && _comboTracker.CurrentCombo > 0)
+            {
+                var tier = _tierConfig.GetTierForCombo(_comboTracker.CurrentCombo);
+                comboTierText.text = GetLocalizedTierName(_comboTracker.CurrentCombo);
             }
         }
 
