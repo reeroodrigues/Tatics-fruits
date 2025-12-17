@@ -162,7 +162,8 @@ public class DailyMissionsController : MonoBehaviour
         if (l.lastClaimDayKey == TodayKey) 
             return false;
         
-        profile.AddGoldAndSave(l.rewards[index]);
+        int rewardCoins = l.rewards[index];
+        profile.AddGoldAndSave(rewardCoins);
         
         l.claimed[index] = true;
         l.lastClaimDayKey = TodayKey;
@@ -175,6 +176,7 @@ public class DailyMissionsController : MonoBehaviour
         }
         
         profile.SaveProfile();
+        SaveHelper.OnDailyRewardClaimed(TodayKey, rewardCoins);
         
         OnDailyLoginChanged?.Invoke();
         FireAttention();
@@ -207,9 +209,13 @@ public class DailyMissionsController : MonoBehaviour
         if (st == null || !st.completed || st.claimed)
             return false;
 
-        profile.AddGoldAndSave(st.rewardGold);
+        int rewardCoins = st.rewardGold;
+        profile.AddGoldAndSave(rewardCoins);
         st.claimed = true;
         profile.SaveProfile();
+        
+        Managers.AnalyticsManager.Instance?.TrackDailyMissionCompleted(missionId, "daily_mission", rewardCoins);
+        
         OnDailyMissionsChanged?.Invoke();
         FireAttention();
         return true;

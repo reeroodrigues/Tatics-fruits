@@ -61,6 +61,7 @@ public class PlayerProfileData : ISaveData
     public string language = "pt_BR";
 
     public bool hasAcceptedLGPD = false;
+    public bool removeAds = false;
     
     public DailySystemData daily = new DailySystemData();
     public Dictionary<string, int> BestScores = new Dictionary<string, int>();

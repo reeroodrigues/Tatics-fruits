@@ -49,7 +49,6 @@ namespace Core.Services
             _databaseReference = FirebaseDatabase.DefaultInstance.RootReference;
             
             _localFilePath = Path.Combine(Application.persistentDataPath, "playerData.json");
-            Debug.Log($"[DataSaver] Local file path: {_localFilePath}");
         }
 
         /// <summary>
@@ -87,7 +86,6 @@ namespace Core.Services
         public void SetUserId(string uid)
         {
             userId = uid;
-            Debug.Log($"[Data saver] UserId set: {userId}");
         }
 
         /// <summary>
@@ -111,7 +109,6 @@ namespace Core.Services
 
             if (serverDataTask.IsFaulted)
             {
-                Debug.LogError($"[DataSaver] Erro ao carregar dados do Firebase: {serverDataTask.Exception}");
                 OnLoadFailed?.Invoke(serverDataTask.Exception);
             }
             else
@@ -124,17 +121,11 @@ namespace Core.Services
 
                     if (!string.IsNullOrEmpty(jsonData))
                     {
-                        Debug.Log("[DataSaver] Server data found!");
                         cloudData = JsonUtility.FromJson<DataToSave>(jsonData);
                     }
                     else
                     {
-                        Debug.Log("[DataSaver] Snapshot existe mas não tem JSON.");
                     }
-                }
-                else
-                {
-                    Debug.Log("[DataSaver] Nenhum dado encontrado no Firebase pra esse usuário.");
                 }
             }
 
@@ -142,7 +133,6 @@ namespace Core.Services
 
             if (dataToSave != null)
             {
-                Debug.Log("[DataSaver] Dados finais resolvidos. Sincronizando local + Firebase.");
 
                 if (dataToSave.lastUpdatedTicks == 0)
                     dataToSave.lastUpdatedTicks = DateTime.UtcNow.Ticks;
@@ -201,11 +191,9 @@ namespace Core.Services
             {
                 var json = JsonUtility.ToJson(dataToSave);
                 File.WriteAllText(_localFilePath, json);
-                Debug.Log("[DataSaver] Dados salvos localmente.");
             }
             catch (Exception e)
             {
-                Debug.LogError($"[DataSaver] Erro ao salvar localmente: {e}");
             }
         }
 
@@ -215,24 +203,20 @@ namespace Core.Services
             {
                 if (!File.Exists(_localFilePath))
                 {
-                    Debug.Log("[DataSaver] Nenhum arquivo local encontrado.");
                     return null;
                 }
 
                 var json = File.ReadAllText(_localFilePath);
                 if (string.IsNullOrEmpty(json))
                 {
-                    Debug.Log("[DataSaver] Arquivo local está vazio.");
                     return null;
                 }
 
                 var data = JsonUtility.FromJson<DataToSave>(json);
-                Debug.Log("[DataSaver] Dados locais carregados com sucesso.");
                 return data;
             }
             catch (Exception e)
             {
-                Debug.LogError($"[DataSaver] Erro ao carregar dados locais: {e}");
                 return null;
             }
         }
@@ -248,24 +232,20 @@ namespace Core.Services
             
             if (local != null && cloud == null)
             {
-                Debug.Log("[DataSaver] Usando apenas dados locais.");
                 return local;
             }
 
             if (local == null && cloud != null)
             {
-                Debug.Log("[DataSaver] Usando apenas dados da nuvem.");
                 return cloud;
             }
             
             if (cloud.lastUpdatedTicks > local.lastUpdatedTicks)
             {
-                Debug.Log("[DataSaver] Dados da nuvem são mais recentes. Usando cloud.");
                 return cloud;
             }
             else
             {
-                Debug.Log("[DataSaver] Dados locais são mais recentes (ou empatados). Usando local.");
                 return local;
             }
         }
@@ -299,7 +279,6 @@ namespace Core.Services
         {
             if (string.IsNullOrEmpty(userId))
             {
-                Debug.LogError("[DataSaver] userId está vazio! Configure o ID do jogador antes de salvar/carregar.");
                 return false;
             }
 
@@ -395,12 +374,10 @@ namespace Core.Services
             if (isVip)
             {
                 dataToSave.vipExpirationTicks = DateTime.UtcNow.AddDays(durationDays).Ticks;
-                Debug.Log($"[DataSaver] Vip acticated for {durationDays} days");
             }
             else
             {
                 dataToSave.vipExpirationTicks = 0;
-                Debug.Log($"[DataSaver] Vip deactivated");
             }
             
             SaveData();
@@ -421,7 +398,6 @@ namespace Core.Services
             {
                 dataToSave.isVip = false;
                 SaveData();
-                Debug.Log($"[DataSaver] Vip expired");
             }
             return isActive;
         }
@@ -432,7 +408,6 @@ namespace Core.Services
             {
                 dataToSave.ownedCards.Add(cardId);
                 SaveData();
-                Debug.Log($"[DataSaver] Card unlocked: {cardId}");
             }
         }
 
@@ -442,7 +417,6 @@ namespace Core.Services
             {
                 dataToSave.unlockedAvatar.Add(avatarId);
                 SaveData();
-                Debug.Log($"[DataSaver] Avatar unlocked: {avatarId}");
             }
         }
     }

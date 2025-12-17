@@ -254,6 +254,8 @@ public class SettingsMenu : MonoBehaviour
         SettingsRepository.Save(_settings);
         RefreshToggleVisuals();
         Core.SoundManager.Instance.SetMusicEnabled(isOn);
+        
+        SaveHelper.OnSettingsChanged(_settings.musicOn, _settings.sfxOn, _settings.vfxOn, _settings.language);
     }
 
     private void OnSfxToggleChanged(bool isOn)
@@ -262,6 +264,8 @@ public class SettingsMenu : MonoBehaviour
         SettingsRepository.Save(_settings);
         RefreshToggleVisuals();
         Core.SoundManager.Instance.SetSFXEnabled(isOn);
+        
+        SaveHelper.OnSettingsChanged(_settings.musicOn, _settings.sfxOn, _settings.vfxOn, _settings.language);
     }
 
     private void RefreshToggleVisuals()
@@ -276,6 +280,8 @@ public class SettingsMenu : MonoBehaviour
         SettingsRepository.Save(_settings);
         Localizer.Instance.SetLanguage(lang);
         RefreshLanguageVisual();
+        
+        SaveHelper.OnSettingsChanged(_settings.musicOn, _settings.sfxOn, _settings.vfxOn, _settings.language);
     }
 
     private void RefreshLanguageVisual()

@@ -55,16 +55,45 @@ namespace UI.Menus
         private Sequence _titleSeq;
         private bool _switching;
         private LevelProgressService _progress;
+        private bool _saveSystemInitialized;
+
+        private void InitializeSaveSystem()
+        {
+            if (_saveSystemInitialized) return;
+            
+            if (Managers.PlayerDataManager.Instance != null)
+            {
+                Managers.PlayerDataManager.Instance.SetAutoSaveInterval(120f);
+                Managers.PlayerDataManager.Instance.EnableAutoSave(true);
+                Debug.Log("[MainMenu] ✅ Auto-save configured (120s interval)");
+            }
+            
+            EnsureApplicationLifecycleManager();
+            SaveHelper.LogSaveSystemStatus();
+            
+            _saveSystemInitialized = true;
+        }
+
+        private void EnsureApplicationLifecycleManager()
+        {
+            var existing = FindFirstObjectByType<Managers.ApplicationLifecycleManager>();
+            if (existing == null)
+            {
+                var go = new GameObject("ApplicationLifecycleManager");
+                go.AddComponent<Managers.ApplicationLifecycleManager>();
+                Debug.Log("[MainMenu] ✅ ApplicationLifecycleManager created");
+            }
+        }
 
         private void Start()
         {
+            InitializeSaveSystem();
+            
             var profile = SaveManager.Instance.Load<PlayerProfileData>();
 
             if (!profile.hasAcceptedLGPD && lgpdViewPrefab != null)
             {
-                // Instancia o prefab como filho do canvas principal
                 var instance = Instantiate(lgpdViewPrefab, uiRoot != null ? uiRoot : transform);
-                // Não precisa fazer mais nada, o LgpdView se auto-inicializa no Start()
             }
 
             _progress = new LevelProgressService();
@@ -110,6 +139,15 @@ namespace UI.Menus
 
             _progress.SetCurrentIndex(idx);
             _progress.Save();
+            
+            var profileController = Object.FindFirstObjectByType<PlayerProfileController>();
+            if (profileController != null)
+            {
+                profileController.SetCurrentLevel(idx);
+            }
+            
+            SaveHelper.SaveToLocal();
+            Debug.Log("[MainMenu] Progress saved before entering gameplay");
         
             Managers.AnalyticsManager.Instance?.TrackMenuOpened("gameplay");
         

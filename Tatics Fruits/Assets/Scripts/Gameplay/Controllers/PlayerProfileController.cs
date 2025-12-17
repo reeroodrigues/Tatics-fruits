@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using UnityEngine.Serialization;
 using Core.SaveSystem;
 
 public class PlayerProfileController : MonoBehaviour
@@ -23,7 +22,7 @@ public class PlayerProfileController : MonoBehaviour
     [Header("Deck")]
     [SerializeField] private int deckLimit = 5;
 
-    private int goldHudRefCount = 0;
+    private int _goldHudRefCount = 0;
     private const string NameRegex = @"^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$";
     public bool IsLoaded { get; private set; }
     public event Action OnProfileLoaded;
@@ -38,7 +37,7 @@ public class PlayerProfileController : MonoBehaviour
         IsLoaded = true;
         OnProfileLoaded?.Invoke();
 
-        goldHudRefCount = goldHutVisibleByDefault ? 1 : 0;
+        _goldHudRefCount = goldHutVisibleByDefault ? 1 : 0;
         ApplyGoldHudVisibility();
     }
 
@@ -63,18 +62,18 @@ public class PlayerProfileController : MonoBehaviour
     {
         var go = GoldHudTarget();
         if (go)
-            go.SetActive(goldHudRefCount > 0);
+            go.SetActive(_goldHudRefCount > 0);
     }
 
     public void RequestShowGoldHud()
     {
-        goldHudRefCount++;
+        _goldHudRefCount++;
         ApplyGoldHudVisibility();
     }
 
     public void ReleaseShowGoldHud()
     {
-        goldHudRefCount = Mathf.Max(0, goldHudRefCount - 1);
+        _goldHudRefCount = Mathf.Max(0, _goldHudRefCount - 1);
         ApplyGoldHudVisibility();
     }
 
@@ -113,19 +112,24 @@ public class PlayerProfileController : MonoBehaviour
         SaveManager.Instance.Save(Data);
     }
     
+    private void SaveAndSync()
+    {
+        Save();
+        SyncToFirebase();
+    }
 
     public void OpenProfile()  => profilePanel?.SetActive(true);
     public void CloseProfile() => profilePanel?.SetActive(false);
 
     public void ChangeAvatar()
     {
-        Save();
+        SaveAndSync();
     }
 
     public void SelectAvatar(int avatarIndex)
     {
-        
-        Save();
+        Data.avatarIndex = avatarIndex;
+        SaveAndSync();
     }
 
     private void ValidatePlayerName(string name)
@@ -137,8 +141,16 @@ public class PlayerProfileController : MonoBehaviour
         {
             if (playerNameText)      playerNameText.text = name;
             Data.playerName = name;
-            Save();
+            SaveAndSync();
         }
+    }
+
+    public void SetPlayerName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return;
+        Data.playerName = name;
+        if (playerNameText) playerNameText.text = name;
+        SaveAndSync();
     }
 
     public bool CanAfford(int price) => Data.gold >= price;
@@ -149,8 +161,8 @@ public class PlayerProfileController : MonoBehaviour
             return;
         
         Data.gold = Mathf.Max(0, Data.gold + amount);
-        Save();
-        SyncToFirebase();
+        UpdateGoldUI();
+        SaveAndSync();
     }
 
     public bool TrySpendGold(int amount)
@@ -159,10 +171,8 @@ public class PlayerProfileController : MonoBehaviour
             return false;
         
         Data.gold -= amount;
-        Save();
         UpdateGoldUI();
-
-        SyncToFirebase();
+        SaveAndSync();
         return true;
     }
 
@@ -175,9 +185,15 @@ public class PlayerProfileController : MonoBehaviour
             firebaseSync.dataToSave.userName = Data.playerName;
             firebaseSync.dataToSave.crrLevel = Data.currentLevelIndex;
             firebaseSync.dataToSave.highScore = Data.highestLevelUnlocked;
+            firebaseSync.dataToSave.ownedCards = new System.Collections.Generic.List<string>(Data.ownedCards);
+            firebaseSync.dataToSave.equippedDeck = new System.Collections.Generic.List<string>(Data.equippedDeck);
+            firebaseSync.dataToSave.unlockedAvatar = new System.Collections.Generic.List<int>(Data.unlockedAvatars);
+            firebaseSync.dataToSave.purchasedAvatar = new System.Collections.Generic.List<int>(Data.purchasedAvatars);
+            firebaseSync.dataToSave.musicOn = Data.musicOn;
+            firebaseSync.dataToSave.sfxOn = Data.sfxOn;
+            firebaseSync.dataToSave.vfxOn = Data.vfxOn;
+            firebaseSync.dataToSave.language = Data.language;
             firebaseSync.SaveData();
-            
-            Debug.Log($"[PlayerProfile] Synced to Firebase - Coins: {Data.gold}");
         }
     }
 
@@ -191,7 +207,7 @@ public class PlayerProfileController : MonoBehaviour
         if (!TrySpendGold(price)) return false;
 
         Data.ownedCards.Add(cardId);
-        Save();
+        SaveAndSync();
         return true;
     }
 
@@ -203,7 +219,7 @@ public class PlayerProfileController : MonoBehaviour
         if (Data.equippedDeck.Count >= deckLimit) return false;
 
         Data.equippedDeck.Add(cardId);
-        Save();
+        SaveAndSync();
         return true;
     }
 
@@ -211,8 +227,83 @@ public class PlayerProfileController : MonoBehaviour
     {
         if (!Data.equippedDeck.Contains(cardId)) return false;
         Data.equippedDeck.Remove(cardId);
-        Save();
+        SaveAndSync();
         return true;
+    }
+
+    public void UnlockAvatar(int avatarId)
+    {
+        if (Data.unlockedAvatars.Contains(avatarId)) return;
+        Data.unlockedAvatars.Add(avatarId);
+        SaveAndSync();
+    }
+
+    public void PurchaseAvatar(int avatarId, int price)
+    {
+        if (Data.purchasedAvatars.Contains(avatarId)) return;
+        if (!TrySpendGold(price)) return;
+        
+        Data.purchasedAvatars.Add(avatarId);
+        UnlockAvatar(avatarId);
+    }
+
+    public void SetMusicEnabled(bool enabled)
+    {
+        Data.musicOn = enabled;
+        SaveAndSync();
+    }
+
+    public void SetSfxEnabled(bool enabled)
+    {
+        Data.sfxOn = enabled;
+        SaveAndSync();
+    }
+
+    public void SetVfxEnabled(bool enabled)
+    {
+        Data.vfxOn = enabled;
+        SaveAndSync();
+    }
+
+    public void SetLanguage(string language)
+    {
+        Data.language = language;
+        SaveAndSync();
+    }
+
+    public void SetCurrentLevel(int levelIndex)
+    {
+        Data.currentLevelIndex = levelIndex;
+        SaveAndSync();
+    }
+
+    public void SetHighestLevelUnlocked(int levelIndex)
+    {
+        if (levelIndex > Data.highestLevelUnlocked)
+        {
+            Data.highestLevelUnlocked = levelIndex;
+            SaveAndSync();
+        }
+    }
+
+    public void RegisterBestScore(string levelId, int score)
+    {
+        if (string.IsNullOrEmpty(levelId)) return;
+        
+        if (!Data.BestScores.ContainsKey(levelId))
+        {
+            Data.BestScores[levelId] = score;
+        }
+        else if (score > Data.BestScores[levelId])
+        {
+            Data.BestScores[levelId] = score;
+        }
+        else
+        {
+            return;
+        }
+        
+        SaveAndSync();
     }
 
     public void SaveProfile()
@@ -222,11 +313,20 @@ public class PlayerProfileController : MonoBehaviour
 
     public void AddGoldAndSave(int amount)
     {
-        if (amount == 0)
-            return;
-        
-        Data.gold = Mathf.Max(0, Data.gold + amount);
-        Save();
-        UpdateGoldUI();
+        AddGold(amount);
+    }
+
+    public void OnLevelComplete(int levelIndex, int coinsEarned, int score, int stars)
+    {
+        AddGold(coinsEarned);
+        SetCurrentLevel(levelIndex);
+        SetHighestLevelUnlocked(levelIndex + 1);
+        RegisterBestScore($"level_{levelIndex}", score);
+    }
+
+    public void SetRemoveAds(bool removeAds)
+    {
+        Data.removeAds = removeAds;
+        SaveAndSync();
     }
 }

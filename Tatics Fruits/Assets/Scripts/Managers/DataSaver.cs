@@ -11,12 +11,14 @@ namespace Managers
     public class DataToSave
     {
         public string userName;
+        public int uniquePlayerId;
         public int totalCoins;
         public int crrLevel;
         public int highScore;
         public long lastUpdatedTicks;
         public bool isVip;
         public long vipExpirationTicks;
+        public bool removeAds;
         public List<string> ownedCards = new List<string>();
         public List<string> equippedDeck = new List<string>();
         public List<int> unlockedAvatar =  new List<int>{0};
@@ -34,7 +36,7 @@ namespace Managers
     public class DataSaver : MonoBehaviour
     {
         [Header("Player Data")]
-        [SerializeField] private string userId; // defina isso pelo Firebase Auth ou outro sistema de ID
+        [SerializeField] private string userId; 
         [SerializeField] public DataToSave dataToSave = new DataToSave();
 
         private DatabaseReference _databaseReference;
@@ -247,9 +249,11 @@ namespace Managers
             return new DataToSave
             {
                 userName = "Guest",
+                uniquePlayerId = UnityEngine.Random.Range(100000, 999999),
                 totalCoins = 0,
                 crrLevel = 1,
                 highScore = 0,
+                removeAds = false,
                 lastUpdatedTicks = DateTime.UtcNow.Ticks
             };
         }

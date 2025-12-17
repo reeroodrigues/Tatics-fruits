@@ -23,11 +23,6 @@ namespace Managers
             DontDestroyOnLoad(gameObject);
             
             await InitializeFirebaseAsync();
-        
-            if (_currentUser == null)
-            {
-                SignInAsGuest();
-            }
         }
 
 
@@ -47,6 +42,11 @@ namespace Managers
                     {
                         Debug.Log($"[LoginManager] Existing user found: {_currentUser.UserId}");
                         OnFirebaseSignedIn(_currentUser);
+                    }
+                    else
+                    {
+                        Debug.Log("[LoginManager] No existing user found. Creating new guest user...");
+                        SignInAsGuest();
                     }
                 }
                 else

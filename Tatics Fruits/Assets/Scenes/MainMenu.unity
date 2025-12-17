@@ -2239,6 +2239,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 334434126}
   m_CullTransparentMesh: 1
+--- !u!1 &351946061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 351946062}
+  - component: {fileID: 351946063}
+  m_Layer: 0
+  m_Name: SaveSystemInitializer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &351946062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351946061}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &351946063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 351946061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2602404321fdfb41a6d10fc06519cec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Managers.SaveSystemInitializer
+  enableAutoSave: 1
+  autoSaveInterval: 120
+  showDebugLogs: 1
 --- !u!1 &359422893
 GameObject:
   m_ObjectHideFlags: 0
@@ -7084,6 +7131,54 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8526486932910258787, guid: 133e505ba3e6ca3409d01ca1652f2f81, type: 3}
   m_PrefabInstance: {fileID: 760785049}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &765468452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 765468453}
+  - component: {fileID: 765468454}
+  m_Layer: 0
+  m_Name: ApplicationLifecycleManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &765468453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765468452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &765468454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 765468452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00faee564c0d48144846c09b14f60dd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Managers.ApplicationLifecycleManager
+  saveOnQuit: 1
+  saveOnPause: 1
+  saveOnFocusLost: 1
+  saveCooldown: 3
 --- !u!1 &765741465
 GameObject:
   m_ObjectHideFlags: 0
@@ -9549,6 +9644,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 997462642}
   m_CullTransparentMesh: 1
+--- !u!1 &1006621485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1006621486}
+  - component: {fileID: 1006621487}
+  m_Layer: 0
+  m_Name: PlayerDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1006621486
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006621485}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1006621487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006621485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3b49a53d58164947a0a217ac00b21ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Managers.PlayerDataManager
+  dataSaver: {fileID: 1250548557}
 --- !u!1 &1015797452
 GameObject:
   m_ObjectHideFlags: 0
@@ -10446,15 +10586,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5fb712109c45984f942b3bea6edb265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataSaver
-  userId: user001
+  userId: 
   dataToSave:
     userName: 
+    uniquePlayerId: 0
     totalCoins: 0
     crrLevel: 0
     highScore: 0
     lastUpdatedTicks: 0
     isVip: 0
     vipExpirationTicks: 0
+    removeAds: 0
     ownedCards: []
     equippedDeck: []
     unlockedAvatar: 00000000
@@ -16114,6 +16256,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824601163}
   m_CullTransparentMesh: 1
+--- !u!1 &1838201922
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1838201923}
+  - component: {fileID: 1838201924}
+  m_Layer: 0
+  m_Name: FirebaseProfileSyncService
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1838201923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838201922}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1838201924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838201922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f17a3ffa8a7f47faa805e6f5d49232fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.Services.FirebaseProfileSyncService
+  userId: 
+  dataToSave:
+    userName: 
+    totalCoins: 0
+    crrLevel: 0
+    highScore: 0
+    lastUpdatedTicks: 0
+    isVip: 0
+    vipExpirationTicks: 0
+    ownedCards: []
+    equippedDeck: []
+    unlockedAvatar: 00000000
+    purchasedAvatar: 
+    musicOn: 1
+    sfxOn: 1
+    vfxOn: 1
+    language: pt_BR
+    dailyDayKey: 
+    lastLoginDayKey: 
 --- !u!1 &1843222587
 GameObject:
   m_ObjectHideFlags: 0
@@ -20820,3 +21025,7 @@ SceneRoots:
   - {fileID: 728060451}
   - {fileID: 1250548556}
   - {fileID: 932623332}
+  - {fileID: 1006621486}
+  - {fileID: 765468453}
+  - {fileID: 351946062}
+  - {fileID: 1838201923}
