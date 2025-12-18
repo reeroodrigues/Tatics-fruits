@@ -143,45 +143,98 @@ namespace Managers
         {
             if (user == null)
             {
-                Debug.LogError($"[LoginManager] User is null in OnFirebaseSignedIn!");
+                Debug.LogError("[LoginManager] User is null in OnFirebaseSignedIn!");
                 return;
             }
-            
-            var userId = user.UserId;
+
+            var uid = user.UserId;
             var displayName = user.DisplayName ?? "Guest";
-            
-            Debug.Log($"[LoginManager] User signed in - ID: {userId}, Name: {displayName}");
 
-            if (dataSaver != null)
-            {
-                dataSaver.SetUserId(userId);
-                dataSaver.LoadData();
+            Debug.Log($"[LoginManager] User signed in - ID: {uid}, Name: {displayName}");
 
-                var profileController = FindObjectOfType<PlayerProfileController>();
-                if (profileController != null && profileController.Data != null)
-                {
-                    dataSaver.dataToSave.userName = string.IsNullOrEmpty(displayName) || displayName == "Guest" ? profileController.Data.playerName : displayName;
-                    dataSaver.dataToSave.crrLevel = profileController.Data.currentLevelIndex;
-                    dataSaver.dataToSave.highScore = profileController.Data.highestLevelUnlocked;
-                    dataSaver.dataToSave.ownedCards =  new List<string>(profileController.Data.ownedCards);
-                    dataSaver.dataToSave.equippedDeck = new List<string>(profileController.Data.equippedDeck);
-                    dataSaver.dataToSave.unlockedAvatar = new List<int>(profileController.Data.unlockedAvatars);
-                    dataSaver.dataToSave.purchasedAvatar = new List<int>(profileController.Data.purchasedAvatars);
-                    dataSaver.dataToSave.bestScores = new Dictionary<string, int>(profileController.Data.BestScores);
-                    dataSaver.dataToSave.musicOn = profileController.Data.musicOn;
-                    dataSaver.dataToSave.sfxOn = profileController.Data.sfxOn;
-                    dataSaver.dataToSave.vfxOn = profileController.Data.vfxOn;
-                    dataSaver.dataToSave.language = profileController.Data.language;
-                    dataSaver.dataToSave.dailyDayKey = profileController.Data.daily.dayKey;
-                    dataSaver.dataToSave.lastLoginDayKey = profileController.Data.daily.login.lastClaimDayKey;
-                    
-                    dataSaver.SaveData();
-                    Debug.Log($"[LoginManager] ✅ Full player profile synced to Firebase - Coins: {profileController.Data.gold}, Cards: {profileController.Data.ownedCards.Count}, Avatars: {profileController.Data.unlockedAvatars.Count}");
-                }
-            }
-            else
+            if (dataSaver == null)
             {
                 Debug.LogError("[LoginManager] DataSaver is null!");
+                return;
+            }
+
+            dataSaver.SetUserId(uid);
+            
+            dataSaver.OnDataLoaded -= HandleDataLoaded;
+            dataSaver.OnLoadFailed -= HandleLoadFailed;
+            dataSaver.OnDataNotFound -= HandleDataNotFound;
+
+            dataSaver.OnDataLoaded += HandleDataLoaded;
+            dataSaver.OnLoadFailed += HandleLoadFailed;
+            dataSaver.OnDataNotFound += () =>
+            {
+                dataSaver.SaveData(force: true);
+            };
+
+            dataSaver.LoadData();
+
+            void HandleDataLoaded(DataToSave cloud)
+            {
+                Debug.Log($"[LoginManager] ✅ Data loaded from DataSaver. Coins(cloud/local resolved): {cloud.totalCoins}");
+
+                var profileController = FindObjectOfType<PlayerProfileController>();
+                if (profileController == null || profileController.Data == null)
+                {
+                    Debug.LogWarning("[LoginManager] PlayerProfileController not found or Data is null.");
+                    return;
+                }
+                
+                profileController.Data.playerName = string.IsNullOrEmpty(displayName) || displayName == "Guest"
+                    ? cloud.userName
+                    : displayName;
+
+                profileController.Data.gold = cloud.totalCoins;
+                profileController.Data.currentLevelIndex = cloud.crrLevel;
+                profileController.Data.highestLevelUnlocked = cloud.highScore;
+
+                if (cloud.ownedCards != null) profileController.Data.ownedCards = new List<string>(cloud.ownedCards);
+                if (cloud.equippedDeck != null) profileController.Data.equippedDeck = new List<string>(cloud.equippedDeck);
+                if (cloud.unlockedAvatar != null) profileController.Data.unlockedAvatars = new List<int>(cloud.unlockedAvatar);
+                if (cloud.purchasedAvatar != null) profileController.Data.purchasedAvatars = new List<int>(cloud.purchasedAvatar);
+                if (cloud.bestScores != null) profileController.Data.BestScores = new Dictionary<string, int>(cloud.bestScores);
+
+                profileController.Data.musicOn = cloud.musicOn;
+                profileController.Data.sfxOn = cloud.sfxOn;
+                profileController.Data.vfxOn = cloud.vfxOn;
+                profileController.Data.language = cloud.language;
+
+                if (profileController.Data.daily != null)
+                {
+                    profileController.Data.daily.dayKey = cloud.dailyDayKey ?? "";
+                    if (profileController.Data.daily.login != null)
+                        profileController.Data.daily.login.lastClaimDayKey = cloud.lastLoginDayKey ?? "";
+                }
+
+                profileController.SaveProfile();
+                
+                dataSaver.OnDataLoaded -= HandleDataLoaded;
+                dataSaver.OnLoadFailed -= HandleLoadFailed;
+                dataSaver.OnDataNotFound -= HandleDataNotFound;
+
+                Debug.Log($"[LoginManager] ✅ Profile applied. Gold(now): {profileController.Data.gold}");
+            }
+
+            void HandleDataNotFound()
+            {
+                Debug.Log("[LoginManager] No data found in cloud/local. Using default created by DataSaver.");
+                
+                dataSaver.OnDataLoaded -= HandleDataLoaded;
+                dataSaver.OnLoadFailed -= HandleLoadFailed;
+                dataSaver.OnDataNotFound -= HandleDataNotFound;
+            }
+
+            void HandleLoadFailed(Exception e)
+            {
+                Debug.LogError($"[LoginManager] Load failed: {e}");
+
+                dataSaver.OnDataLoaded -= HandleDataLoaded;
+                dataSaver.OnLoadFailed -= HandleLoadFailed;
+                dataSaver.OnDataNotFound -= HandleDataNotFound;
             }
         }
 

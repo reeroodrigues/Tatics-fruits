@@ -99,6 +99,8 @@ namespace Core.Services
 
         private IEnumerator LoadDataCoroutine()
         {
+            Debug.Log("[FirebaseProfileSync] 🔄 Starting data load - Firebase has priority...");
+            
             var serverDataTask = _databaseReference.Child("users").Child(userId).GetValueAsync();
 
             var localData = LoadLocal();
@@ -109,6 +111,7 @@ namespace Core.Services
 
             if (serverDataTask.IsFaulted)
             {
+                Debug.LogError($"[FirebaseProfileSync] ❌ Error loading from Firebase: {serverDataTask.Exception}");
                 OnLoadFailed?.Invoke(serverDataTask.Exception);
             }
             else
@@ -122,10 +125,16 @@ namespace Core.Services
                     if (!string.IsNullOrEmpty(jsonData))
                     {
                         cloudData = JsonUtility.FromJson<DataToSave>(jsonData);
+                        Debug.Log($"[FirebaseProfileSync] ☁️ Firebase data loaded - Coins: {cloudData.totalCoins}, Level: {cloudData.crrLevel}");
                     }
                     else
                     {
+                        Debug.Log("[FirebaseProfileSync] ⚠️ Snapshot exists but contains no JSON data");
                     }
+                }
+                else
+                {
+                    Debug.Log("[FirebaseProfileSync] ℹ️ No Firebase data found for this user");
                 }
             }
 
@@ -146,6 +155,8 @@ namespace Core.Services
                 var profileController = FindObjectOfType<PlayerProfileController>();
                 if (profileController != null && profileController.Data != null)
                 {
+                    Debug.Log($"[FirebaseProfileSync] 📥 Applying data to PlayerProfile - Coins: {dataToSave.totalCoins}, Level: {dataToSave.crrLevel}");
+                    
                     profileController.Data.playerName = dataToSave.userName;
                     profileController.Data.gold = dataToSave.totalCoins;
                     profileController.Data.currentLevelIndex = dataToSave.crrLevel;
@@ -179,6 +190,8 @@ namespace Core.Services
                     }
 
                     profileController.SaveProfile();
+                    
+                    Debug.Log($"[FirebaseProfileSync] ✅ Profile fully synced - Final Coins: {profileController.Data.gold}");
                 }
             }
         }
@@ -228,26 +241,24 @@ namespace Core.Services
         private DataToSave ResolveDataConflict(DataToSave local, DataToSave cloud)
         {
             if (local == null && cloud == null)
-                return null;
-            
-            if (local != null && cloud == null)
             {
-                return local;
+                Debug.Log("[FirebaseProfileSync] 📭 No data found (neither local nor cloud)");
+                return null;
+            }
+            
+            if (cloud != null)
+            {
+                Debug.Log($"[FirebaseProfileSync] ☁️ Firebase data found - Always using cloud data (Firebase has priority) | Coins: {cloud.totalCoins}, Level: {cloud.crrLevel}");
+                return cloud;
             }
 
-            if (local == null && cloud != null)
+            if (local != null)
             {
-                return cloud;
-            }
-            
-            if (cloud.lastUpdatedTicks > local.lastUpdatedTicks)
-            {
-                return cloud;
-            }
-            else
-            {
+                Debug.Log($"[FirebaseProfileSync] 💾 No Firebase data - Using local data as fallback | Coins: {local.totalCoins}, Level: {local.crrLevel}");
                 return local;
             }
+            
+            return null;
         }
 
         private DataToSave CreateNewDefaultData()
