@@ -384,6 +384,15 @@ namespace Managers
             return true;
         }
 
+        public void UpdateDailyLogin(string todayKey)
+        {
+            if (dataToSave != null && dataToSave.lastLoginDayKey != todayKey)
+            {
+                dataToSave.lastLoginDayKey = todayKey;
+                SaveData();
+            }
+        }
+
         #endregion
 
         #region Patch Local Apply (mínimo útil)

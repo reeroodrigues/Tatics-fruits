@@ -27,10 +27,10 @@ public static class SaveHelper
 
     public static void SyncToFirebase()
     {
-        var firebaseSync = Object.FindFirstObjectByType<FirebaseProfileSyncService>();
-        if (firebaseSync != null)
+        var dataSaver = Object.FindFirstObjectByType<Managers.DataSaver>();
+        if (dataSaver != null)
         {
-            firebaseSync.SaveData();
+            dataSaver.SaveData();
         }
     }
 
@@ -173,10 +173,10 @@ public static class SaveHelper
     {
         AddCoins(rewardCoins);
         
-        var firebaseSync = Object.FindFirstObjectByType<FirebaseProfileSyncService>();
-        if (firebaseSync != null)
+        var dataSaver = Object.FindFirstObjectByType<Managers.DataSaver>();
+        if (dataSaver != null)
         {
-            firebaseSync.UpdateDailyLogin(dayKey);
+            dataSaver.UpdateDailyLogin(dayKey);
         }
         
         Debug.Log($"[SaveHelper] ✅ Daily reward claimed - Day: {dayKey}, Coins: {rewardCoins}");
@@ -198,9 +198,16 @@ public static class SaveHelper
         Debug.Log("========== SAVE SYSTEM STATUS ==========");
         Debug.Log($"PlayerDataManager: {(PlayerDataManager.Instance != null ? "✅" : "❌")}");
         Debug.Log($"PlayerProfileController: {(Object.FindFirstObjectByType<PlayerProfileController>() != null ? "✅" : "❌")}");
-        Debug.Log($"FirebaseSync: {(Object.FindFirstObjectByType<FirebaseProfileSyncService>() != null ? "✅" : "❌")}");
-        Debug.Log($"DataSaver: {(Object.FindFirstObjectByType<DataSaver>() != null ? "✅" : "❌")}");
-        Debug.Log($"Coins: {GetCoins()}");
+        Debug.Log($"DataSaver (Firebase): {(Object.FindFirstObjectByType<Managers.DataSaver>() != null ? "✅" : "❌")}");
+        
+        var dataSaver = Object.FindFirstObjectByType<Managers.DataSaver>();
+        if (dataSaver != null && dataSaver.dataToSave != null)
+        {
+            Debug.Log($"  └─ Firebase Coins: {dataSaver.dataToSave.totalCoins}");
+            Debug.Log($"  └─ Firebase Level: {dataSaver.dataToSave.crrLevel}");
+        }
+        
+        Debug.Log($"Coins (from helpers): {GetCoins()}");
         Debug.Log("========================================");
     }
 }

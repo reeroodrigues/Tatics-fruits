@@ -176,7 +176,29 @@ namespace Managers
             void HandleDataLoaded(DataToSave cloud)
             {
                 Debug.Log($"[LoginManager] ✅ Data loaded from DataSaver. Coins(cloud/local resolved): {cloud.totalCoins}");
+                ApplyCloudDataToProfile(cloud);
+            }
 
+            void HandleDataNotFound()
+            {
+                Debug.Log("[LoginManager] No data found in cloud/local. Using default created by DataSaver.");
+                
+                dataSaver.OnDataLoaded -= HandleDataLoaded;
+                dataSaver.OnLoadFailed -= HandleLoadFailed;
+                dataSaver.OnDataNotFound -= HandleDataNotFound;
+            }
+
+            void HandleLoadFailed(Exception e)
+            {
+                Debug.LogError($"[LoginManager] Load failed: {e}");
+
+                dataSaver.OnDataLoaded -= HandleDataLoaded;
+                dataSaver.OnLoadFailed -= HandleLoadFailed;
+                dataSaver.OnDataNotFound -= HandleDataNotFound;
+            }
+
+            void ApplyCloudDataToProfile(DataToSave cloud)
+            {
                 var profileController = FindObjectOfType<PlayerProfileController>();
                 if (profileController == null || profileController.Data == null)
                 {
@@ -217,24 +239,6 @@ namespace Managers
                 dataSaver.OnDataNotFound -= HandleDataNotFound;
 
                 Debug.Log($"[LoginManager] ✅ Profile applied. Gold(now): {profileController.Data.gold}");
-            }
-
-            void HandleDataNotFound()
-            {
-                Debug.Log("[LoginManager] No data found in cloud/local. Using default created by DataSaver.");
-                
-                dataSaver.OnDataLoaded -= HandleDataLoaded;
-                dataSaver.OnLoadFailed -= HandleLoadFailed;
-                dataSaver.OnDataNotFound -= HandleDataNotFound;
-            }
-
-            void HandleLoadFailed(Exception e)
-            {
-                Debug.LogError($"[LoginManager] Load failed: {e}");
-
-                dataSaver.OnDataLoaded -= HandleDataLoaded;
-                dataSaver.OnLoadFailed -= HandleLoadFailed;
-                dataSaver.OnDataNotFound -= HandleDataNotFound;
             }
         }
 
