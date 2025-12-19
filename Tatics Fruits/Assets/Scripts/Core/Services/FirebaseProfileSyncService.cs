@@ -13,6 +13,7 @@ namespace Core.Services
     public class DataToSave
     {
         public string userName;
+        public string userId;
         public int totalCoins;
         public int crrLevel;
         public int highScore;
@@ -87,6 +88,10 @@ namespace Core.Services
         public void SetUserId(string uid)
         {
             userId = uid;
+
+            var profileController = FindObjectOfType<PlayerProfileController>();
+            if (profileController != null)
+                profileController.SetFirebaseUserId(uid);
         }
 
         /// <summary>
@@ -182,6 +187,8 @@ namespace Core.Services
                     profileController.Data.sfxOn = dataToSave.sfxOn;
                     profileController.Data.vfxOn = dataToSave.vfxOn;
                     profileController.Data.language = dataToSave.language;
+                    profileController.Data.firebaseUserId = userId;
+                    profileController.SetFirebaseUserId(userId);
 
                     if (profileController.Data.daily != null)
                     {

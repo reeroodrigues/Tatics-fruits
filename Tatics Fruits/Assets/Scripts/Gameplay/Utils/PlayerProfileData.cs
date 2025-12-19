@@ -70,6 +70,7 @@ public class PlayerProfileData : ISaveData
     public List<string> equippedDeck = new List<string>();
     public List<int> unlockedAvatars =  new List<int> {0};
     public List<int> purchasedAvatars =  new List<int>();
+    public string firebaseUserId;
 
     public string GetFileName() => "player_profile.json";
 

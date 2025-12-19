@@ -13,6 +13,7 @@ namespace Gameplay.Controllers
         [Header("UI / Perfil")]
         [SerializeField] private GameObject profilePanel;
         [SerializeField] private TextMeshProUGUI playerNameText;
+        [SerializeField] private TextMeshProUGUI playerIdText;
         [SerializeField] private Image avatarImage;
         [SerializeField] private Button closeAvatarPanelButton;
 
@@ -100,7 +101,9 @@ namespace Gameplay.Controllers
         {
             if (playerNameText)
                 playerNameText.text = Data.playerName;
-        
+            
+            if (playerIdText && !string.IsNullOrEmpty(Data.firebaseUserId))
+                playerIdText.text = $"ID: {Data.firebaseUserId}";
         }
 
         private void UpdateGoldUI()
@@ -144,6 +147,17 @@ namespace Gameplay.Controllers
                 if (playerNameText)      playerNameText.text = name;
                 Data.playerName = name;
                 SaveAndSync();
+            }
+        }
+
+        public void SetFirebaseUserId(string firebaseId)
+        {
+            if (!string.IsNullOrEmpty(firebaseId))
+            {
+                Data.firebaseUserId = firebaseId;
+                
+                if (playerIdText != null)
+                    playerIdText.text = $"ID: {firebaseId}";
             }
         }
 

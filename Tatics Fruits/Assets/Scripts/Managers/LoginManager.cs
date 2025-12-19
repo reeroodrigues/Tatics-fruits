@@ -225,6 +225,7 @@ namespace Managers
                 profileController.Data.sfxOn = cloud.sfxOn;
                 profileController.Data.vfxOn = cloud.vfxOn;
                 profileController.Data.language = cloud.language;
+                profileController.Data.firebaseUserId = uid;
 
                 if (profileController.Data.daily != null)
                 {
@@ -234,6 +235,7 @@ namespace Managers
                 }
 
                 profileController.SaveProfile();
+                profileController.SetFirebaseUserId(uid);
                 
                 dataSaver.OnDataLoaded -= HandleDataLoaded;
                 dataSaver.OnLoadFailed -= HandleLoadFailed;

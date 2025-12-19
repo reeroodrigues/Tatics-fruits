@@ -66,6 +66,12 @@ namespace Managers
         {
             userId = uid;
             Debug.Log($"[DataSaver] UserId set: {userId}");
+            
+            var profileController = FindObjectOfType<Gameplay.Controllers.PlayerProfileController>();
+            if (profileController != null)
+            {
+                profileController.SetFirebaseUserId(uid);
+            }
         }
 
         #region Public API
