@@ -394,7 +394,7 @@ namespace Gameplay.Controllers
 
         public void SaveProfile()
         {
-            Save();
+            SaveAndSync();
             UpdateAvatarUI();
         }
 
