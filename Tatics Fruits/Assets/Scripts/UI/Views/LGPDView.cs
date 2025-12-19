@@ -217,6 +217,13 @@ namespace UI.Views
 
             _profile.hasAcceptedLGPD = true;
             SaveManager.Instance.Save(_profile);
+            
+            var dataSaver = FindFirstObjectByType<Managers.DataSaver>();
+            if (dataSaver != null)
+            {
+                dataSaver.SaveData(force: true);
+                Debug.Log("[LGPDView] LGPD acceptance synced to Firebase");
+            }
 
             FadeOut();
         }

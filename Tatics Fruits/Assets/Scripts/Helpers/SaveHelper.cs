@@ -7,13 +7,6 @@ public static class SaveHelper
 {
     public static void SaveAll()
     {
-        SaveToLocal();
-        SyncToFirebase();
-        Debug.Log("[SaveHelper] ✅ All save systems triggered");
-    }
-
-    public static void SaveToLocal()
-    {
         if (PlayerDataManager.Instance != null)
         {
             PlayerDataManager.Instance.SavePlayerData();
@@ -24,6 +17,14 @@ public static class SaveHelper
         {
             profileController.SaveProfile();
         }
+        
+        SyncToFirebase();
+        Debug.Log("[SaveHelper] ✅ All save systems triggered (local + Firebase)");
+    }
+
+    public static void SaveToLocal()
+    {
+        SaveAll();
     }
 
     public static void SyncToFirebase()
@@ -31,7 +32,7 @@ public static class SaveHelper
         var dataSaver = Object.FindFirstObjectByType<Managers.DataSaver>();
         if (dataSaver != null)
         {
-            dataSaver.SaveData();
+            dataSaver.SaveData(force: true);
         }
     }
 
