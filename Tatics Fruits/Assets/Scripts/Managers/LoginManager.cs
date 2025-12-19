@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
+using Gameplay.Controllers;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AvatarConfig 9
   m_EditorClassIdentifier: Assembly-CSharp::Core.ScriptableObjects.AvatarConfig
   avatarId: 9
-  avatarSprite: {fileID: -5891497828558514117, guid: bd8984a157a750441b0cdda2db1ff523, type: 3}
+  avatarSprite: {fileID: -7581513707642343491, guid: d99cccf75063bf0459f680681e0b6a37, type: 3}
   avatarName: 
   unlockPrice: 900
   isDefault: 0
