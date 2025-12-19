@@ -330,6 +330,7 @@ GameObject:
   m_Component:
   - component: {fileID: 35881748}
   - component: {fileID: 35881749}
+  - component: {fileID: 35881750}
   m_Layer: 5
   m_Name: Player Info Section
   m_TagString: Untagged
@@ -406,6 +407,27 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &35881750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 35881747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7410112a2d0446409285d9d4394965e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profilePanel: {fileID: 159736904}
+  playerNameText: {fileID: 2087180038}
+  playerIdText: {fileID: 161289072}
+  avatarImage: {fileID: 1780230677}
+  closeAvatarPanelButton: {fileID: 1423609542}
+  goldText: {fileID: 6381565975627992168}
+  goldHudRoot: {fileID: 1059827660}
+  goldHutVisibleByDefault: 0
+  deckLimit: 5
 --- !u!1 &36581930
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,7 +1436,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8bbf2eee6f55f5e4c98972bdba76374d, type: 2}
   - {fileID: 11400000, guid: 34c92f153758aa34d9b47ad127e509d0, type: 2}
   - {fileID: 11400000, guid: 243c99841bfd69842b08e6f01ba830ef, type: 2}
-  profileController: {fileID: 1537639275}
+  profileController: {fileID: 0}
 --- !u!1 &161289070
 GameObject:
   m_ObjectHideFlags: 0
@@ -3222,7 +3244,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1537639275}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Gameplay.Controllers.PlayerProfileController, Assembly-CSharp
         m_MethodName: CopyUserIdToClipboard
         m_Mode: 1
@@ -8529,7 +8551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 1330019148}
-  profile: {fileID: 1537639275}
+  profile: {fileID: 0}
   panelCanvasGroup: {fileID: 795167727}
   window: {fileID: 727917563}
   closeButton: {fileID: 641166597}
@@ -12228,7 +12250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2213f901ce024b1fbc660b5414741708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 1537639275}
+  profile: {fileID: 0}
   missionPool:
   - {fileID: 11400000, guid: 138b6144d8c5eda45af1dd80e0e2fa7c, type: 2}
   - {fileID: 11400000, guid: c952c66c33bf4284b81e3002fb3b86c3, type: 2}
@@ -13740,14 +13762,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1537639274}
-  - component: {fileID: 1537639275}
   m_Layer: 0
   m_Name: ProfileController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1537639274
 Transform:
   m_ObjectHideFlags: 0
@@ -13763,27 +13784,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1537639275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1537639273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7410112a2d0446409285d9d4394965e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  profilePanel: {fileID: 159736904}
-  playerNameText: {fileID: 2087180038}
-  playerIdText: {fileID: 161289072}
-  avatarImage: {fileID: 1780230677}
-  closeAvatarPanelButton: {fileID: 1423609542}
-  goldText: {fileID: 6381565975627992168}
-  goldHudRoot: {fileID: 1059827660}
-  goldHutVisibleByDefault: 0
-  deckLimit: 5
 --- !u!1 &1573817550
 GameObject:
   m_ObjectHideFlags: 0
@@ -18529,7 +18529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1905131048}
   m_Layer: 5
-  m_Name: Player Info Section
+  m_Name: Player Info
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
