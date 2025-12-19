@@ -1,7 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Core.SaveSystem;
+using Core.ScriptableObjects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +17,7 @@ namespace Gameplay.Controllers
         [SerializeField] private TextMeshProUGUI playerNameText;
         [SerializeField] private TextMeshProUGUI playerIdText;
         [SerializeField] private Image avatarImage;
+        [SerializeField] private List<AvatarConfig> allAvatars;
         [SerializeField] private TextMeshProUGUI playerLevelText;
         [SerializeField] private Button closeAvatarPanelButton;
 
@@ -50,6 +53,7 @@ namespace Gameplay.Controllers
             ApplyProfileUI();
             UpdateGoldUI();
             UpdateLevelUI();
+            UpdateAvatarUI();
         }
 
         private GameObject GoldHudTarget()
@@ -80,6 +84,24 @@ namespace Gameplay.Controllers
         {
             if (playerLevelText != null)
                 playerLevelText.text = $"Level: {Data.currentLevelIndex}";
+        }
+
+        private void UpdateAvatarUI()
+        {
+            if (avatarImage == null || allAvatars == null || allAvatars.Count == 0)
+                return;
+
+            var selectedAvatar = allAvatars.Find(a => a != null && a.avatarId == Data.avatarIndex);
+
+            if (selectedAvatar != null && selectedAvatar.avatarSprite != null)
+            {
+                avatarImage.sprite = selectedAvatar.avatarSprite;
+                avatarImage.enabled = true;
+            }
+            else
+            {
+                avatarImage.enabled = false;
+            }
         }
         
         public void ReleaseShowGoldHud()
@@ -201,32 +223,44 @@ namespace Gameplay.Controllers
         public bool TrySpendGold(int amount)
         {
             if(!CanAfford(amount))
+            {
+                Debug.LogWarning($"[PlayerProfileController] Cannot afford {amount} gold. Current balance: {Data.gold}");
                 return false;
+            }
         
             Data.gold -= amount;
             UpdateGoldUI();
             SaveAndSync();
+            
+            Debug.Log($"[PlayerProfileController] ✅ Spent {amount} gold. New balance: {Data.gold}");
             return true;
         }
 
         private void SyncToFirebase()
         {
-            var firebaseSync = FindObjectOfType<Core.Services.FirebaseProfileSyncService>();
-            if (firebaseSync != null && firebaseSync.dataToSave != null)
+            var dataSaver = FindObjectOfType<Managers.DataSaver>();
+            if (dataSaver != null && dataSaver.dataToSave != null)
             {
-                firebaseSync.dataToSave.totalCoins = Data.gold;
-                firebaseSync.dataToSave.userName = Data.playerName;
-                firebaseSync.dataToSave.crrLevel = Data.currentLevelIndex;
-                firebaseSync.dataToSave.highScore = Data.highestLevelUnlocked;
-                firebaseSync.dataToSave.ownedCards = new System.Collections.Generic.List<string>(Data.ownedCards);
-                firebaseSync.dataToSave.equippedDeck = new System.Collections.Generic.List<string>(Data.equippedDeck);
-                firebaseSync.dataToSave.unlockedAvatar = new System.Collections.Generic.List<int>(Data.unlockedAvatars);
-                firebaseSync.dataToSave.purchasedAvatar = new System.Collections.Generic.List<int>(Data.purchasedAvatars);
-                firebaseSync.dataToSave.musicOn = Data.musicOn;
-                firebaseSync.dataToSave.sfxOn = Data.sfxOn;
-                firebaseSync.dataToSave.vfxOn = Data.vfxOn;
-                firebaseSync.dataToSave.language = Data.language;
-                firebaseSync.SaveData();
+                dataSaver.dataToSave.totalCoins = Data.gold;
+                dataSaver.dataToSave.userName = Data.playerName;
+                dataSaver.dataToSave.crrLevel = Data.currentLevelIndex;
+                dataSaver.dataToSave.highScore = Data.highestLevelUnlocked;
+                dataSaver.dataToSave.ownedCards = new List<string>(Data.ownedCards);
+                dataSaver.dataToSave.equippedDeck = new List<string>(Data.equippedDeck);
+                dataSaver.dataToSave.unlockedAvatar = new List<int>(Data.unlockedAvatars);
+                dataSaver.dataToSave.purchasedAvatar = new List<int>(Data.purchasedAvatars);
+                dataSaver.dataToSave.musicOn = Data.musicOn;
+                dataSaver.dataToSave.sfxOn = Data.sfxOn;
+                dataSaver.dataToSave.vfxOn = Data.vfxOn;
+                dataSaver.dataToSave.language = Data.language;
+        
+                dataSaver.SaveData(force: true);
+        
+                Debug.Log($"[PlayerProfileController] ✅ Synced to Firebase - Coins: {Data.gold}, Unlocked Avatars: {Data.unlockedAvatars.Count}, Purchased Avatars: {Data.purchasedAvatars.Count}");
+            }
+            else
+            {
+                Debug.LogWarning("[PlayerProfileController] DataSaver not found or dataToSave is null!");
             }
         }
 
@@ -266,18 +300,36 @@ namespace Gameplay.Controllers
 
         public void UnlockAvatar(int avatarId)
         {
-            if (Data.unlockedAvatars.Contains(avatarId)) return;
+            if (Data.unlockedAvatars.Contains(avatarId))
+            {
+                Debug.Log($"[PlayerProfileController] Avatar {avatarId} already unlocked");
+                return;
+            }
+            
             Data.unlockedAvatars.Add(avatarId);
             SaveAndSync();
+            
+            Debug.Log($"[PlayerProfileController] ✅ Unlocked avatar {avatarId}. Total unlocked: {Data.unlockedAvatars.Count}");
         }
 
         public void PurchaseAvatar(int avatarId, int price)
         {
-            if (Data.purchasedAvatars.Contains(avatarId)) return;
-            if (!TrySpendGold(price)) return;
+            if (Data.purchasedAvatars.Contains(avatarId))
+            {
+                Debug.Log($"[PlayerProfileController] Avatar {avatarId} already purchased");
+                return;
+            }
+            
+            if (!TrySpendGold(price))
+            {
+                Debug.LogWarning($"[PlayerProfileController] Not enough gold to purchase avatar {avatarId}. Need {price}, have {Data.gold}");
+                return;
+            }
         
             Data.purchasedAvatars.Add(avatarId);
             UnlockAvatar(avatarId);
+            
+            Debug.Log($"[PlayerProfileController] ✅ Purchased avatar {avatarId} for {price} gold. New balance: {Data.gold}");
         }
 
         public void SetMusicEnabled(bool enabled)
@@ -343,6 +395,7 @@ namespace Gameplay.Controllers
         public void SaveProfile()
         {
             Save();
+            UpdateAvatarUI();
         }
 
         public void AddGoldAndSave(int amount)

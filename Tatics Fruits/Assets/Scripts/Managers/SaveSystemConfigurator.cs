@@ -74,12 +74,6 @@ namespace Managers
                 allSystemsReady = false;
             }
 
-            var firebaseSync = FindFirstObjectByType<FirebaseProfileSyncService>();
-            if (firebaseSync == null)
-            {
-                Debug.LogWarning("[SaveSystemConfig] ⚠️ FirebaseProfileSyncService not found - cloud sync disabled!");
-            }
-
             var profileController = FindFirstObjectByType<PlayerProfileController>();
             if (profileController == null)
             {
@@ -96,9 +90,8 @@ namespace Managers
         {
             Debug.Log("========== SAVE SYSTEM STATUS ==========");
             Debug.Log($"PlayerDataManager: {(PlayerDataManager.Instance != null ? "✅ Active" : "❌ Missing")}");
-            Debug.Log($"DataSaver: {(FindFirstObjectByType<DataSaver>() != null ? "✅ Active" : "❌ Missing")}");
+            Debug.Log($"DataSaver: {(FindFirstObjectByType<DataSaver>() != null ? "✅ Active (Firebase Sync)" : "❌ Missing")}");
             Debug.Log($"ApplicationLifecycleManager: {(FindFirstObjectByType<ApplicationLifecycleManager>() != null ? "✅ Active" : "⚠️ Not Found")}");
-            Debug.Log($"FirebaseProfileSyncService: {(FindFirstObjectByType<FirebaseProfileSyncService>() != null ? "✅ Active" : "⚠️ Not Found")}");
             Debug.Log($"PlayerProfileController: {(FindFirstObjectByType<PlayerProfileController>() != null ? "✅ Active" : "⚠️ Not Found")}");
             Debug.Log($"Auto-Save: {(enableAutoSave ? $"✅ Enabled ({autoSaveIntervalSeconds}s)" : "❌ Disabled")}");
             Debug.Log("========================================");
@@ -128,15 +121,15 @@ namespace Managers
         {
             Debug.Log("[SaveSystemConfig] Force syncing to Firebase...");
             
-            var firebaseSync = FindFirstObjectByType<FirebaseProfileSyncService>();
-            if (firebaseSync != null)
+            var dataSaver = FindFirstObjectByType<DataSaver>();
+            if (dataSaver != null)
             {
-                firebaseSync.SaveData();
-                Debug.Log("[SaveSystemConfig] ✅ Firebase sync triggered!");
+                dataSaver.SaveData(force: true);
+                Debug.Log("[SaveSystemConfig] ✅ Firebase sync triggered via DataSaver!");
             }
             else
             {
-                Debug.LogError("[SaveSystemConfig] ❌ FirebaseProfileSyncService not found!");
+                Debug.LogError("[SaveSystemConfig] ❌ DataSaver not found!");
             }
         }
     }

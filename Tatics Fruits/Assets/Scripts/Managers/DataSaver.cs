@@ -284,7 +284,7 @@ namespace Managers
 
         #region Local JSON
 
-        private void SaveLocal()
+        public void SaveLocal()
         {
             try
             {

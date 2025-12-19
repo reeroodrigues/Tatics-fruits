@@ -47,14 +47,12 @@ namespace Managers
             
             bool hasPlayerDataManager = PlayerDataManager.Instance != null;
             bool hasProfileController = FindFirstObjectByType<PlayerProfileController>() != null;
-            bool hasFirebaseSync = FindFirstObjectByType<FirebaseProfileSyncService>() != null;
             bool hasDataSaver = FindFirstObjectByType<DataSaver>() != null;
             bool hasLifecycleManager = FindFirstObjectByType<ApplicationLifecycleManager>() != null;
             
             Debug.Log($"PlayerDataManager: {(hasPlayerDataManager ? "✅" : "❌")}");
             Debug.Log($"PlayerProfileController: {(hasProfileController ? "✅" : "❌")}");
-            Debug.Log($"FirebaseProfileSyncService: {(hasFirebaseSync ? "✅" : "❌")}");
-            Debug.Log($"DataSaver: {(hasDataSaver ? "✅" : "❌")}");
+            Debug.Log($"DataSaver: {(hasDataSaver ? "✅" : "❌")} (Firebase Sync)");
             Debug.Log($"ApplicationLifecycleManager: {(hasLifecycleManager ? "✅" : "❌")}");
             
             Debug.Log("===============================================");

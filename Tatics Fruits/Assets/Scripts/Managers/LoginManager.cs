@@ -176,7 +176,11 @@ namespace Managers
 
             void HandleDataLoaded(DataToSave cloud)
             {
-                Debug.Log($"[LoginManager] ✅ Data loaded from DataSaver. Coins(cloud/local resolved): {cloud.totalCoins}");
+                Debug.Log($"[LoginManager] ✅ Data loaded from Firebase/Local:");
+                Debug.Log($"  └─ Coins: {cloud.totalCoins}");
+                Debug.Log($"  └─ Level: {cloud.crrLevel}");
+                Debug.Log($"  └─ Unlocked Avatars: {cloud.unlockedAvatar?.Count ?? 0}");
+                Debug.Log($"  └─ Purchased Avatars: {cloud.purchasedAvatar?.Count ?? 0}");
                 ApplyCloudDataToProfile(cloud);
             }
 
@@ -227,6 +231,12 @@ namespace Managers
                 profileController.Data.language = cloud.language;
                 profileController.Data.firebaseUserId = uid;
 
+                if (dataSaver != null && dataSaver.dataToSave != null)
+                {
+                    dataSaver.dataToSave.totalCoins = cloud.totalCoins;
+                    dataSaver.SaveLocal();
+                }
+
                 if (profileController.Data.daily != null)
                 {
                     profileController.Data.daily.dayKey = cloud.dailyDayKey ?? "";
@@ -236,6 +246,11 @@ namespace Managers
 
                 profileController.SaveProfile();
                 profileController.SetFirebaseUserId(uid);
+                
+                Debug.Log($"[LoginManager] ✅ Applied cloud data to PlayerProfileController:");
+                Debug.Log($"  └─ Gold: {profileController.Data.gold}");
+                Debug.Log($"  └─ Unlocked Avatars: {profileController.Data.unlockedAvatars.Count}");
+                Debug.Log($"  └─ Purchased Avatars: {profileController.Data.purchasedAvatars.Count}");
                 
                 dataSaver.OnDataLoaded -= HandleDataLoaded;
                 dataSaver.OnLoadFailed -= HandleLoadFailed;
