@@ -112,6 +112,15 @@ namespace Gameplay.Controllers
             OnGoldChanged?.Invoke(Data.gold);
         }
 
+        public void CopyUserIdToClipboard()
+        {
+            if (!string.IsNullOrEmpty(Data.firebaseUserId))
+            {
+                GUIUtility.systemCopyBuffer = Data.firebaseUserId;
+                Debug.Log("ID copy to clipboard");
+            }
+        }
+
         private void Save()
         {
             SaveManager.Instance.Save(Data);
