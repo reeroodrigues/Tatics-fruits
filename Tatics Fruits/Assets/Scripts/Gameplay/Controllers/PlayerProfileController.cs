@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Core.SaveSystem;
 using Core.ScriptableObjects;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -50,10 +51,40 @@ namespace Gameplay.Controllers
 
         private void Start()
         {
+            var dataSaver = FindObjectOfType<DataSaver>();
+            if (dataSaver != null)
+                dataSaver.OnRemoteDataChanged += OnRemoteDataChanged;
+            
             ApplyProfileUI();
             UpdateGoldUI();
             UpdateLevelUI();
             UpdateAvatarUI();
+        }
+
+        private void OnDestroy()
+        {
+            var dataSaver = FindFirstObjectByType<DataSaver>();
+            if (dataSaver != null)
+            {
+                dataSaver.OnRemoteDataChanged -= OnRemoteDataChanged;
+                dataSaver.StopRealtimeListener();
+            }
+        }
+
+        private void OnRemoteDataChanged(DataToSave remoteData)
+        {
+            Debug.Log($"[PlayerProfileController] 🔔 REMOTE DATA CHANGED EVENT RECEIVED!");
+            Debug.Log($"  └─ Remote Coins: {remoteData.totalCoins} | Current Coins: {Data.gold}");
+            Debug.Log($"  └─ Remote Level: {remoteData.crrLevel} | Current Level: {Data.currentLevelIndex}");
+            
+            Data.gold = remoteData.totalCoins;
+            Data.currentLevelIndex = remoteData.crrLevel;
+            Data.playerName = remoteData.userName;
+            
+            UpdateGoldUI();
+            UpdateLevelUI();
+            
+            Debug.Log($"[PlayerProfileController] ✅ Remote data applied to UI - New Coins: {Data.gold}");
         }
 
         private GameObject GoldHudTarget()

@@ -54,6 +54,15 @@ namespace Managers
         public event Action OnDataNotFound;
         public event Action<Exception> OnLoadFailed;
         public event Action OnSavedToCloud;
+        public event Action<DataToSave> OnRemoteDataChanged;
+        
+        [Header("Real-Time Sync")]
+        [SerializeField] private bool enableRealtimeSync = true;
+        [SerializeField] private bool smartMerger = true;
+
+        private bool _isListening = false;
+        private bool _isLocalChange = false;
+        
 
         private void Awake()
         {
@@ -232,6 +241,7 @@ namespace Managers
                 
                 Debug.Log($"[DataSaver] ✅ Data resolved and applied - Final Coins: {dataToSave.totalCoins}");
                 OnDataLoaded?.Invoke(dataToSave);
+                StartRealtimeListener();
                 yield break;
             }
 
@@ -246,6 +256,8 @@ namespace Managers
             }
 
             OnDataNotFound?.Invoke();
+            StartRealtimeListener();
+            yield break;
         }
 
         #endregion
@@ -259,6 +271,8 @@ namespace Managers
 
             dataToSave.lastUpdatedTicks = DateTime.UtcNow.Ticks;
 
+            _isLocalChange = true;
+
             var json = JsonUtility.ToJson(dataToSave);
 
             _databaseReference
@@ -270,6 +284,7 @@ namespace Managers
                     if (task.IsFaulted)
                     {
                         Debug.LogError($"[DataSaver] Erro ao salvar FULL no Firebase: {task.Exception}");
+                        _isLocalChange = false;
                     }
                     else if (task.IsCompletedSuccessfully)
                     {
@@ -457,6 +472,114 @@ namespace Managers
                         dataToSave.lastUpdatedTicks = Convert.ToInt64(kv.Value);
                         break;
                 }
+            }
+        }
+
+        #endregion
+
+        #region Real-Time Firebase Listener
+
+        public void StartRealtimeListener()
+        {
+            
+            if (!enableRealtimeSync)
+            {
+                Debug.Log($"[DataSaver] Real-time listener NOT started - Sync disabled in inspector");
+                return;
+            }
+            
+            if (_isListening)
+            {
+                Debug.Log($"[DataSaver] Real-time listener already active");
+                return;
+            }
+            
+            if (!ValidateUserId())
+            {
+                Debug.LogError($"[DataSaver] Cannot start listener - Invalid user ID");
+                return;
+            }
+
+            var userRef = _databaseReference.Child("users").Child(userId);
+
+            userRef.ValueChanged += OnFirebaseValueChanged;
+            _isListening = true;
+            
+            Debug.Log($"[DataSaver] 🔔 Real-time listener STARTED for user: {userId}");
+        }
+
+        public void StopRealtimeListener()
+        {
+            if (!_isListening  || !ValidateUserId())
+                return;
+            
+            var userRef = _databaseReference.Child("users").Child(userId);
+            userRef.ValueChanged -= OnFirebaseValueChanged;
+            _isListening = false;
+            
+            Debug.Log("[DataSaver] 🔕 Real-time listener STOPPED");
+        }
+
+        private void OnFirebaseValueChanged(object sender, ValueChangedEventArgs args)
+        {
+            if (args.DatabaseError != null)
+            {
+                Debug.LogError($"[DataSaver] Firebase listener error: {args.DatabaseError.Message}");
+                return;
+            }
+
+            if (_isLocalChange)
+            {
+                _isLocalChange = false;
+                Debug.Log("[DataSaver] Ignoring self-triggered Firebase change");
+                return;
+            }
+
+            var snapshot = args.Snapshot;
+            if (snapshot == null || !snapshot.Exists)
+            {
+                Debug.LogWarning("[DataSaver] Firebase data was deleted remotely");
+                return;
+            }
+            
+            var jsonData = snapshot.GetRawJsonValue();
+            if (string.IsNullOrEmpty(jsonData))
+            {
+                Debug.LogWarning("[DataSaver] Firebase data is empty");
+                return;
+            }
+            
+            var remoteData = JsonUtility.FromJson<DataToSave>(jsonData);
+
+            if (smartMerger)
+            {
+                ApplyRemoteChanges(remoteData);
+            }
+            else
+            {
+                dataToSave = remoteData;
+                SaveLocal();
+                OnRemoteDataChanged?.Invoke(dataToSave);
+            }
+            
+            Debug.Log($"[DataSaver] ✅ Remote changes applied - New Coins: {dataToSave.totalCoins}, New Level: {dataToSave.crrLevel}");
+        }
+
+        private void ApplyRemoteChanges(DataToSave remoteData)
+        {
+            var remoteDiff = remoteData.lastUpdatedTicks - dataToSave.lastUpdatedTicks;
+            var remoteTime = new DateTime(remoteData.lastUpdatedTicks);
+            var localTime = new DateTime(dataToSave.lastUpdatedTicks);
+            
+            if (remoteData.lastUpdatedTicks > dataToSave.lastUpdatedTicks)
+            {
+                dataToSave = remoteData;
+                SaveLocal();
+                OnRemoteDataChanged?.Invoke(dataToSave);
+            }
+            else
+            {
+                return;
             }
         }
 
