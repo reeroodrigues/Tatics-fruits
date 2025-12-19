@@ -15,6 +15,7 @@ namespace Gameplay.Controllers
         [SerializeField] private TextMeshProUGUI playerNameText;
         [SerializeField] private TextMeshProUGUI playerIdText;
         [SerializeField] private Image avatarImage;
+        [SerializeField] private TextMeshProUGUI playerLevelText;
         [SerializeField] private Button closeAvatarPanelButton;
 
         [Header("UI / Economia")]
@@ -48,6 +49,7 @@ namespace Gameplay.Controllers
         {
             ApplyProfileUI();
             UpdateGoldUI();
+            UpdateLevelUI();
         }
 
         private GameObject GoldHudTarget()
@@ -74,6 +76,12 @@ namespace Gameplay.Controllers
             ApplyGoldHudVisibility();
         }
 
+        private void UpdateLevelUI()
+        {
+            if (playerLevelText != null)
+                playerLevelText.text = $"Level: {Data.currentLevelIndex}";
+        }
+        
         public void ReleaseShowGoldHud()
         {
             _goldHudRefCount = Mathf.Max(0, _goldHudRefCount - 1);
@@ -299,6 +307,7 @@ namespace Gameplay.Controllers
         public void SetCurrentLevel(int levelIndex)
         {
             Data.currentLevelIndex = levelIndex;
+            UpdateLevelUI();
             SaveAndSync();
         }
 

@@ -420,9 +420,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profilePanel: {fileID: 159736904}
-  playerNameText: {fileID: 2087180038}
+  playerNameText: {fileID: 917945694}
   playerIdText: {fileID: 161289072}
-  avatarImage: {fileID: 1780230677}
+  avatarImage: {fileID: 1143253042}
+  playerLevelText: {fileID: 506349713}
   closeAvatarPanelButton: {fileID: 1423609542}
   goldText: {fileID: 6381565975627992168}
   goldHudRoot: {fileID: 1059827660}
@@ -1436,7 +1437,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8bbf2eee6f55f5e4c98972bdba76374d, type: 2}
   - {fileID: 11400000, guid: 34c92f153758aa34d9b47ad127e509d0, type: 2}
   - {fileID: 11400000, guid: 243c99841bfd69842b08e6f01ba830ef, type: 2}
-  profileController: {fileID: 0}
+  profileController: {fileID: 35881750}
 --- !u!1 &161289070
 GameObject:
   m_ObjectHideFlags: 0
@@ -12250,7 +12251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2213f901ce024b1fbc660b5414741708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 0}
+  profile: {fileID: 35881750}
   missionPool:
   - {fileID: 11400000, guid: 138b6144d8c5eda45af1dd80e0e2fa7c, type: 2}
   - {fileID: 11400000, guid: c952c66c33bf4284b81e3002fb3b86c3, type: 2}
@@ -15360,7 +15361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b17464cba3b5ffa4d8ecb279fc672e75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Ads.AdSystemSetup
-  autoSetup: 1
+  autoSetup: 0
   interstitialAdManager: {fileID: 1693729827}
   bannerAdManager: {fileID: 1693729826}
   adInitializer: {fileID: 1693729825}
