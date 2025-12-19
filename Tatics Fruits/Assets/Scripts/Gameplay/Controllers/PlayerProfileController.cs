@@ -83,7 +83,7 @@ namespace Gameplay.Controllers
         private void UpdateLevelUI()
         {
             if (playerLevelText != null)
-                playerLevelText.text = $"Level: {Data.currentLevelIndex}";
+                playerLevelText.text = $"Level: {Data.currentLevelIndex + 1}";
         }
 
         private void UpdateAvatarUI()

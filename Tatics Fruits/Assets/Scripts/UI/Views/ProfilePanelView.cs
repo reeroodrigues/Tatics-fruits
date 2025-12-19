@@ -119,7 +119,7 @@ namespace UI.Views
                 coinAmountText.text = data.gold.ToString();
             
             if (lastLevelText != null)
-                lastLevelText.text = $"Last Level: {data.currentLevelIndex + 1}";
+                lastLevelText.text = $"Level: {data.currentLevelIndex + 1}";
 
             if (currentAvatarImage != null)
             {
