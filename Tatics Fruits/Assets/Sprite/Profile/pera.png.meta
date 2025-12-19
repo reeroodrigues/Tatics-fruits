@@ -132,12 +132,12 @@ TextureImporter:
       name: pera_0
       rect:
         serializedVersion: 2
-        x: 295
-        y: 233
-        width: 7
-        height: 7
+        x: 496
+        y: 860
+        width: 5
+        height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -154,12 +154,12 @@ TextureImporter:
       name: pera_1
       rect:
         serializedVersion: 2
-        x: 343
-        y: 160
-        width: 385
-        height: 705
+        x: 502
+        y: 860
+        width: 6
+        height: 4
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -172,11 +172,99 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: pera_2
+      rect:
+        serializedVersion: 2
+        x: 516
+        y: 860
+        width: 28
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24061262e1808824d829115120a0ef82
+      internalID: -845192921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pera_3
+      rect:
+        serializedVersion: 2
+        x: 296
+        y: 234
+        width: 5
+        height: 5
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1284d19c1f095e45ba5f8c006909139
+      internalID: 1885396170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pera_4
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 161
+        width: 384
+        height: 635
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3da9b288495b7984993efbb89ff3ae42
+      internalID: 1795395391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pera_5
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 836
+        width: 126
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aea1dae062bb5f5488ea06ef2b86f5af
+      internalID: 1334148350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 69c531d1b6bf1164ea3a1d14bb9438c9
     internalID: 0
     vertices: []
     indices: 
@@ -184,10 +272,16 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       pera_0: -7450357554928763288
       pera_1: -2539384917794612282
+      pera_2: -845192921
+      pera_3: 1885396170
+      pera_4: 1795395391
+      pera_5: 1334148350
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
