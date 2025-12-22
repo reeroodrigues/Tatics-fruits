@@ -881,7 +881,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &122685946
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11385,6 +11385,8 @@ MonoBehaviour:
     dailyDayKey: 
     lastLoginDayKey: 
   createCloudIfMissing: 1
+  enableRealtimeSync: 1
+  smartMerger: 1
 --- !u!1 &1251724882
 GameObject:
   m_ObjectHideFlags: 0
@@ -19640,8 +19642,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 43.200005
-  m_fontSizeMax: 172.80002
+  m_fontSizeMin: 0
+  m_fontSizeMax: 0
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

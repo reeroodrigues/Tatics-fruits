@@ -173,8 +173,6 @@ public static class SaveHelper
 
     public static void OnDailyRewardClaimed(string dayKey, int rewardCoins)
     {
-        AddCoins(rewardCoins);
-        
         var dataSaver = Object.FindFirstObjectByType<Managers.DataSaver>();
         if (dataSaver != null)
         {
