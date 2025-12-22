@@ -121,5 +121,23 @@ namespace Managers
                 _dataSaver.OnRemoteDataChanged -= OnPlayerDataLoaded;
             }
         }
+
+        private void UnlockeRemoveAdsWithRestart()
+        {
+            if (_adsRemoved)
+                return;
+            
+            _adsRemoved = true;
+
+            if (_dataSaver != null)
+            {
+                _dataSaver.SetRemoveAds(true);
+                _dataSaver.SaveData(force: true);
+            }
+            
+            ApplyAdRemovalStatus();
+            OnAdsRemoved?.Invoke();
+            OnRemovedAdsStatusChanged?.Invoke(_adsRemoved);
+        }
     }
 }

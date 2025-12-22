@@ -934,13 +934,14 @@ GameObject:
   - component: {fileID: 122685949}
   - component: {fileID: 122685948}
   - component: {fileID: 122685947}
+  - component: {fileID: 122685950}
   m_Layer: 5
   m_Name: RemoveAds Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &122685946
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1042,6 +1043,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 122685945}
   m_CullTransparentMesh: 1
+--- !u!114 &122685950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122685945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c3edfdd18d8489a86130488333bc475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Views.RemoveAdsButton
+  button: {fileID: 122685947}
+  priceText: {fileID: 2135017504}
+  loadingIndicator: {fileID: 0}
+  purchasePopupPrefab: {fileID: 7381870508915024752, guid: 2919ccfe4b1b82f4fa7b3b286c623227, type: 3}
+  popupParent: {fileID: 2082077804}
 --- !u!1 &131159042
 GameObject:
   m_ObjectHideFlags: 0
@@ -19701,8 +19719,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 43.200005
-  m_fontSizeMax: 172.80002
+  m_fontSizeMin: 0
+  m_fontSizeMax: 0
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -20553,8 +20571,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -928}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 471.76, y: -87.789}
+  m_SizeDelta: {x: 136.47, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2135017504
 MonoBehaviour:
