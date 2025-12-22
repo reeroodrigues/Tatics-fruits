@@ -1,4 +1,5 @@
 using System;
+using Managers;
 using UnityEngine;
 
 namespace Ads
@@ -74,6 +75,11 @@ namespace Ads
 
         public void ShowInterstitialAd()
         {
+            if (RemoveAdsManager.Instance != null && RemoveAdsManager.Instance.AreAdsRemoved())
+            {
+                return;
+            }
+            
             if (!enableAds || _isShowingAd)
             {
                 Debug.Log("[InterstitialAdManager] Ads disabled or already showing an ad.");

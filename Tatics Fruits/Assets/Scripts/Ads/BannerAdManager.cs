@@ -1,3 +1,4 @@
+using Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -98,6 +99,11 @@ namespace Ads
 
         public void ShowBanner()
         {
+
+            if (RemoveAdsManager.Instance != null && RemoveAdsManager.Instance.AreAdsRemoved())
+            {
+                return;
+            }
             if (!enableBanners)
             {
                 Debug.Log("[BannerAdManager] Banners are disabled");
