@@ -1613,7 +1613,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 222c3942839b451ca60579fda06e5d8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Views.RemoveAdsAutoPrompt
-  purchasePopupPrefab: {fileID: 7381870508915024752, guid: 2919ccfe4b1b82f4fa7b3b286c623227, type: 3}
+  purchasePopupPrefab: {fileID: 6837050900643768352, guid: 749078b59afb39a4daa998b2c7837e9e, type: 3}
   popupParent: {fileID: 2082077804}
   delayBeforeShowing: 1.5
   showOnFirstLaunch: 1
