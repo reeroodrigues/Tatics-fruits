@@ -4,7 +4,6 @@ using Gameplay.Utils;
 using Managers;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 namespace UI.Popups
@@ -23,10 +22,25 @@ namespace UI.Popups
         [SerializeField] private TextMeshProUGUI descriptionText;
         [SerializeField] private TextMeshProUGUI priceText;
         [SerializeField] private TextMeshProUGUI confirmButtonText;
-        [SerializeField] private TextMeshProUGUI cancelButtonText;
+        
+        [Header("Discount UI")]
+        [SerializeField] private TextMeshProUGUI originalPriceText;
+        [SerializeField] private TextMeshProUGUI savingsText;
+        [SerializeField] private TextMeshProUGUI discountBadgeText;
+        [SerializeField] private TextMeshProUGUI urgencyText;
+        [SerializeField] private TextMeshProUGUI bannerText;
+        [SerializeField] private RectTransform discountBadge;
+        [SerializeField] private RectTransform limitedTimeBanner;
+        
+        [Header("Discount Settings")]
+        [SerializeField] private bool showDiscount = true;
+        [SerializeField] private int discountPercentage = 50;
+        [SerializeField] private string originalPriceOverride = "";
         
         [Header("Animation")]
         [SerializeField] private float animationDuration = 0.3f;
+        [SerializeField] private float badgePulseScale = 1.1f;
+        [SerializeField] private float badgePulseDuration = 0.8f;
         
         public event Action OnConfirm;
         public event Action OnCancel;
@@ -66,22 +80,100 @@ namespace UI.Popups
         private void SetupTexts()
         {
             if (titleText != null)
-                titleText.text = Localizer.Instance.Tr("remove_ads_title", "Remove Ads");
+                titleText.text = Localizer.Instance.Tr("iap_remove_ads_title", "Remove Ads");
             
             if (descriptionText != null)
-                descriptionText.text = Localizer.Instance.Tr("remove_ads_description", "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.");
+                descriptionText.text = Localizer.Instance.Tr("iap_remove_ads_description", "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.");
 
-            if (IAPManager.Instance != null && priceText != null)
-            {
-                var price = IAPManager.Instance.GetProductPrice();
-                priceText.text = price;
-            }
+            if (bannerText != null)
+                bannerText.text = Localizer.Instance.Tr("iap_limited_time_banner", "⚡ LIMITED TIME OFFER ⚡");
+
+            if (urgencyText != null)
+                urgencyText.text = Localizer.Instance.Tr("iap_offer_ends_soon", "🔥 Offer ends soon!");
+
+            SetupPricing();
 
             if (confirmButtonText != null)
-                confirmButtonText.text = Localizer.Instance.Tr("purchase_button", "Purhcase");
+                confirmButtonText.text = Localizer.Instance.Tr("iap_purchase_button", "BUY NOW");
+        }
 
-            if (cancelButtonText != null)
-                cancelButtonText.text = Localizer.Instance.Tr("cancel_button", "Cancel");
+        private void SetupPricing()
+        {
+            if (IAPManager.Instance == null)
+                return;
+
+            string currentPrice = IAPManager.Instance.GetProductPrice();
+
+            if (priceText != null)
+                priceText.text = currentPrice;
+
+            if (showDiscount)
+            {
+                if (originalPriceText != null)
+                {
+                    string originalPrice = !string.IsNullOrEmpty(originalPriceOverride) 
+                        ? originalPriceOverride 
+                        : CalculateOriginalPrice(currentPrice);
+                    
+                    originalPriceText.text = $"<s>{originalPrice}</s>";
+                }
+
+                if (discountBadgeText != null)
+                    discountBadgeText.text = $"-{discountPercentage}%";
+
+                if (savingsText != null)
+                {
+                    string savingsLabel = Localizer.Instance.Tr("iap_you_save", "You save");
+                    string savings = CalculateSavings(currentPrice);
+                    savingsText.text = $"{savingsLabel} {savings}!";
+                }
+            }
+            else
+            {
+                if (originalPriceText != null) originalPriceText.gameObject.SetActive(false);
+                if (savingsText != null) savingsText.gameObject.SetActive(false);
+                if (discountBadge != null) discountBadge.gameObject.SetActive(false);
+                if (limitedTimeBanner != null) limitedTimeBanner.gameObject.SetActive(false);
+                if (urgencyText != null) urgencyText.gameObject.SetActive(false);
+            }
+        }
+
+        private string CalculateOriginalPrice(string currentPrice)
+        {
+            string numericPart = System.Text.RegularExpressions.Regex.Replace(currentPrice, @"[^\d,.]", "");
+            
+            if (float.TryParse(numericPart.Replace(",", "."), System.Globalization.NumberStyles.Any, 
+                System.Globalization.CultureInfo.InvariantCulture, out float price))
+            {
+                float originalPrice = price / (1f - (discountPercentage / 100f));
+                string currency = currentPrice.Replace(numericPart, "").Trim();
+                
+                if (currentPrice.Contains(","))
+                    return $"{currency} {originalPrice:F2}".Replace(".", ",");
+                else
+                    return $"{currency} {originalPrice:F2}";
+            }
+
+            return currentPrice;
+        }
+
+        private string CalculateSavings(string currentPrice)
+        {
+            string numericPart = System.Text.RegularExpressions.Regex.Replace(currentPrice, @"[^\d,.]", "");
+            
+            if (float.TryParse(numericPart.Replace(",", "."), System.Globalization.NumberStyles.Any, 
+                System.Globalization.CultureInfo.InvariantCulture, out float price))
+            {
+                float savings = price * (discountPercentage / 100f) / (1f - (discountPercentage / 100f));
+                string currency = currentPrice.Replace(numericPart, "").Trim();
+                
+                if (currentPrice.Contains(","))
+                    return $"{currency} {savings:F2}".Replace(".", ",");
+                else
+                    return $"{currency} {savings:F2}";
+            }
+
+            return "";
         }
 
         private void HandleConfirm()
@@ -89,7 +181,7 @@ namespace UI.Popups
             SetButtonsInteractable(false);
             
             if (confirmButtonText != null)
-                confirmButtonText.text = Localizer.Instance.Tr("processing", "Processing...");
+                confirmButtonText.text = Localizer.Instance.Tr("iap_processing", "Processing...");
             
             OnConfirm?.Invoke();
         }
@@ -105,7 +197,7 @@ namespace UI.Popups
             Debug.Log("[RemoveAdsPurchasePopup] Purchase successful! Restarting game...");
             
             if (descriptionText != null)
-                descriptionText.text = Localizer.Instance.Tr("purchase_successful","Purchase successful!\nRestarting game...");
+                descriptionText.text = Localizer.Instance.Tr("iap_purchase_success", "Purchase successful!\nRestarting game...");
 
             DOVirtual.DelayedCall(1.5f, () =>
             {
@@ -118,14 +210,20 @@ namespace UI.Popups
             Debug.LogWarning($"[RemoveAdsPurchasePopup] Purchase failed: {error}");
             
             if (descriptionText != null)
-                descriptionText.text = Localizer.Instance.Tr("purchase_failed", $"Purchase failed:\n{error}") ;
+            {
+                string failedMessage = Localizer.Instance.Tr("iap_purchase_failed", "Purchase failed");
+                descriptionText.text = $"{failedMessage}:\n{error}";
+            }
 
             SetButtonsInteractable(true);
+
+            if (confirmButtonText != null)
+                confirmButtonText.text = Localizer.Instance.Tr("iap_purchase_button", "BUY NOW");
 
             DOVirtual.DelayedCall(2f, () =>
             {
                 if (descriptionText != null)
-                    descriptionText.text = Localizer.Instance.Tr("remove_ads_description", "Purchase successful!");
+                    descriptionText.text = Localizer.Instance.Tr("iap_remove_ads_description", "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.");
             });
         }
 
@@ -168,6 +266,33 @@ namespace UI.Popups
                     .SetEase(Ease.OutBack)
                     .SetUpdate(true);
             }
+
+            if (discountBadge != null && showDiscount)
+            {
+                discountBadge.localScale = Vector3.zero;
+                discountBadge.DOScale(1f, animationDuration * 1.5f)
+                    .SetEase(Ease.OutElastic)
+                    .SetDelay(animationDuration * 0.5f)
+                    .SetUpdate(true)
+                    .OnComplete(() => PulseBadge());
+            }
+
+            if (limitedTimeBanner != null && showDiscount)
+            {
+                limitedTimeBanner.DOShakeRotation(0.5f, new Vector3(0, 0, 10f), 10, 90)
+                    .SetDelay(animationDuration)
+                    .SetUpdate(true);
+            }
+        }
+
+        private void PulseBadge()
+        {
+            if (discountBadge == null) return;
+
+            discountBadge.DOScale(badgePulseScale, badgePulseDuration * 0.5f)
+                .SetEase(Ease.InOutSine)
+                .SetLoops(-1, LoopType.Yoyo)
+                .SetUpdate(true);
         }
 
         private void AnimateOut()
@@ -200,6 +325,9 @@ namespace UI.Popups
             }
 
             DOTween.Kill(this);
+            
+            if (discountBadge != null)
+                discountBadge.DOKill();
         }
     }
 }

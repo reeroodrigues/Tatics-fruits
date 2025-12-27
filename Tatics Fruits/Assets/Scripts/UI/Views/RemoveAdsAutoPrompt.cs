@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using Managers;
 using UI.Popups;
@@ -23,6 +22,8 @@ namespace UI.Views
 
         private void Start()
         {
+            var tracker = GameSessionTracker.Instance;
+            
             if (ShouldShowPopup())
                 DOVirtual.DelayedCall(delayBeforeShowing, ShowPopup);
         }
@@ -37,13 +38,14 @@ namespace UI.Views
 
             var justReturned = GameSessionTracker.JustReturnedFromGameplay;
             var hasPlayed = GameSessionTracker.HasPlayedGameplayThisSession;
+            
 
             if (showOnReturnFromGameplay && justReturned)
                 return true;
 
             if (showOnFirstLaunch && !hasPlayed)
                 return true;
-
+            
             return false;
         }
 
@@ -52,14 +54,18 @@ namespace UI.Views
             if (_currentPopup != null)
                 return;
             
-            if(purchasePopupPrefab != null)
+            if(purchasePopupPrefab == null)
                 return;
             
             var parent = popupParent != null ? popupParent : transform.root;
+            
             _currentPopup = Instantiate(purchasePopupPrefab, parent);
 
-            _currentPopup.OnConfirm += OnPurchaseConfirmed;
-            _currentPopup.OnCancel += OnPurchaseCancelled;
+            if (_currentPopup != null)
+            {
+                _currentPopup.OnConfirm += OnPurchaseConfirmed;
+                _currentPopup.OnCancel += OnPurchaseCancelled;
+            }
             
             GameSessionTracker.ResetReturnedFlag();
         }
@@ -68,7 +74,6 @@ namespace UI.Views
         {
             if (IAPManager.Instance != null) 
                 IAPManager.Instance.PurchaseRemoveAds();
-            
         }
 
         private void OnPurchaseCancelled()
