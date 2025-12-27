@@ -1,8 +1,10 @@
 using System;
 using DG.Tweening;
+using Gameplay.Utils;
 using Managers;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 namespace UI.Popups
@@ -21,6 +23,7 @@ namespace UI.Popups
         [SerializeField] private TextMeshProUGUI descriptionText;
         [SerializeField] private TextMeshProUGUI priceText;
         [SerializeField] private TextMeshProUGUI confirmButtonText;
+        [SerializeField] private TextMeshProUGUI cancelButtonText;
         
         [Header("Animation")]
         [SerializeField] private float animationDuration = 0.3f;
@@ -63,10 +66,10 @@ namespace UI.Popups
         private void SetupTexts()
         {
             if (titleText != null)
-                titleText.text = "Remove Ads";
+                titleText.text = Localizer.Instance.Tr("remove_ads_title", "Remove Ads");
             
             if (descriptionText != null)
-                descriptionText.text = "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.";
+                descriptionText.text = Localizer.Instance.Tr("remove_ads_description", "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.");
 
             if (IAPManager.Instance != null && priceText != null)
             {
@@ -75,7 +78,10 @@ namespace UI.Popups
             }
 
             if (confirmButtonText != null)
-                confirmButtonText.text = "Purchase";
+                confirmButtonText.text = Localizer.Instance.Tr("purchase_button", "Purhcase");
+
+            if (cancelButtonText != null)
+                cancelButtonText.text = Localizer.Instance.Tr("cancel_button", "Cancel");
         }
 
         private void HandleConfirm()
@@ -83,7 +89,7 @@ namespace UI.Popups
             SetButtonsInteractable(false);
             
             if (confirmButtonText != null)
-                confirmButtonText.text = "Processing...";
+                confirmButtonText.text = Localizer.Instance.Tr("processing", "Processing...");
             
             OnConfirm?.Invoke();
         }
@@ -99,7 +105,7 @@ namespace UI.Popups
             Debug.Log("[RemoveAdsPurchasePopup] Purchase successful! Restarting game...");
             
             if (descriptionText != null)
-                descriptionText.text = "Purchase successful!\nRestarting game...";
+                descriptionText.text = Localizer.Instance.Tr("purchase_successful","Purchase successful!\nRestarting game...");
 
             DOVirtual.DelayedCall(1.5f, () =>
             {
@@ -112,14 +118,14 @@ namespace UI.Popups
             Debug.LogWarning($"[RemoveAdsPurchasePopup] Purchase failed: {error}");
             
             if (descriptionText != null)
-                descriptionText.text = $"Purchase failed:\n{error}";
+                descriptionText.text = Localizer.Instance.Tr("purchase_failed", $"Purchase failed:\n{error}") ;
 
             SetButtonsInteractable(true);
 
             DOVirtual.DelayedCall(2f, () =>
             {
                 if (descriptionText != null)
-                    descriptionText.text = "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.";
+                    descriptionText.text = Localizer.Instance.Tr("remove_ads_description", "Purchase successful!");
             });
         }
 
