@@ -1,6 +1,5 @@
 using System;
 using DG.Tweening;
-using Gameplay.Utils;
 using Managers;
 using TMPro;
 using UnityEngine;
@@ -28,7 +27,6 @@ namespace UI.Popups
         
         public event Action OnConfirm;
         public event Action OnCancel;
-        private Localizer _localizer;
 
         private void Awake()
         {
@@ -65,10 +63,10 @@ namespace UI.Popups
         private void SetupTexts()
         {
             if (titleText != null)
-                titleText.text = _localizer.Tr("remove_ads_title");
+                titleText.text = "Remove Ads";
             
             if (descriptionText != null)
-                descriptionText.text = _localizer.Tr("remove_ads_description");
+                descriptionText.text = "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.";
 
             if (IAPManager.Instance != null && priceText != null)
             {
@@ -77,12 +75,16 @@ namespace UI.Popups
             }
 
             if (confirmButtonText != null)
-                confirmButtonText.text = _localizer.Tr("remove_ads_confirm");
+                confirmButtonText.text = "Purchase";
         }
 
         private void HandleConfirm()
         {
             SetButtonsInteractable(false);
+            
+            if (confirmButtonText != null)
+                confirmButtonText.text = "Processing...";
+            
             OnConfirm?.Invoke();
         }
 
@@ -94,8 +96,10 @@ namespace UI.Popups
 
         private void OnPurchaseSuccess()
         {
+            Debug.Log("[RemoveAdsPurchasePopup] Purchase successful! Restarting game...");
+            
             if (descriptionText != null)
-                descriptionText.text = _localizer.Tr("remove_ads_description_success");
+                descriptionText.text = "Purchase successful!\nRestarting game...";
 
             DOVirtual.DelayedCall(1.5f, () =>
             {
@@ -105,20 +109,24 @@ namespace UI.Popups
 
         private void OnPurchaseFailed(string error)
         {
+            Debug.LogWarning($"[RemoveAdsPurchasePopup] Purchase failed: {error}");
+            
             if (descriptionText != null)
-                descriptionText.text = _localizer.Tr($"remove_ads_description_failed: {error}");
+                descriptionText.text = $"Purchase failed:\n{error}";
 
             SetButtonsInteractable(true);
 
             DOVirtual.DelayedCall(2f, () =>
             {
                 if (descriptionText != null)
-                    descriptionText.text =  _localizer.Tr("remove_ads_description_failed");
+                    descriptionText.text = "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.";
             });
         }
 
         private void RestartGame()
         {
+            Debug.Log("[RemoveAdsPurchasePopup] Restarting application...");
+            
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #else
