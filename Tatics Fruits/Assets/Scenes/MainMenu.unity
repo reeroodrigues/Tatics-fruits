@@ -1569,6 +1569,55 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 176824421}
   m_CullTransparentMesh: 1
+--- !u!1 &177288570
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 177288571}
+  - component: {fileID: 177288572}
+  m_Layer: 0
+  m_Name: RemoveAdsAutoPrompt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &177288571
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177288570}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &177288572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177288570}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 222c3942839b451ca60579fda06e5d8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Views.RemoveAdsAutoPrompt
+  purchasePopupPrefab: {fileID: 7381870508915024752, guid: 2919ccfe4b1b82f4fa7b3b286c623227, type: 3}
+  popupParent: {fileID: 2082077804}
+  delayBeforeShowing: 1.5
+  showOnFirstLaunch: 1
+  showOnReturnFromGameplay: 1
 --- !u!1 &180266088
 GameObject:
   m_ObjectHideFlags: 0
@@ -16518,8 +16567,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Views.RemoveAdsButton
   button: {fileID: 1793286336}
-  priceText: {fileID: 2135017504}
-  loadingIndicator: {fileID: 0}
   purchasePopupPrefab: {fileID: 7381870508915024752, guid: 2919ccfe4b1b82f4fa7b3b286c623227, type: 3}
   popupParent: {fileID: 2082077804}
 --- !u!1 &1806586240
@@ -21366,3 +21413,4 @@ SceneRoots:
   - {fileID: 1270414123}
   - {fileID: 960821417}
   - {fileID: 1070578018}
+  - {fileID: 177288571}

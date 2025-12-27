@@ -1,6 +1,7 @@
 using Core.SaveSystem;
 using DG.Tweening;
 using Gameplay.Controllers;
+using Managers;
 using New_GameplayCore.Services;
 using UI.Views;
 using UnityEngine;
@@ -89,6 +90,8 @@ namespace UI.Menus
         private void Start()
         {
             InitializeSaveSystem();
+
+            var _ = GameSessionTracker.Instance;
             
             var profile = SaveManager.Instance.Load<PlayerProfileData>();
 

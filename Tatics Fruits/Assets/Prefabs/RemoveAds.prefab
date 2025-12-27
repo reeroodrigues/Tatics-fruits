@@ -417,6 +417,7 @@ MonoBehaviour:
   descriptionText: {fileID: 6488714668267752082}
   priceText: {fileID: 1756610662726531555}
   confirmButtonText: {fileID: 7257778647671959420}
+  cancelButtonText: {fileID: 1323921790357629227}
   animationDuration: 0.3
 --- !u!225 &2320648488112362702
 CanvasGroup:
