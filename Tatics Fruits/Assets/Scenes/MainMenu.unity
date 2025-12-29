@@ -1615,7 +1615,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UI.Views.RemoveAdsAutoPrompt
   purchasePopupPrefab: {fileID: 6837050900643768352, guid: 749078b59afb39a4daa998b2c7837e9e, type: 3}
   popupParent: {fileID: 2082077804}
-  delayBeforeShowing: 1.5
+  delayBeforeShowing: 5
   showOnFirstLaunch: 1
   showOnReturnFromGameplay: 1
 --- !u!1 &180266088
@@ -19797,8 +19797,8 @@ MonoBehaviour:
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 20.9925
-  m_fontSizeMax: 83.97
+  m_fontSizeMin: 43.200005
+  m_fontSizeMax: 172.80002
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

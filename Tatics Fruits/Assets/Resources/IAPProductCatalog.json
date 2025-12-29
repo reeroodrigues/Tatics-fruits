@@ -1,0 +1,38 @@
+{
+  "appleSKU": "",
+  "appleTeamID": "",
+  "enableCodelessAutoInitialization": false,
+  "enableUnityGamingServicesAutoInitialization": false,
+  "products": [
+    {
+      "id": "no.ad",
+      "type": 1,
+      "storeIDs": [
+        {
+          "store": "GooglePlay",
+          "id": "no.ad"
+        }
+      ],
+      "defaultDescription": {
+        "googleLocale": 21,
+        "title": "Remove ads",
+        "description": "Remove all ads from the game"
+      },
+      "screenshotPath": "",
+      "applePriceTier": 0,
+      "googlePrice": {
+        "data": [999, 0, 0, 131072],
+        "num": 9.99
+      },
+      "pricingTemplateID": "9.99",
+      "descriptions": [
+        {
+          "googleLocale": 64,
+          "title": "Remova anúncios",
+          "description": "Remova todos os anúncios do jogo"
+        }
+      ],
+      "payouts": []
+    }
+  ]
+}

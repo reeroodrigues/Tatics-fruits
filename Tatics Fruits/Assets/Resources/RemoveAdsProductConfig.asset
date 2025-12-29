@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13dede2dfaa4a0b9320cda8fea98a2d, type: 3}
   m_Name: RemoveAdsProductConfig
   m_EditorClassIdentifier: Assembly-CSharp::Core.ScriptableObjects.RemoveAdsProductConfig
-  googlePlayProductId: no_ad
-  appleStoreProductId: 
+  googlePlayProductId: no.ad
+  appleStoreProductId: no.ad
   productName: Remove Ads
   description: Remove all ads from the game
-  priceUSD: 21.99
+  priceUSD: 1.99
   isNonConsumable: 1
