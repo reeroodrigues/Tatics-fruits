@@ -80,21 +80,21 @@ namespace UI.Popups
         private void SetupTexts()
         {
             if (titleText != null)
-                titleText.text = Localizer.Instance.Tr("iap_remove_ads_title", "Remove Ads");
+                titleText.text = Localizer.Instance.Tr("remove_ads_title", "Remove Ads");
             
             if (descriptionText != null)
-                descriptionText.text = Localizer.Instance.Tr("iap_remove_ads_description", "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.");
+                descriptionText.text = Localizer.Instance.Tr("remove_ads_description", "Remove all ads from the game forever!");
 
             if (bannerText != null)
-                bannerText.text = Localizer.Instance.Tr("iap_limited_time_banner", "⚡ LIMITED TIME OFFER ⚡");
+                bannerText.text = Localizer.Instance.Tr("limited_time_banner", "LIMITED TIME OFFER");
 
             if (urgencyText != null)
-                urgencyText.text = Localizer.Instance.Tr("iap_offer_ends_soon", "🔥 Offer ends soon!");
+                urgencyText.text = Localizer.Instance.Tr("offer_ends_soon", "Offer ends soon!");
 
             SetupPricing();
 
             if (confirmButtonText != null)
-                confirmButtonText.text = Localizer.Instance.Tr("iap_purchase_button", "BUY NOW");
+                confirmButtonText.text = Localizer.Instance.Tr("purchase_button", "BUY NOW");
         }
 
         private void SetupPricing()
@@ -123,7 +123,7 @@ namespace UI.Popups
 
                 if (savingsText != null)
                 {
-                    string savingsLabel = Localizer.Instance.Tr("iap_you_save", "You save");
+                    string savingsLabel = Localizer.Instance.Tr("you_save", "You save");
                     string savings = CalculateSavings(currentPrice);
                     savingsText.text = $"{savingsLabel} {savings}!";
                 }
@@ -181,7 +181,7 @@ namespace UI.Popups
             SetButtonsInteractable(false);
             
             if (confirmButtonText != null)
-                confirmButtonText.text = Localizer.Instance.Tr("iap_processing", "Processing...");
+                confirmButtonText.text = Localizer.Instance.Tr("processing", "Processing...");
             
             OnConfirm?.Invoke();
         }
@@ -197,7 +197,7 @@ namespace UI.Popups
             Debug.Log("[RemoveAdsPurchasePopup] Purchase successful! Restarting game...");
             
             if (descriptionText != null)
-                descriptionText.text = Localizer.Instance.Tr("iap_purchase_success", "Purchase successful!\nRestarting game...");
+                descriptionText.text = Localizer.Instance.Tr("purchase_success", "Purchase successful!\nRestarting game...");
 
             DOVirtual.DelayedCall(1.5f, () =>
             {
@@ -211,19 +211,19 @@ namespace UI.Popups
             
             if (descriptionText != null)
             {
-                string failedMessage = Localizer.Instance.Tr("iap_purchase_failed", "Purchase failed");
+                string failedMessage = Localizer.Instance.Tr("purchase_failed", "Purchase failed");
                 descriptionText.text = $"{failedMessage}:\n{error}";
             }
 
             SetButtonsInteractable(true);
 
             if (confirmButtonText != null)
-                confirmButtonText.text = Localizer.Instance.Tr("iap_purchase_button", "BUY NOW");
+                confirmButtonText.text = Localizer.Instance.Tr("purchase_button", "BUY NOW");
 
             DOVirtual.DelayedCall(2f, () =>
             {
                 if (descriptionText != null)
-                    descriptionText.text = Localizer.Instance.Tr("iap_remove_ads_description", "Remove all ads from the game forever!\n\nEnjoy uninterrupted gameplay.");
+                    descriptionText.text = Localizer.Instance.Tr("remove_ads_description", "Remove all ads from the game forever!\nEnjoy uninterrupted gameplay.");
             });
         }
 
