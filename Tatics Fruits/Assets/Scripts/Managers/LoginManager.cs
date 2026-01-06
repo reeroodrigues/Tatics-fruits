@@ -5,9 +5,14 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
 using Gameplay.Controllers;
+
+#if UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+#endif
+
 using UnityEngine;
+
 
 namespace Managers
 {
@@ -61,6 +66,7 @@ namespace Managers
             }
         }
 
+#if UNITY_ANDROID
         public void LoginGooglePlayGames()
         {
             PlayGamesPlatform.Instance.Authenticate((status) =>
@@ -68,7 +74,7 @@ namespace Managers
                 if (status == SignInStatus.Success)
                 {
                     Debug.Log("[LoginManager] Google Play Games authentication successful");
-                    
+            
                     PlayGamesPlatform.Instance.RequestServerSideAccess(false, idToken =>
                     {
                         Debug.Log($"[LoginManager] ID Token received: {idToken?.Substring(0, 20)}...");
@@ -81,7 +87,16 @@ namespace Managers
                 }
             });
         }
+#else
+        public void LoginGooglePlayGames()
+        {
+            Debug.LogWarning("[LoginManager] Google Play Games login is only available on Android");
+            SignInAsGuest();
+        }
+#endif
 
+
+#if UNITY_ANDROID
         private void SignInWithGooglePlayGamesFirebase(string idToken)
         {
             if (string.IsNullOrEmpty(idToken))
@@ -91,9 +106,9 @@ namespace Managers
             }
 
             Debug.Log("[LoginManager] Signing in to Firebase with Google Play Games...");
-        
+    
             Credential credential = PlayGamesAuthProvider.GetCredential(idToken);
-        
+    
             _firebaseAuth.SignInWithCredentialAsync(credential).ContinueWithOnMainThread(task =>
             {
                 if (task.IsCanceled)
@@ -101,7 +116,7 @@ namespace Managers
                     Debug.LogError("[LoginManager] Firebase sign-in was canceled");
                     return;
                 }
-            
+        
                 if (task.IsFaulted)
                 {
                     Debug.LogError($"[LoginManager] Firebase sign-in failed: {task.Exception}");
@@ -110,10 +125,17 @@ namespace Managers
 
                 _currentUser = task.Result;
                 Debug.Log($"[LoginManager] Firebase sign-in successful! User ID: {_currentUser.UserId}");
-            
+        
                 OnFirebaseSignedIn(_currentUser);
             });
         }
+#else
+        private void SignInWithGooglePlayGamesFirebase(string idToken)
+        {
+            Debug.LogWarning("[LoginManager] Google Play Games authentication is only available on Android");
+        }
+#endif
+
 
         public void SignInAsGuest()
         {
@@ -204,7 +226,7 @@ namespace Managers
 
             void ApplyCloudDataToProfile(DataToSave cloud)
             {
-                var profileController = FindObjectOfType<PlayerProfileController>();
+                var profileController = FindFirstObjectByType<PlayerProfileController>();
                 if (profileController == null || profileController.Data == null)
                 {
                     Debug.LogWarning("[LoginManager] PlayerProfileController not found or Data is null.");

@@ -515,6 +515,9 @@ PlayerSettings:
   - m_BuildTarget: Android
     m_StaticBatching: 1
     m_DynamicBatching: 0
+  - m_BuildTarget: iPhone
+    m_StaticBatching: 1
+    m_DynamicBatching: 0
   m_BuildTargetShaderSettings: []
   m_BuildTargetGraphicsJobs: []
   m_BuildTargetGraphicsJobMode: []
@@ -546,6 +549,9 @@ PlayerSettings:
   - serializedVersion: 3
     m_BuildTarget: Android
     m_Formats: 01000000
+  - serializedVersion: 3
+    m_BuildTarget: iOS
+    m_Formats: 03000000
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
@@ -829,7 +835,7 @@ PlayerSettings:
     WebGL: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2
     Windows Store Apps: DOTWEEN
     XboxOne: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2
-    iPhone: DOTWEEN
+    iPhone: DOTWEEN;MOREMOUNTAINS_NICEVIBRATIONS_INSTALLED;APP_UI_EDITOR_ONLY
     tvOS: DOTWEEN;UNITY_POST_PROCESSING_STACK_V2
   additionalCompilerArguments: {}
   platformArchitecture: {}
